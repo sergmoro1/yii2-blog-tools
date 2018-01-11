@@ -22,9 +22,9 @@
         "creocoder/yii2-nested-sets": "^0.9.0",
         "vova07/yii2-imperavi-widget" : "*",
         "mrssoft/yii2-sitemap": "*",
-        "notgosu/yii2-meta-tag-module": "*"
+        "notgosu/yii2-meta-tag-module": "*",
         "sergmoro1/yii2-lang-switcher": "*",
-        "sergmoro1/yii2-byone-uploader" : "*",
+        "sergmoro1/yii2-byone-uploader" : "*"
     },
     "autoload": {
         "psr-4": {
