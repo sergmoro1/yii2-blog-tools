@@ -26,7 +26,7 @@ use yii\helpers\Url;
 use yii\web\Link;
 use yii\web\Linkable;
 use mrssoft\sitemap\SitemapInterface;
-use sergmoro1\rudate\RuDate;
+use sergmoro1\blog\components\RuDate;
 use sergmoro1\blog\components\RuSlug;
 
 use sergmoro1\blog\models\Tag;
