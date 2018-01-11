@@ -33,7 +33,7 @@ use sergmoro1\blog\models\Tag;
 use sergmoro1\blog\models\Comment;
 use common\models\User;
 
-class BasePost extends ActiveRecord implements SitemapInterface, Linkable
+class Post extends ActiveRecord implements SitemapInterface, Linkable
 {
 	const STATUS_DRAFT = 1;
 	const STATUS_PUBLISHED = 2;
