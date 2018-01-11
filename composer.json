@@ -1,0 +1,34 @@
+{
+    "name": "sergmoro1/yii2-blog-tools",
+    "version": "1.0.0",
+    "description": "Blog tools. Posts, Tags, Rubrics, Comments backend management. Tag cloud, Rubric Tree (Nested Set), Ricent Comments widgets.",
+    "keywords": [
+        "yii2",
+        "blog", "tag",
+        "rubric", "comment"
+    ],
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergey Morozov",
+            "email": "sergmoro1@ya.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+		"php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "creocoder/yii2-nested-sets": "^0.9.0",
+        "vova07/yii2-imperavi-widget" : "*",
+        "mrssoft/yii2-sitemap": "*",
+        "notgosu/yii2-meta-tag-module": "*"
+        "sergmoro1/yii2-lang-switcher": "*",
+        "sergmoro1/yii2-byone-uploader" : "*",
+    },
+    "autoload": {
+        "psr-4": {
+            "sergmoro1\\blog\\": ""
+        }
+    }
+}

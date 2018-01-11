@@ -1,0 +1,176 @@
+<?php
+/**
+ * RubricController implements the CRUD actions for Rubric model.
+ */
+namespace sergmoro1\blog\controllers;
+
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+
+use common\models\Post;
+use common\models\User;
+use sergmoro1\blog\models\Rubric;
+
+class RubricController extends Controller
+{
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Lists all Post models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+		if (!\Yii::$app->user->can('index'))
+			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+
+        $query = Rubric::find()->where('id>1');
+ 
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+			'pagination' => [
+				'pageSize' => 100,
+			],
+			'sort' => [
+				'defaultOrder' => [
+					'position' => SORT_ASC, 
+				]
+			],
+        ]);
+
+		return $this->render('index', [
+			'dataProvider' => $dataProvider,
+		]);
+    }
+
+    /**
+     * Creates a new Rubric model.
+     * If creation is successful, the browser will be redirected to the 'index' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+		if (!\Yii::$app->user->can('create'))
+			return $this->alert(\Yii::t('app', 'Access denied.'));
+
+        $model = new Rubric();
+
+        if ($model->load(Yii::$app->request->post())) {
+			if($model->prependTo($this->findModel($model->parent_node)))
+				return $this->redirect(['index']);
+        } else {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Updates an existing Rubric model.
+     * If update is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+		if (!\Yii::$app->user->can('update'))
+			return $this->alert(\Yii::t('app', 'Access denied.'));
+
+		$model = $this->findModel($id);
+
+		// $parent_node is empty, so it must be set
+		if($one = $model->parents(1)->one())
+		{
+			$model->parent_node = $one->id;
+			// new code
+			$loaded = $model->load(Yii::$app->request->post());
+			
+			// Ajax validation including form open in a modal window
+			if (Yii::$app->request->isAjax && $loaded) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ActiveForm::validate($model);
+			}
+
+			// The General case
+			if ($loaded && $model->save()) {
+				return $this->redirect(Yii::$app->request->referrer);
+			} else {
+				return $this->renderAjax('update', [
+					'model' => $model,
+				]);
+			}
+		} else {
+			Yii::$app->session->setFlash(
+				'warning',
+				\Yii::t('blog', 'Node has not parent.')
+			);
+			return $this->redirect(['index']);
+		}
+    }
+
+    /**
+     * Deletes an existing Rubric model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+		if (!\Yii::$app->user->can('delete'))
+			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied'));
+
+		if($id == 1)
+			Yii::$app->session->setFlash(
+				'warning',
+				\Yii::t('blog', 'Node can not be deleted.')
+			);
+		else {
+			$node = $this->findModel($id);
+			// find all node childrens
+			$childrens = $node->children()->all();
+			$node->deleteWithChildren();
+			// update deleted rubrics to 1 in all posts with rubrics are $id or $childrens ID
+			$ids = $id;
+			foreach($childrens as $node)
+				$ids .= ',' . $node->id;
+			Post::updateAll(['rubric' => 1], 'rubric IN (' . $ids . ')');
+		}
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Rubric model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Rubric the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Rubric::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException(\Yii::t('app', 'The requested model does not exist.'));
+        }
+    }
+
+    public function alert($message)
+    {
+        return '<div class="alert alert-danger" role="alert">'. $message .'</div>';
+	}
+}
