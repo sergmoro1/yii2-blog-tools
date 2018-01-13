@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 
-use common\models\Lookup;
+use sergmoro1\lookup\models\Lookup;
 use sergmoro1\blog\models\Rubric;
 
 $this->title = Yii::t('app', 'Posts');

@@ -5,6 +5,9 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
+use sergmoro1\lookup\models\Lookup;
+
 ?>
 
 <div class="comment-form">
@@ -37,7 +40,7 @@ use yii\bootstrap\ActiveForm;
 	) ?>
 
     <?= $form->field($model, 'status')->dropdownList(
-		common\models\Lookup::items('CommentStatus')
+		Lookup::items('CommentStatus')
 	) ?>
 
 	<?= Html::submitButton(Yii::t('app', 'Submit'), ['id' => 'submit-btn', 'style' => 'display: none']) ?>

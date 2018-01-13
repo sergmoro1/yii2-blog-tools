@@ -13,6 +13,7 @@ use vova07\imperavi\Widget;
 use sergmoro1\uploader\widgets\Byone;
 
 use sergmoro1\blog\models\Rubric;
+use sergmoro1\lookup\models\Lookup;
 
 ?>
 
@@ -114,7 +115,7 @@ use sergmoro1\blog\models\Rubric;
     <?= $form->field($model, 'created_at_date') ?>
 
     <?= $form->field($model, 'status')->dropdownList(
-		common\models\Lookup::items('PostStatus')
+		Lookup::items('PostStatus')
 	); ?>
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>

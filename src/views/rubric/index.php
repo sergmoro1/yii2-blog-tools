@@ -2,11 +2,12 @@
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-use common\models\Lookup;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
+
+use sergmoro1\lookup\models\Lookup;
 
 $this->title = \Yii::t('app', 'Rubrics');
 $this->params['breadcrumbs'][] = ['label' => \Yii::t('app', 'Posts'), 'url' => ['post/index']];
