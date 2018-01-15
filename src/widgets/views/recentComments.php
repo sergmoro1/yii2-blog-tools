@@ -4,6 +4,7 @@
  */
 
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 ?>
 
 <p><?php echo $title; ?></p>
@@ -18,5 +19,5 @@ use yii\helpers\Html;
     <?php endforeach; ?>
     </div>
 <?php else: ?>
-    <p><?= \Yii::t('app', 'There are no comments yet.'); ?></p>
+    <p><?= Module::t('core', 'There are no comments yet.'); ?></p>
 <?php endif; ?>

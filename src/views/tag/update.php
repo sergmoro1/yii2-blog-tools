@@ -1,12 +1,12 @@
 <?php
-
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
 /* @var $this yii\web\View */
 /* @var $model models\Tag */
 
-$this->title = \Yii::t('app', 'Update');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => ['index']];
+$this->title = Module::t('core', 'Update');
+$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Events'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

@@ -4,6 +4,7 @@ namespace sergmoro1\blog\widgets;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
 use sergmoro1\blog\models\Rubric;
 
@@ -14,7 +15,7 @@ class RubricTree extends Widget
 
     public function init()
     {
-        $this->title = mb_strtoupper(\Yii::t('app', $this->title), 'UTF-8');
+        $this->title = mb_strtoupper(Module::t('core', $this->title), 'UTF-8');
         parent::init();
     }
 

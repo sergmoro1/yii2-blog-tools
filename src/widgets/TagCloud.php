@@ -6,6 +6,7 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use sergmoro1\blog\components\WebSlug;
+use sergmoro1\blog\Module;
 
 use sergmoro1\blog\models\Tag;
 
@@ -15,7 +16,7 @@ class TagCloud extends Widget
 
     public function init()
     {
-        $this->title = mb_strtoupper(\Yii::t('app', 'Tags'), 'UTF-8');
+        $this->title = mb_strtoupper(Module::t('core', 'Tags'), 'UTF-8');
         parent::init();
     }
     

@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\db\ActiveRecord;
 use sergmoro1\blog\components\RuDate;
+use sergmoro1\blog\Module;
 
 use common\models\Post;
 
@@ -60,7 +61,7 @@ class Comment extends ActiveRecord
 			['reply', 'boolean'],
 			['email', 'email'],
 			['content', 'string', 'max' => 512],
-            ['agree', 'match', 'pattern' => '/^1$/', 'message' => \Yii::t('app', 'Please confirm that you agree to the processing of data sent by you.')],
+            ['agree', 'match', 'pattern' => '/^1$/', 'message' => Module::t('core', 'Please confirm that you agree to the processing of data sent by you.')],
 			// verifyCode needs to be entered correctly
 			['verifyCode', 'captcha', 'skipOnEmpty' => !Yii::$app->user->isGuest],
 		];
@@ -78,16 +79,16 @@ class Comment extends ActiveRecord
 	{
 		return array(
 			'id' => 'Id',
-			'parent_id' => \Yii::t('app', 'Parent'),
-			'model' => \Yii::t('app', 'Model'),
-			'thread' => \Yii::t('app', 'Thread'),
-			'status' => \Yii::t('app', 'Status'),
-			'author' => \Yii::t('app', 'Name'),
-			'location' => \Yii::t('app', 'Location'),
-			'content' => \Yii::t('app', 'Content'),
-			'agree' => \Yii::t('app', 'Consent to the processing of sent data'),
-			'created_at' => \Yii::t('app', 'Created'),
-			'verifyCode' => \Yii::t('app', 'Verification Code'),
+			'parent_id' => Module::t('core', 'Parent'),
+			'model' => Module::t('core', 'Model'),
+			'thread' => Module::t('core', 'Thread'),
+			'status' => Module::t('core', 'Status'),
+			'author' => Module::t('core', 'Name'),
+			'location' => Module::t('core', 'Location'),
+			'content' => Module::t('core', 'Content'),
+			'agree' => Module::t('core', 'Consent to the processing of sent data'),
+			'created_at' => Module::t('core', 'Created'),
+			'verifyCode' => Module::t('core', 'Verification Code'),
 		);
 	}
 
@@ -176,9 +177,9 @@ class Comment extends ActiveRecord
 	{
 		$now = time();
 		if(($hours = floor(($now - $this->created_at) / 3600)) <= 24)
-			return $hours == 1 ? \Yii::t('blog', 'one hour ago') : $hours . \Yii::t('blog', 'hours ago');
+			return $hours == 1 ? Module::t('core', 'one hour ago') : $hours . Module::t('core', 'hours ago');
 		elseif($hpurs <= 48)
-			return \Yii::t('blog', 'yesterday');
+			return Module::t('core', 'yesterday');
 		else
 			return $this->getFullDate('created_at');
 	}

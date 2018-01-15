@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 use sergmoro1\lookup\models\Lookup;
+use sergmoro1\blog\Module;
 
 ?>
 
@@ -43,7 +44,7 @@ use sergmoro1\lookup\models\Lookup;
 		Lookup::items('CommentStatus')
 	) ?>
 
-	<?= Html::submitButton(Yii::t('app', 'Submit'), ['id' => 'submit-btn', 'style' => 'display: none']) ?>
+	<?= Html::submitButton(Module::t('core', 'Submit'), ['id' => 'submit-btn', 'style' => 'display: none']) ?>
 
     <?php ActiveForm::end(); ?>
 

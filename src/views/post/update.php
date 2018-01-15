@@ -3,9 +3,10 @@
 /* @var $model common\models\Post */
 
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
-$this->title = Yii::t('app', 'Update');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
+$this->title = Module::t('core', 'Update');
+$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->getTitle(), 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

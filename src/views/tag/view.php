@@ -7,11 +7,12 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use sergmoro1\blog\Module;
 
 use common\models\Lookup;
 
 $this->params['breadcrumbs'] = [
-	['label' => \Yii::t('app', 'Users'), 'url' => ['user/index']],
+	['label' => Module::t('core', 'Users'), 'url' => ['user/index']],
 	$model->name,
 ];
 ?>
@@ -19,11 +20,11 @@ $this->params['breadcrumbs'] = [
 <div class='row'>
 	<div class='col-sm-12'>
 		<p>
-			<?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-			<?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+			<?= Html::a(Module::t('core', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+			<?= Html::a(Module::t('core', 'Delete'), ['delete', 'id' => $model->id], [
 				'class' => 'btn btn-danger',
 				'data' => [
-					'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+					'confirm' => Module::t('core', 'Are you sure you want to delete this item?'),
 					'method' => 'post',
 				],
 			]) ?>
@@ -31,7 +32,7 @@ $this->params['breadcrumbs'] = [
 	</div>
     <!-- User info -->
 	<div class='col-sm-8'>
-		<h3><?= \Yii::t('app', 'Credentials') ?></h3>
+		<h3><?= \Module::t('core', 'Credentials') ?></h3>
 		<p><b><?= $model->getAttributeLabel('name') ?></b></p>
 		<p><?= $model->name ?></p>
 

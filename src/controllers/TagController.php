@@ -5,6 +5,7 @@ use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use sergmoro1\blog\Module;
 
 use common\models\Post;
 use sergmoro1\blog\models\Tag;
@@ -39,7 +40,7 @@ class TagController extends ModalController
     {
 		$model = $this->findModel($id);
 		if (!\Yii::$app->user->can('update'))
-			return $this->alert(\Yii::t('app', 'Access denied.'));
+			return $this->alert(Module::t('core', 'Access denied.'));
 
 		$this->_tag = $model->name;
 		
@@ -64,7 +65,7 @@ class TagController extends ModalController
     public function actionDelete($id)
     {
 		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		$model = $this->findModel($id);
 
@@ -93,7 +94,7 @@ class TagController extends ModalController
         if (($model = Tag::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(\Yii::t('app', 'The requested model does not exist.'));
+            throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
         }
     }
 }

@@ -6,9 +6,9 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
+use sergmoro1\blog\Module;
 
-
-$this->title = Yii::t('app', 'Tags');
+$this->title = Module::t('core', 'Tags');
 $this->params['breadcrumbs'][] = $this->title;;
 
 echo Modal::widget([
@@ -16,7 +16,7 @@ echo Modal::widget([
 	'toggleButton' => false,
 	'header' => $this->title,
 	'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
-		Html::button('Сохранить', ['class' => 'btn btn-primary', 'onclick' => '$(".tag-form #submit-btn").click()']),
+		Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".tag-form #submit-btn").click()']),
 ]);
 
 ?>

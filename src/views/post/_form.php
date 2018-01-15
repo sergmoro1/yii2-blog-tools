@@ -11,6 +11,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use vova07\imperavi\Widget;
 use sergmoro1\uploader\widgets\Byone;
+use sergmoro1\blog\Module;
 
 use sergmoro1\blog\models\Rubric;
 use sergmoro1\lookup\models\Lookup;
@@ -23,7 +24,7 @@ use sergmoro1\lookup\models\Lookup;
 <div class="col-lg-8">
 
     <div class="form-group">
-        <?= Html::submitButton(\Yii::t('blog', 'Save'), [
+        <?= Html::submitButton(Modules::t('core', 'Save'), [
 			'class' => 'btn btn-success',
 		]) ?>
     </div>
@@ -40,12 +41,12 @@ use sergmoro1\lookup\models\Lookup;
 	
     <?= $form->field($model, 'title')
 		->textInput(['maxlength' => true])
-		->hint(\Yii::t('app', 'Part of the title can be selected by [] as a link of the post, in Russian / English'))
+		->hint(Module::t('core', 'Part of the title can be selected by [] as a link of the post, in Russian / English'))
 	?>
 
     <?= $form->field($model, 'subtitle')
 		->textInput(['maxlength' => true]) 
-		->hint(\Yii::t('app', 'in Russian / English')) 
+		->hint(Module::t('core', 'in Russian / English')) 
 	?>
 
     <?= $form->field($model, 'slug')
@@ -53,7 +54,7 @@ use sergmoro1\lookup\models\Lookup;
 	?>
 
     <?= $form->field($model, 'previous')->dropdownList($model->CanBePrevious(), [
-		'prompt' => \Yii::t('app', 'Select'),
+		'prompt' => Module::t('core', 'Select'),
     ]); ?>
 
 	<?= $form->field($model, 'excerpt')->widget(Widget::className(), [
@@ -121,7 +122,7 @@ use sergmoro1\lookup\models\Lookup;
     <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'rubric')->dropdownList(
-		Rubric::items(\Yii::t('app', 'Root'))
+		Rubric::items(Module::t('core', 'Root'))
 	); ?>
 
 </div>

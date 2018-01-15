@@ -6,11 +6,12 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
+use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 
-$this->title = \Yii::t('app', 'Rubrics');
-$this->params['breadcrumbs'][] = ['label' => \Yii::t('app', 'Posts'), 'url' => ['post/index']];
+$this->title = Module::t('core', 'Rubrics');
+$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['post/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Modal::widget([
@@ -28,7 +29,7 @@ echo Modal::widget([
 <div class='row'>
 <div class='col-sm-8'>
 	<p>
-		<?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . \Yii::t('app', 'Add'), ['create'], [
+		<?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
 			'id' => 'rubric-add',
 			'data-toggle' => 'modal',
 			'data-target' => '#rubric-win',

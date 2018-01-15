@@ -2,8 +2,9 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
-$this->title = Yii::t('app', 'Backend');
+$this->title = Module::t('core', 'Backend');
 $this->params['noTitle'] = true;
 ?>
 <div class="site-index">

@@ -5,22 +5,23 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use sergmoro1\blog\Module;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Post */
 
-$this->title = Yii::t('app', 'View');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
+$this->title = Module::t('core', 'View');
+$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->getTitle();
 ?>
 <div class="post-view">
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+        <?= Html::a(Module::t('core', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Module::t('core', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Module::t('core', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -40,7 +41,7 @@ $this->params['breadcrumbs'][] = $model->getTitle();
 		<?= $model->excludeByLanguage('content'); ?>
 		
 		<?php if(mb_strlen(trim($model->resume), 'UTF-8') > 0 ): ?>
-			<h3><?= \Yii::t('app', 'Resume'); ?></h3>
+			<h3><?= Module::t('core', 'Resume'); ?></h3>
 			<div class='alert alert-success'>
 				<?= $model->excludeByLanguage('resume'); ?>
 			</div>

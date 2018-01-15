@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use sergmoro1\blog\Module;
 
 use common\models\Post;
 use sergmoro1\blog\models\PostSearch;
@@ -38,7 +39,7 @@ class PostController extends Controller
     public function actionIndex()
     {
 		if (!\Yii::$app->user->can('index'))
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		$searchModel = new PostSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->get());
@@ -63,7 +64,7 @@ class PostController extends Controller
 				'model' => $model,
 			]);
 		} else
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
 	public function actionMore($slug, $offset)
@@ -78,7 +79,7 @@ class PostController extends Controller
 			else
 				return 'No more.';
 		} else
-			throw new ForbiddenHttpException(\Yii::t('app', 'Only ajax request suitable.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Only ajax request suitable.'));
 	}
 
     /**
@@ -101,7 +102,7 @@ class PostController extends Controller
 				]);
 			}
 		} else
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -123,7 +124,7 @@ class PostController extends Controller
 				]);
 			}
 		} else
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -144,7 +145,7 @@ class PostController extends Controller
 
 			return $this->redirect(['index']);
 		} else
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -163,7 +164,7 @@ class PostController extends Controller
 			{
 				return $this->_model;
 			} else {
-				throw new NotFoundHttpException(\Yii::t('app', 'The requested model does not exist.'));
+				throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
 			}
 		}
 	}

@@ -28,6 +28,7 @@ use yii\web\Linkable;
 use mrssoft\sitemap\SitemapInterface;
 use sergmoro1\blog\components\RuDate;
 use sergmoro1\blog\components\RuSlug;
+use sergmoro1\blog\Module;
 
 use sergmoro1\blog\models\Tag;
 use sergmoro1\blog\models\Comment;
@@ -72,12 +73,12 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 			[['title', 'excerpt', 'content', 'slug', 'status'], 'required'],
 			[['previous', 'rubric'], 'integer'],
 			['previous', 'default', 'value' => 0],
-			['previous', 'already_selected', 'message' => \Yii::t('app', 'This article is already selected as the previous one.')],
+			['previous', 'already_selected', 'message' => Module::t('core', 'This article is already selected as the previous one.')],
 			['status', 'in', 'range'=>[self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_ARCHIVED]],
 			[['slug', 'title', 'subtitle'], 'string', 'max'=>128],
 			['slug', 'unique'],
-			['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => \Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
-			['tags', 'match', 'pattern' => '/^[\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
+			['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Module::t('core', 'Slug may consists a-z, numbers and minus only.')],
+			['tags', 'match', 'pattern' => '/^[\w\s,]+$/u', 'message' => Module::t('core', 'Tags may consists alphabets, numbers and space only.')],
 			['tags', 'normalizeTags'],
 			['created_at_date', 'date', 'format' => 'dd.MM.yyyy', 'timestampAttribute' => 'created_at'],
 			[['resume', 'created_at', 'updated_at'], 'safe'],
@@ -151,19 +152,19 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 	public function attributeLabels()
 	{
 		return [
-			'author_id' => \Yii::t('app', 'Author'),
-			'previous' => \Yii::t('app', 'Previous post'),
-			'title' => \Yii::t('app', 'Titile'),
-			'subtitle' => \Yii::t('app', 'Sub Title'),
-			'excerpt' => \Yii::t('app', 'Excerpt'),
-			'content' => \Yii::t('app', 'Content'),
-			'resume' => \Yii::t('app', 'Resume'),
-			'tags' => \Yii::t('app', 'Tags'),
-			'rubric' => \Yii::t('app', 'Rubric'),
-			'status' => \Yii::t('app', 'Status'),
-			'created_at' => \Yii::t('app', 'Created'),
-			'created_at_date' => \Yii::t('app', 'Created'),
-			'updated_at' => \Yii::t('app', 'Modified'),
+			'author_id' => Module::t('core', 'Author'),
+			'previous' => Module::t('core', 'Previous post'),
+			'title' => Module::t('core', 'Title'),
+			'subtitle' => Module::t('core', 'Sub Title'),
+			'excerpt' => Module::t('core', 'Excerpt'),
+			'content' => Module::t('core', 'Content'),
+			'resume' => Module::t('core', 'Resume'),
+			'tags' => Module::t('core', 'Tags'),
+			'rubric' => Module::t('core', 'Rubric'),
+			'status' => Module::t('core', 'Status'),
+			'created_at' => Module::t('core', 'Created'),
+			'created_at_date' => Module::t('core', 'Created'),
+			'updated_at' => Module::t('core', 'Modified'),
 		];
 	}
 

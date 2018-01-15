@@ -9,6 +9,7 @@ namespace sergmoro1\blog\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use sergmoro1\blog\Module;
 
 class Tag extends ActiveRecord
 {
@@ -41,9 +42,9 @@ class Tag extends ActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'name' => \Yii::t('blog', 'Name'),
-			'frequency' => \Yii::t('blog', 'Frequency'),
-			'show' => \Yii::t('blog', 'Show'),
+			'name' => Module::t('core', 'Name'),
+			'frequency' => Module::t('core', 'Frequency'),
+			'show' => Module::t('core', 'Show'),
 		);
 	}
 

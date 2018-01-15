@@ -5,17 +5,18 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
+use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 use sergmoro1\blog\models\Rubric;
 
-$this->title = Yii::t('app', 'Posts');
+$this->title = Module::t('core', 'Posts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="post-index">
 	<p>
-		<?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('app', 'Add'), ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], ['class' => 'btn btn-success']) ?>
 	</p>
 
     <?= GridView::widget([

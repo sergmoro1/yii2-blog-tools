@@ -6,6 +6,7 @@ use \Yii;
 use yii\web\Controller;
 use yii\widgets\ActiveForm;
 use yii\web\ForbiddenHttpException;
+use sergmoro1\blog\Module;
 
 /**
  * Controller implements the CRUD actions by Modal way.
@@ -19,7 +20,7 @@ class ModalController extends Controller
     public function actionIndex()
     {
 		if (!Yii::$app->user->can('index', [], false))
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		$searchModel = $this->newSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -38,7 +39,7 @@ class ModalController extends Controller
     public function actionView($id)
     {
 		if (!\Yii::$app->user->can('view'))
-			return $this->alert(\Yii::t('app', 'Access denied.'));
+			return $this->alert(Module::t('core', 'Access denied.'));
 
 		return $this->renderAjax('view', [
 			'model' => $this->findModel($id),
@@ -73,7 +74,7 @@ class ModalController extends Controller
     public function actionCreate()
     {
 		if (!\Yii::$app->user->can('create'))
-			return $this->alert(\Yii::t('app', 'Access denied.'));
+			return $this->alert(Module::t('core', 'Access denied.'));
 
 		$model = $this->newModel();
 		$model = $this->fillin($model, false);
@@ -97,7 +98,7 @@ class ModalController extends Controller
     {
 		$model = $this->findModel($id);
 		if (!\Yii::$app->user->can('update', ['model' => $model]))
-			return $this->alert(\Yii::t('app', 'Access denied.'));
+			return $this->alert(Module::t('core', 'Access denied.'));
 
 		$model = $this->fillin($model);
 		
@@ -119,7 +120,7 @@ class ModalController extends Controller
     public function actionDelete($id)
     {
 		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		$this->findModel($id)->delete();
 

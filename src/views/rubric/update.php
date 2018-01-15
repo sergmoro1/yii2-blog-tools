@@ -3,10 +3,11 @@
 /* @var $model models\Rubric */
 
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
-$this->title = \Yii::t('app', 'Update');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Rubrics'), 'url' => ['index']];
+$this->title = Module::t('core', 'Update');
+$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Rubrics'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

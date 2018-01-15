@@ -6,7 +6,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+use sergmoro1\blog\Module;
 ?>
 
 <div class="tag-form">
@@ -28,10 +28,10 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'show')->dropDownList([0 => 'нет', 1 => 'да'], [
-		'prompt' => \Yii::t('app', 'Select'),
+		'prompt' => Module::t('core', 'Select'),
     ]) ?>
 
-	<?= Html::submitButton('Submit', ['id' => 'submit-btn', 'style' => 'display: none']) ?>
+	<?= Html::submitButton(Module::t('core', 'Submit'), ['id' => 'submit-btn', 'style' => 'display: none']) ?>
 
 <?php ActiveForm::end(); ?>
 

@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use sergmoro1\blog\Module;
 
 use common\models\User;
 use sergmoro1\blog\models\Comment;
@@ -77,7 +78,7 @@ class CommentController extends ModalController
         if (($model = Comment::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(\Yii::t('app', 'The requested model does not exist.'));
+            throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
         }
     }
 }

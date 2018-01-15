@@ -1,9 +1,12 @@
 <?php
 namespace sergmoro1\blog;
 
+use Yii;
+
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'sergmoro1\blog\controllers';
+    public $sourceLanguage = 'en-US';
 
 	public function init()
 	{
@@ -17,10 +20,13 @@ class Module extends \yii\base\Module
 	 */
 	public function registerTranslations()
 	{
-		\Yii::$app->i18n->translations['blog'] = [
+		Yii::$app->i18n->translations['sergmoro1/blog/*'] = [
 			'class' => 'yii\i18n\PhpMessageSource',
-			'sourceLanguage' => 'en-US',
-			'basePath' => '@vendor/sergmoro1/blog-tools/src/messages',
+			'sourceLanguage' => $this->sourceLanguage,
+			'basePath' => '@vendor/sergmoro1/yii2-blog-tools/src/messages',
+	        'fileMap' => [
+                'sergmoro1/blog/core' => 'core.php',
+            ],
 		];
 	}
 
@@ -36,6 +42,6 @@ class Module extends \yii\base\Module
 	 */
 	public static function t($category, $message, $params = [], $language = null)
 	{
-		return \Yii::t($category, $message, $params, $language);
+		return Yii::t('sergmoro1/blog/' . $category, $message, $params, $language);
 	}
 }

@@ -3,8 +3,9 @@
 /* @var $modelmodels\Rubric */
 
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
-$this->title = Yii::t('app', 'Update');
+$this->title = Module::t('core', 'Update');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
 
 if($model->model == 1) // Post

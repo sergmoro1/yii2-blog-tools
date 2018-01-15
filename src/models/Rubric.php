@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\db\ActiveRecord;
 use creocoder\nestedsets\NestedSetsBehavior;
 use sergmoro1\blog\components\RuSlug;
+use sergmoro1\blog\Module;
 
 use \common\models\Post;
 
@@ -55,7 +56,7 @@ class Rubric extends ActiveRecord
 			[['parent_node', 'name', 'slug'], 'required'],
 			[['name', 'slug'], 'string', 'max'=>255],
 			['slug', 'unique'],
-			['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => \Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
+			['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Module::t('core', 'Slug may consists a-z, numbers and minus only.')],
 			[['position', 'show'], 'integer'],
 		];
 	}
@@ -66,13 +67,13 @@ class Rubric extends ActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'name' => \Yii::t('app', 'Name'),
-			'slug' => \Yii::t('app', 'Slug'),
-			'parent_node' => \Yii::t('blog', 'Parent node'),
-			'post_count' => \Yii::t('blog', 'Posts'),
-			'position' =>  \Yii::t('blog', 'Position'),
-			'visible' =>  \Yii::t('blog', 'Visible'),
-			'show' =>  \Yii::t('blog', 'Show'),
+			'name' => Module::t('core', 'Name'),
+			'slug' => Module::t('core', 'Slug'),
+			'parent_node' => Module::t('core', 'Parent node'),
+			'post_count' => Module::t('core', 'Posts'),
+			'position' =>  Module::t('core', 'Position'),
+			'visible' =>  Module::t('core', 'Visible'),
+			'show' =>  Module::t('core', 'Show'),
 		);
 	}
 
@@ -84,7 +85,7 @@ class Rubric extends ActiveRecord
 	public static function items($rootTitle = null)
 	{
 		if(!$rootTitle) 
-			$rootTitle = \Yii::t('blog', 'Root');
+			$rootTitle = Module::t('core', 'Root');
 		$a = [];
 		$a[1] = $rootTitle;
 		foreach(Rubric::find()->where('id>1')->orderBy('lft ASC')->all() as $node)

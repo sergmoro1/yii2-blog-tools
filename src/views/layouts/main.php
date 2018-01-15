@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
@@ -57,9 +58,9 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
 
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-				<li><?= Html::a(\Yii::t('app', 'frontend'), ['/blog/site/frontend']) ?></li>
+				<li><?= Html::a(Yii::t('app', 'frontend'), ['/blog/site/frontend']) ?></li>
 				<?php if(Yii::$app->user->isGuest): ?>
-				<li><?= Html::a(\Yii::t('app', 'Login'), ['/user/site/login']) ?></li>
+				<li><?= Html::a(Yii::t('app', 'Login'), ['/user/site/login']) ?></li>
 				<?php else: ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -73,13 +74,13 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
 					</a>
                     <ul class="dropdown-menu">
 						<?php if(Yii::$app->user->can('gear')): ?>
-						    <li><?= Html::a('<i class="fa fa-gear"></i> ' . \Yii::t('app', 'Gear'), ['/site/gear']) ?></li>
+						    <li><?= Html::a('<i class="fa fa-gear"></i> ' . Yii::t('app', 'Gear'), ['/site/gear']) ?></li>
 						<?php else: ?>
-							<li><?= Html::a('<i class="fa fa-user"></i> ' . \Yii::t('app', 'Profile'), ['/user/user/index']) ?><li>
+							<li><?= Html::a('<i class="fa fa-user"></i> ' . Yii::t('app', 'Profile'), ['/user/user/index']) ?><li>
 						<?php endif; ?>
                         <li class="divider"></li>
                         <li>
-							<li><?= Html::a('<i class="fa fa-fw fa-power-off"></i> ' . \Yii::t('app', 'Logout'), ['/user/site/logout'], ['data-method' => 'post']) ?></li>
+							<li><?= Html::a('<i class="fa fa-fw fa-power-off"></i> ' . Yii::t('app', 'Logout'), ['/user/site/logout'], ['data-method' => 'post']) ?></li>
                         </li>
                     </ul>
                 </li>
@@ -93,8 +94,8 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                 <ul class="nav navbar-nav side-nav">
 
 					<li class='vertical'>
-						<h2><?= \Yii::t('app', 'Blog') ?></h2>
-						<p><?= \Yii::t('app', 'Websites development') ?></p>
+						<h2><?= Yii::t('app', 'Blog') ?></h2>
+						<p><?= Yii::t('app', 'Websites development') ?></p>
 					</li>
 				</ul>
 

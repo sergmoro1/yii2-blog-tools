@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use sergmoro1\blog\Module;
 
 use common\models\Post;
 use common\models\User;
@@ -36,7 +37,7 @@ class RubricController extends Controller
     public function actionIndex()
     {
 		if (!\Yii::$app->user->can('index'))
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied.'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $query = Rubric::find()->where('id>1');
  
@@ -65,7 +66,7 @@ class RubricController extends Controller
     public function actionCreate()
     {
 		if (!\Yii::$app->user->can('create'))
-			return $this->alert(\Yii::t('app', 'Access denied.'));
+			return $this->alert(Module::t('core', 'Access denied.'));
 
         $model = new Rubric();
 
@@ -88,7 +89,7 @@ class RubricController extends Controller
     public function actionUpdate($id)
     {
 		if (!\Yii::$app->user->can('update'))
-			return $this->alert(\Yii::t('app', 'Access denied.'));
+			return $this->alert(Module::t('core', 'Access denied.'));
 
 		$model = $this->findModel($id);
 
@@ -131,7 +132,7 @@ class RubricController extends Controller
     public function actionDelete($id)
     {
 		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(\Yii::t('app', 'Access denied'));
+			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		if($id == 1)
 			Yii::$app->session->setFlash(
@@ -165,7 +166,7 @@ class RubricController extends Controller
         if (($model = Rubric::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(\Yii::t('app', 'The requested model does not exist.'));
+            throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
         }
     }
 

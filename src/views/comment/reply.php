@@ -3,9 +3,10 @@
 /* @var $model models\Comment */
 
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
-$this->title = Yii::t('app', 'Reply');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
+$this->title = Module::t('core', 'Reply');
+$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['index']];
 
 if($comment->model == 1) // Post
 $this->params['breadcrumbs'][] = ['label' => $comment->post->getTitle(), 'url' => ['post/' . $comment->post->slug]];
@@ -22,7 +23,7 @@ $this->params['breadcrumbs'][] = $comment->author;
 	<div class="row">
 		<div class="form-group">
 			<label class="control-label col-sm-4 text-right" for="comment">
-				<?= $comment->author . ' ' . \Yii::t('app', 'wrote') ?>
+				<?= $comment->author . ' ' . Module::t('core', 'wrote') ?>
 			</label>
 			<div class="col-sm-6" id="comment">
 				<div class="well">

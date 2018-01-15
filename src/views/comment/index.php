@@ -11,10 +11,11 @@ p.answer {
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap\Modal;
+use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 
-$this->title = Yii::t('app', 'Comments');
+$this->title = Module::t('core', 'Comments');
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
 
 echo Modal::widget([
@@ -22,8 +23,8 @@ echo Modal::widget([
 	'size' => Modal::SIZE_LARGE,
 	'toggleButton' => false,
 	'header' => $this->title,
-	'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
-		Html::button('Сохранить', ['class' => 'btn btn-primary', 'onclick' => '$(".comment-form #submit-btn").click()']),
+	'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
+		Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".comment-form #submit-btn").click()']),
 ]);
 ?>
 <div class="comment-index">
@@ -45,7 +46,7 @@ echo Modal::widget([
 				}
 			],
             [
-				'header' => 'Title',
+				'header' => Module::t('core', 'Title'),
 				'format' => 'html',
 				'value' => function($data) {
 					return $data->post->getTitleLink();
