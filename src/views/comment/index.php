@@ -52,7 +52,13 @@ echo Modal::widget([
 					return $data->post->getTitleLink();
 				}
 			],
-			'author',
+            [
+				'attribute' => 'author',
+				'format' => 'html',
+				'value' => function($data) {
+					return $data->author . ($data->location ? ' <small>(' . $data->location . ')</small>' : '');
+				}
+			],
 			'email',
             [
 				'attribute' => 'content',

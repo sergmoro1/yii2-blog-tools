@@ -9,11 +9,8 @@ use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\models\User;
 use common\widgets\Alert;
-use sergmoro1\langswitcher\widgets\LangSwitcher;
 
-backend\assets\AppAsset::register($this);
 sergmoro1\blog\assets\SBAdminAsset::register($this);
-
 ?>
 
 <?php $this->beginPage() ?>
@@ -33,7 +30,6 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
 </head>
 
 <body>
-<?= LangSwitcher::widget(); ?>
 
 <?php $this->beginBody() ?>
     <!-- Navigation -->
@@ -53,7 +49,6 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                 <a class="navbar-brand" href="<?= Url::to(['/site/index']) ?>">
 					<?= Yii::$app->name ?>
 				</a>
-				<a class="language-switcher" href="<?= Url::to(['/langswitcher/language/switch']) ?>">rus|eng</a>
             </div>
 
             <!-- Top Menu Items -->

@@ -24,7 +24,7 @@ use sergmoro1\lookup\models\Lookup;
 <div class="col-lg-8">
 
     <div class="form-group">
-        <?= Html::submitButton(Modules::t('core', 'Save'), [
+        <?= Html::submitButton(Module::t('core', 'Save'), [
 			'class' => 'btn btn-success',
 		]) ?>
     </div>
@@ -105,7 +105,7 @@ use sergmoro1\lookup\models\Lookup;
 	]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), [
+        <?= Html::submitButton(Module::t('core', 'Save'), [
 			'class' => 'btn btn-success',
 		]) ?>
     </div>

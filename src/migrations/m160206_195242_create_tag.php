@@ -17,6 +17,7 @@ class m160206_195242_create_tag extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(128)->notNull(),
             'frequency' => $this->integer()->defaultValue(1),
+            'show' => $this->boolean->notNull()->defaultValue(1),
         ], $tableOptions);
     }
 

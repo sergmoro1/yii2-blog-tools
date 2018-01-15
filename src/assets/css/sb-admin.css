@@ -10,7 +10,17 @@ body {
     margin-top: 100px;
     background-color: #222;
 }
-
+.navbar-header .language-switcher {
+	display: inline-block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 20px;
+    color: #999;
+}
+.navbar-header .language-switcher:hover, .navbar-brand .language-switcher:focus {
+    color: #fff;
+    text-decoration: none;
+}
 @media(min-width:768px) {
     body {
         margin-top: 50px;

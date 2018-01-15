@@ -18,16 +18,15 @@ class m160206_175933_create_comment extends Migration
             'model' => $this->integer()->notNull(),
             'parent_id' => $this->integer(),
             'author' => $this->string(128)->notNull(),
+            'location' => $this->string(128)->defaultValue('')->notNull(),
+            'email' => $this->string(128)->notNull(),
             'content' => $this->text(),
             'status' => $this->integer()->notNull(),
-            'location' => $this->string(128)->notNull(),
             'thread' => $this->string(32)->notNull()->defaultValue(time() + rand(1000, 9999)),
             'reply' => $this->boolean()->notNull()->defaultValue(0),
 
             'created_at' => $this->integer()->notNull(),
         ], $tableOptions);
-        $this->createIndex('FK_comment_post', '{{%comment}}', 'post_id');
-        $this->addForeignKey ('FK_comment_post', '{{%comment}}', 'post_id', '{{%post}}', 'id', 'CASCADE');
     }
 
     public function down()

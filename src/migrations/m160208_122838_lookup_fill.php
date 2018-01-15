@@ -22,6 +22,6 @@ class m160208_122838_lookup_fill extends Migration
     {
 		$this->delete('{{%lookup}}', 'type=:type', ['type' => 'PostStatus']);
 		$this->delete('{{%lookup}}', 'type=:type', ['type' => 'CommentStatus']);
-		$this->delete('{{%lookup}}', 'type=:type', ['type' => 'CommentFor']);
+		$this->delete('{{%lookup}}', 'code=1 AND type=:type', ['type' => 'CommentFor']);
     }
 }

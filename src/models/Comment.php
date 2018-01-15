@@ -14,14 +14,16 @@ class Comment extends ActiveRecord
 	/**
 	 * The followings are the available columns in table 'tbl_comment':
 	 * @var integer $id
+	 * @var integer $model
+	 * @var integer $parent_id
+	 * @var string $author
+	 * @var string $location
+	 * @var string $email
 	 * @var string $content
 	 * @var integer $status
-	 * @var integer $created
-	 * @var string $author
-	 * @var string $email
-	 * @var string $url
-	 * @var integer $parent_id
-	 * @var integer $model
+	 * @var integer $created_at
+	 * @var string $thread
+	 * @var boolean $reply
 	 */
 	const STATUS_PENDING = 1;
 	const STATUS_APPROVED = 2;
@@ -53,8 +55,8 @@ class Comment extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return [
-			[['content', 'author'], 'required'],
-			[['author', 'email'], 'string', 'max' => 128],
+			[['content', 'author', 'email'], 'required'],
+			[['author', 'email', 'location'], 'string', 'max' => 128],
 			['thread', 'string', 'max' => 32],
 			['status', 'in', 'range'=>[self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_ARCHIVED]],
 			[['parent_id', 'model'], 'integer'],

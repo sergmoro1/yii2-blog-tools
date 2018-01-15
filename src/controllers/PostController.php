@@ -136,10 +136,9 @@ class PostController extends Controller
     public function actionDelete($id)
     {
 		if (\Yii::$app->user->can('delete')) {
-			$model = $this->loadModel($id);
+			$model = $this->findModel($id);
 			foreach($model->files as $file)
 				$file->delete();
-			\Yii::$app->db->createCommand("DELETE FROM {{%comment}} WHERE model=". Post::COMMENT_FOR ." AND parent_id='{$id}'")->execute();
 
 			$model->delete();
 

@@ -12,9 +12,11 @@ class SBAdminAsset extends AssetBundle
 {
 	public $sourcePath = '@vendor/sergmoro1/yii2-blog-tools/src/assets';
     public $css = [
-        'css/sb-admin.css'
+        'css/sb-admin.css',
+        'css/site.css',
     ];
     public $js = [
+		'js/jquery.compatible.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

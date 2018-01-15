@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $model->getTitle();
     </p>
 
 	<div class='post-preview'>
-		<?php echo $this->render('@frontend/views/post/_view_head', [
+		<?php echo $this->render('_view_head', [
 			'model' => $model, 
 			'read_more' => false, 
 			'backend' => true,
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $model->getTitle();
 			</div>
 		<?php endif; ?>
 		
-		<?php echo $this->render('@frontend/views/post/_view_foot', [
+		<?php echo $this->render('_view_foot', [
 			'model' => $model, 
 			'prev_next' => true, 
 			'read_more' => false, 
