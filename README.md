@@ -44,7 +44,7 @@ return [
     'layoutPath' => '@vendor/sergmoro1/yii2-blog-tools/src/views/layouts',
     ...
     'modules' => [
-		'uploader' => ['class' => 'sergmoro1\uploader\Module'],
+        'uploader' => ['class' => 'sergmoro1\uploader\Module'],
     ],
     'components' => [
         'authManager' => [
@@ -56,20 +56,20 @@ return [
     ...
 </pre>
 
-Set up in <code>common/config/main.php</code> seo module.
+Set up in <code>common/config/main.php</code> blog, user (if installed) and seo module.
 <pre>
 <?php
 return [
     ...
     'bootstrap' => ['blog'],
-	'modules' => [
-		'lookup' => ['class' => 'sergmoro1\lookup\Module'],
-		'blog' => ['class' => 'sergmoro1\blog\Module'],
-		'user' => ['class' => 'sergmoro1\user\Module'],
+    'modules' => [
+        'lookup' => ['class' => 'sergmoro1\lookup\Module'],
+        'blog' => ['class' => 'sergmoro1\blog\Module'],
+        'user' => ['class' => 'sergmoro1\user\Module'],
         'seo' => [
             'class' => 'notgosu\yii2\modules\metaTag\Module',
             'viewPath' => '@backend/views/meta',
         ],
-	],
-	...
+    ],
+    ...
 </pre>
