@@ -16,35 +16,34 @@ Models
 Files & Images
 <ul>
   <li>Upload, resize, sorting by mouse, cropping;</li>
-  <li>Imperavi in Post _form.php with predefined controller;</li>
+  <li>Imperavi redactor with predefined controller - upload, select, delete files & images.</li>
 </ul>
 
 SEO
 <ul>
   <li>Any metatags;</li>
-  <li>Metatag management.</li>
+  <li>Metatags management.</li>
 </ul>
 
 RBAC
 <ul>
   <li>Predefined roles, rules;</li>
-  <li>Predefined controllers with rbac.</li>
+  <li>Predefined controllers with rights verification.</li>
 </ul>
 
 User (if installed)
 <ul>
   <li>Registration with email confirmation;</li>
   <li>Authorization;</li>
-  <li>Users management.</li>
+  <li>Images uploading.</li>
 </ul>
 
 Comment
 <ul>
-  <li>For Post but for any model too;</li>
+  <li>For Post (but for any model);</li>
   <li>Comment management;</li>
   <li>Ability to reply comments.</li>
 </ul>
-
 
 <h2>Installation</h2>
 
@@ -135,6 +134,5 @@ return [
 Enter <code>http://your-app/backend/web</code> and <code>Login</code>.
 
 Name: Admin
-Password: 123456
 
-To enable email confirmation during registration, configure Swift mailer.
+Password: 123456
