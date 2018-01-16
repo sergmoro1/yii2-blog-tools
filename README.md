@@ -114,9 +114,9 @@ return [
 
 Set up in <code>common/config/main.php</code> blog, user (if installed) and seo module.
 <pre>
-<?php
 return [
     ...
+    'language' => 'ru-RU', // 'en-US',
     'bootstrap' => ['blog'],
     'modules' => [
         'lookup' => ['class' => 'sergmoro1\lookup\Module'],
@@ -129,3 +129,12 @@ return [
     ],
     ...
 </pre>
+
+<h3>Start</h3>
+
+Enter <code>http://your-app/backend/web</code> and <code>Login</code>.
+
+Name: Admin
+Password: 123456
+
+To enable email confirmation during registration, configure Swift mailer.

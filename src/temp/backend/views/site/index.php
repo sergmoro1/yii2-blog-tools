@@ -19,7 +19,7 @@ $this->params['noTitle'] = true;
 				Вложенные множества, метки для ускорения поиска. Цепочки постов для связывания статей по смыслу.
 			</p>
 
-			<p><?= Html::a('list &raquo;', ['post/index'], ['class' => 'btn btn-default']) ?>
+			<p><?= Html::a('list &raquo;', ['blog/post/index'], ['class' => 'btn btn-default']) ?>
 		</div>
 	</div>
 	<div class="row">
@@ -35,7 +35,7 @@ $this->params['noTitle'] = true;
 				Зарегистрированные пользователи могут оставлять ответы на комментарии к собственным постам.
 			</p>
 
-			<p><?= Html::a('list &raquo;', ['comment/index'], ['class' => 'btn btn-default']) ?>
+			<p><?= Html::a('list &raquo;', ['blog/comment/index'], ['class' => 'btn btn-default']) ?>
 		</div>
 	</div>
 	<div class="row">
@@ -51,7 +51,7 @@ $this->params['noTitle'] = true;
 				Регистрация с подтверждением по email.
 			</p>
 
-			<p><?= Html::a('list &raquo;', ['user/index'], ['class' => 'btn btn-default']) ?>
+			<p><?= Html::a('list &raquo;', ['user/user/index'], ['class' => 'btn btn-default']) ?>
 		</div>
 	</div>
 
