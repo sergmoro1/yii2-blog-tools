@@ -1,17 +1,19 @@
 <?php
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
+
 use common\models\Post;
 ?>
 
 <?php if(!isset($backend)): ?>
-<a href="<?= $model->url; ?>" title="<?= \Yii::t('app', 'go to') ?>">
+<a href="<?= $model->url; ?>" title="<?= Module::t('core', 'go to') ?>">
 <?php endif; ?>
 
 <h2 class='post-title'>
-	<?= $model->getTitle(); ?>
+	<?= $model->getTitle() ?>
 </h2>
 <h3 class='post-subtitle'>
-	<?= $model->splitByLanguage('subtitle'); ?>
+	<?= $model->subtitle ?>
 </h3>
 
 <?php if(!isset($backend)): ?>

@@ -35,10 +35,10 @@ $this->params['breadcrumbs'][] = $model->getTitle();
 		]); ?>
 
 		<div class="excerpt">
-			<?= $model->excludeByLanguage('excerpt'); ?>
+			<?= $model->excerpt ?>
 		</div>
 
-		<?= $model->excludeByLanguage('content'); ?>
+		<?= $model->content ?>
 		
 		<?php if(mb_strlen(trim($model->resume), 'UTF-8') > 0 ): ?>
 			<h3><?= Module::t('core', 'Resume'); ?></h3>

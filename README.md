@@ -12,6 +12,11 @@ Models
 
 <h2>Installation</h2>
 
+Change <code>composer.json</code> parameter
+<pre>
+    "minimum-stability": "dev",
+</pre>
+
 In app directory:
 
 <pre>
@@ -21,6 +26,9 @@ $ composer require sergmoro1/yii2-user "dev-master"
 </pre>
 
 <h3>Run migrations</h3>
+
+In app directory:
+
 <pre>
 $ php yii migrate --migrationPath=@vendor/notgosu/yii2-meta-tag-module/src/migrations
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-byone-uploader/migrations
@@ -30,9 +38,21 @@ $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-blog-tools/src/migratio
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-user/src/migrations
 </pre>
 
+<h3>Git init</h3>
+
+<pre>
+$ git init
+</pre>
+
 <h3>Copy predefined files to appropriate folders</h3>
 
-Copy files from <code>sergmoro1/yii2-blog-tools/src/temp</code> folders to appropriate folders of your project.
+In app directory:
+
+<pre>
+$ cp ./vendor/sergmoro1/yii2-blog-tools/src/initblog ./
+$ php initblog
+$ chmod -R 777 ./frontend/web/files
+</pre>
 
 <h3>Configs</h3>
 
