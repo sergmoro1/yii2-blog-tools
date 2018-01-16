@@ -24,7 +24,6 @@
         "mrssoft/yii2-sitemap": "*",
         "notgosu/yii2-meta-tag-module": "*",
         "sergmoro1/yii2-lookup" : "*",
-        "sergmoro1/yii2-lang-switcher": "*",
         "sergmoro1/yii2-byone-uploader" : "*"
     },
     "autoload": {

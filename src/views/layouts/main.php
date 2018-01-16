@@ -89,7 +89,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                 <ul class="nav navbar-nav side-nav">
 
 					<li class='vertical'>
-						<h2><?= Yii::t('app', 'Blog') ?></h2>
+						<h2>Vorst.ru</h2>
 						<p><?= Yii::t('app', 'Websites development') ?></p>
 					</li>
 				</ul>
