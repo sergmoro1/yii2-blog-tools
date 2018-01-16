@@ -2,17 +2,53 @@
 
 <h2>Advantages</h2>
 
+Full featured.
+
 Models
 <ul>
   <li>post;</li>
   <li>comment;</li>
   <li>rubric (Nested Set);</li>
-  <li>tag.</li>
+  <li>tag;</li>
+  <li>meta tag.</li>
 </ul>
+
+Files & Images
+<ul>
+  <li>Upload, resize, sorting by mouse, cropping;</li>
+  <li>Imperavi in Post _form.php with predefined controller;</li>
+</ul>
+
+SEO
+<ul>
+  <li>Any metatags;</li>
+  <li>Metatag management.</li>
+</ul>
+
+RBAC
+<ul>
+  <li>Predefined roles, rules;</li>
+  <li>Predefined controllers with rbac.</li>
+</ul>
+
+User (if installed)
+<ul>
+  <li>Registration with email confirmation;</li>
+  <li>Authorization;</li>
+  <li>Users management.</li>
+</ul>
+
+Comment
+<ul>
+  <li>For Post but for any model too;</li>
+  <li>Comment management;</li>
+  <li>Ability to reply comments.</li>
+</ul>
+
 
 <h2>Installation</h2>
 
-Change <code>composer.json</code> parameter
+Change project <code>composer.json</code> parameter
 <pre>
     "minimum-stability": "dev",
 </pre>
@@ -56,7 +92,7 @@ $ chmod -R 777 ./frontend/web/files
 
 <h3>Configs</h3>
 
-Set up in <code>backend/config/main.php</code> default layout, three modules and auth component.
+Set up in <code>backend/config/main.php</code> default layout, uploader module and auth component.
 
 <pre>
 return [
