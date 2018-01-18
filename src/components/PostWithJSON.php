@@ -14,7 +14,7 @@
  *  ];
  * }
  */
-namespace frontend\components;
+namespace sergmoro1\blog\components;
 
 use Yii;
 use yii\base\Behavior;
