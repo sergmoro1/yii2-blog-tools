@@ -21,7 +21,7 @@
         "yiisoft/yii2": "*",
         "creocoder/yii2-nested-sets": "^0.9.0",
         "vova07/yii2-imperavi-widget" : "*",
-        "mrssoft/yii2-sitemap": "dev-master",
+        "mrssoft/yii2-sitemap": "*@dev",
         "notgosu/yii2-meta-tag-module": "dev-master",
         "sergmoro1/yii2-lookup" : "dev-master",
         "sergmoro1/yii2-byone-uploader" : "dev-master"
