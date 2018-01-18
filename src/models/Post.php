@@ -348,13 +348,36 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 	}
 
 	/**
-	 * @param integer the maximum number of posts that should be returned
+	 * @param $limit - integer the maximum number of posts that should be returned
+	 * @param $slug - string rubric slug
+	 * @param $tag - string
 	 * @return array the most recently added posts
 	 */
-	public function getRecentPosts($limit)
+	public function getRecentPosts($limit = 3, $slug = false, $tag = false)
 	{
-		return Post::find()
-			->where('status=' . self::STATUS_PUBLISHED . ' and created_at>' . (time() - 3600 * 24 * 365))
+		$query = Post::find()
+			->where(['status' => self::STATUS_PUBLISHED]);
+
+		// posts from selected rubric and all it's sub rubric
+		if($slug) {
+			if($selectedRubric = Rubric::findOne(['slug' => $slug])) {
+				$a = []; $a[] = $selectedRubric->id;
+				foreach($selectedRubric->children()->all() as $child)
+					$a[] = $child->id;
+				$query->andWhere(['in', 'rubric', $a]); // rubric IN ($a)
+			}
+		}
+		// posts with tag
+		if($tag && ($tag = str_replace('_', ' ', $tag)))
+			$query->andWhere(['like', 'tags', $tag]); // tags LIKE "%$tag%"
+		// posts from only recent posts rubrics
+		if(!$slug && !$tag) {
+			$a = [];
+			foreach(\Yii::$app->params['recent-posts'] as $slug)
+				$a[] = Rubric::findOne(['slug' => $slug])->id;
+			$query->andWhere(['in', 'rubric', $a]); // rubric IN ($a)
+		}
+		return $query
 			->orderBy('created_at DESC')
 			->limit($limit)
 			->all();

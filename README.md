@@ -47,15 +47,10 @@ Comment
 
 <h2>Installation</h2>
 
-Change project <code>composer.json</code> parameter
-<pre>
-    "minimum-stability": "dev",
-</pre>
-
 In app directory:
 
 <pre>
-$ composer require sergmoro1/yii2-blog-tools "dev-master"
+$ composer require --prefer-dist sergmoro1/yii2-blog-tools "dev-master"
 // recomended
 $ composer require sergmoro1/yii2-user "dev-master"
 </pre>
