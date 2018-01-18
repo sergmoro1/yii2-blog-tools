@@ -15,16 +15,15 @@
             "email": "sergmoro1@ya.ru"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
 		"php": ">=5.4.0",
         "yiisoft/yii2": "*",
         "creocoder/yii2-nested-sets": "^0.9.0",
         "vova07/yii2-imperavi-widget" : "*",
-        "mrssoft/yii2-sitemap": "@dev",
-        "notgosu/yii2-meta-tag-module": "@dev",
-        "sergmoro1/yii2-lookup" : "@dev",
-        "sergmoro1/yii2-byone-uploader" : "@dev"
+        "mrssoft/yii2-sitemap": "*@dev",
+        "notgosu/yii2-meta-tag-module": "*@dev",
+        "sergmoro1/yii2-lookup" : "*@dev",
+        "sergmoro1/yii2-byone-uploader" : "*@dev"
     },
     "autoload": {
         "psr-4": {
