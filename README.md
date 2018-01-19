@@ -115,7 +115,7 @@ return [
     ...
 </pre>
 
-Set up in <code>common/config/main.php</code> blog, user (if installed) and seo module.
+Set up in <code>common/config/main.php</code> blog, user (if installed) and seo modules.
 <pre>
 return [
     ...
