@@ -62,7 +62,7 @@ class Comment extends ActiveRecord
 			['content', 'string', 'max' => 512],
             ['agree', 'match', 'pattern' => '/^1$/', 'message' => Module::t('core', 'Please confirm that you agree to the processing of data sent by you.')],
 			// verifyCode needs to be entered correctly
-			['verifyCode', 'captcha', 'skipOnEmpty' => !Yii::$app->user->isGuest],
+			['verifyCode', 'captcha', 'skipOnEmpty' => !\Yii::$app->user->isGuest],
 		];
 	}
 

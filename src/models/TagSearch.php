@@ -30,7 +30,7 @@ class TagSearch extends Tag
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
 			'pagination' => [
-				'pageSize' => Yii::$app->params['recordsPerPage'],
+				'pageSize' => \Yii::$app->params['recordsPerPage'],
 			],
 			'sort' => [
 				'defaultOrder' => [

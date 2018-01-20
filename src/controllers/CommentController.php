@@ -2,14 +2,13 @@
 
 namespace sergmoro1\blog\controllers;
 
-use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use sergmoro1\blog\Module;
 
-use common\models\User;
+use sergmoro1\user\models\User;
 use sergmoro1\blog\models\Comment;
 use sergmoro1\blog\models\CommentSearch;
 
@@ -56,8 +55,8 @@ class CommentController extends ModalController
 		$model->status = Comment::STATUS_APPROVED;
 		$model->reply = 1;
 		
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(Yii::$app->request->referrer);
+		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+			return $this->redirect(\Yii::$app->request->referrer);
 		} else {
 			return $this->renderAjax('reply', [
 				'model' => $model,

@@ -3,6 +3,7 @@ namespace sergmoro1\blog\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use sergmoro1\user\models\User;
 
 class CommentSearch extends Comment
 {
@@ -24,7 +25,7 @@ class CommentSearch extends Comment
     public function search($params)
     {
         $query = Comment::find();
-        if(Yii::$app->user->identity->group == User::GROUP_AUTHOR)
+        if(\Yii::$app->user->identity->group == User::GROUP_AUTHOR)
         {
 			// only comments for User's posts
 			$userPosts= [];
@@ -40,7 +41,7 @@ class CommentSearch extends Comment
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
 			'pagination' => [
-				'pageSize' => Yii::$app->params['recordsPerPage'],
+				'pageSize' => \Yii::$app->params['recordsPerPage'],
 			],
 			'sort' => [
 				'defaultOrder' => [

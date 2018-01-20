@@ -67,12 +67,12 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 			[['title', 'excerpt', 'content', 'status'], 'required'],
 			[['previous', 'rubric'], 'integer'],
 			['previous', 'default', 'value' => 0],
-			['previous', 'already_selected', 'message' => Yii::t('app', 'This article is already selected as the previous one.')],
+			['previous', 'already_selected', 'message' => \Yii::t('app', 'This article is already selected as the previous one.')],
 			['status', 'in', 'range'=>[self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_ARCHIVED]],
 			[['slug', 'title', 'subtitle'], 'string', 'max'=>128],
 			['slug', 'unique'],
-			['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
-			['tags', 'match', 'pattern' => '/^[\w\s,]+$/u', 'message' => Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
+			['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => \Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
+			['tags', 'match', 'pattern' => '/^[\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
 			['tags', 'normalizeTags'],
 			['created_at_date', 'date', 'format' => 'dd.MM.yyyy', 'timestampAttribute' => 'created_at'],
 			[['resume', 'created_at', 'updated_at'], 'safe'],
@@ -106,12 +106,12 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 
 	public function getComments($offset = 0)
 	{
-		$rows = Yii::$app->db
+		$rows = \Yii::$app->db
 			->createCommand('SELECT DISTINCT thread '.
 				'FROM comment '.
 				'WHERE parent_id=:parent_id AND model=:model AND status=:status '.
 				'ORDER BY thread DESC '.
-				'LIMIT '. Yii::$app->params['recordsPerPage'] .' OFFSET '. $offset)
+				'LIMIT '. \Yii::$app->params['recordsPerPage'] .' OFFSET '. $offset)
 			->bindValues([
 				':parent_id' => $this->id,
 				':model' => self::COMMENT_FOR , 
@@ -146,19 +146,19 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 	public function attributeLabels()
 	{
 		return [
-			'author_id' => Yii::t('app', 'Author'),
-			'previous' => Yii::t('app', 'Previous post'),
-			'title' => Yii::t('app', 'Title'),
-			'subtitle' => Yii::t('app', 'Sub Title'),
-			'excerpt' => Yii::t('app', 'Excerpt'),
-			'content' => Yii::t('app', 'Content'),
-			'resume' => Yii::t('app', 'Resume'),
-			'tags' => Yii::t('app', 'Tags'),
-			'rubric' => Yii::t('app', 'Rubric'),
-			'status' => Yii::t('app', 'Status'),
-			'created_at' => Yii::t('app', 'Created'),
-			'created_at_date' => Yii::t('app', 'Created'),
-			'updated_at' => Yii::t('app', 'Modified'),
+			'author_id' => \Yii::t('app', 'Author'),
+			'previous' => \Yii::t('app', 'Previous post'),
+			'title' => \Yii::t('app', 'Title'),
+			'subtitle' => \Yii::t('app', 'Sub Title'),
+			'excerpt' => \Yii::t('app', 'Excerpt'),
+			'content' => \Yii::t('app', 'Content'),
+			'resume' => \Yii::t('app', 'Resume'),
+			'tags' => \Yii::t('app', 'Tags'),
+			'rubric' => \Yii::t('app', 'Rubric'),
+			'status' => \Yii::t('app', 'Status'),
+			'created_at' => \Yii::t('app', 'Created'),
+			'created_at_date' => \Yii::t('app', 'Created'),
+			'updated_at' => \Yii::t('app', 'Modified'),
 		];
 	}
 
@@ -179,7 +179,7 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 		return new ActiveDataProvider([
 			'query' => $query,
 			'pagination' => [
-				'pageSize' => Yii::app()->params['itemsPerPage'],
+				'pageSize' => \Yii::app()->params['itemsPerPage'],
 			],
 			'sort' => [
 				'defaultOrder'=>['status' => SORT_ASC, 'updated_at' => SORT_DESC]
@@ -395,7 +395,7 @@ class Post extends ActiveRecord implements SitemapInterface, Linkable
 		if($comment->thread == '-')
 			$comment->thread = time() . uniqid();
 		else
-			Yii::$app->db->createCommand("UPDATE {{%comment}} SET reply=0 WHERE thread='{$comment->thread}'")->execute();
+			\Yii::$app->db->createCommand("UPDATE {{%comment}} SET reply=0 WHERE thread='{$comment->thread}'")->execute();
 		$comment->reply = 1;
 		return $comment->save();
 	}

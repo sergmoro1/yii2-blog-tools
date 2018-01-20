@@ -4,6 +4,8 @@ namespace sergmoro1\blog\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
+use sergmoro1\user\models\User;
+
 class PostSearch extends Post
 {
     public function rules()
@@ -24,13 +26,13 @@ class PostSearch extends Post
     public function search($params)
     {
         $query = Post::find();
-        if(Yii::$app->user->identity->group == User::GROUP_AUTHOR)
+        if(\Yii::$app->user->identity->group == User::GROUP_AUTHOR)
 			$query->andFilterWhere(['author_id' => Yii::$app->user->id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
 			'pagination' => [
-				'pageSize' => Yii::$app->params['postsPerPage'],
+				'pageSize' => \Yii::$app->params['postsPerPage'],
 			],
 			'sort' => [
 				'defaultOrder' => [
