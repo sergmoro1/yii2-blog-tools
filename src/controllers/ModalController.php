@@ -2,7 +2,6 @@
 
 namespace sergmoro1\blog\controllers;
 
-use \Yii;
 use yii\web\Controller;
 use yii\widgets\ActiveForm;
 use yii\web\ForbiddenHttpException;
@@ -19,11 +18,11 @@ class ModalController extends Controller
      */
     public function actionIndex()
     {
-		if (!Yii::$app->user->can('index', [], false))
+		if (!\Yii::$app->user->can('index', [], false))
 			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		$searchModel = $this->newSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
 		return $this->render('index', [
 			'searchModel' => $searchModel,
@@ -56,7 +55,7 @@ class ModalController extends Controller
 
 		// Ajax validation including form open in a modal window
 		if ($request->isAjax && $model->load($request->post())) {
-			Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+			\Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
 			return ActiveForm::validate($model);
 		}
 	}
@@ -79,7 +78,7 @@ class ModalController extends Controller
 		$model = $this->newModel();
 		$model = $this->fillin($model, false);
 		
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['index']);
 		} else {
 			return $this->renderAjax('create', [
@@ -102,8 +101,8 @@ class ModalController extends Controller
 
 		$model = $this->fillin($model);
 		
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(Yii::$app->request->referrer);
+		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+			return $this->redirect(\Yii::$app->request->referrer);
 		} else {
 			return $this->renderAjax('update', [
 				'model' => $model,
