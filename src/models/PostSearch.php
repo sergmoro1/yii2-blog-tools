@@ -1,12 +1,8 @@
 <?php
 namespace sergmoro1\blog\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use common\models\Post;
-use common\models\User;
 
 class PostSearch extends Post
 {

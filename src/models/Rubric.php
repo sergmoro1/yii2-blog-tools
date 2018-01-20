@@ -8,8 +8,6 @@ use creocoder\nestedsets\NestedSetsBehavior;
 use sergmoro1\blog\components\RuSlug;
 use sergmoro1\blog\Module;
 
-use \common\models\Post;
-
 class Rubric extends ActiveRecord
 {
 	/**

@@ -7,7 +7,6 @@
  */
 namespace sergmoro1\blog\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 use sergmoro1\blog\Module;
 

@@ -19,7 +19,6 @@
  */
 namespace sergmoro1\blog\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -28,10 +27,6 @@ use yii\web\Linkable;
 use mrssoft\sitemap\SitemapInterface;
 use sergmoro1\blog\components\RuDate;
 use sergmoro1\blog\components\RuSlug;
-
-use sergmoro1\blog\models\Tag;
-use sergmoro1\blog\models\Comment;
-use common\models\User;
 
 class Post extends ActiveRecord implements SitemapInterface, Linkable
 {
