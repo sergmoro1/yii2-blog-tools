@@ -45,7 +45,7 @@ return [
     'Please confirm that you agree to the processing of data sent by you.' => 
         'Пожалуйста, подтвердите, что вы согласны на обработку данных, отправленных вами.',
     'Position' => 'Позиция',
-    'Posts' => 'Посты',
+    'Posts' => 'Статьи',
     'Previous post' => 'Предыдущий пост',
     'Profile' => 'Профиль',
     'Reply' => 'Ответ',

@@ -12,7 +12,7 @@ use yii\helpers\Html;
 use sergmoro1\uploader\FilePath;
 use sergmoro1\uploader\models\OneFile;
 
-class Post extends \sergmoro1\blog\models\Post
+class Post extends \sergmoro1\blog\models\BasePost
 {
 	public $sizes = [
 		'original' => ['width' => 2400, 'height' => 1600, 'catalog' => 'original'],

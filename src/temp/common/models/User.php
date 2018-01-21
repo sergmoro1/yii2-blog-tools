@@ -10,7 +10,7 @@ use yii\helpers\Url;
 use sergmoro1\uploader\FilePath;
 use sergmoro1\uploader\models\OneFile;
 
-class User extends \sergmoro1\user\models\User
+class User extends \sergmoro1\user\models\BaseUser
 {
 	public $sizes = [
 		'original' => ['width' => 1600, 'height' => 900, 'catalog' => 'original'],
