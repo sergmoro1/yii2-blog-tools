@@ -8,7 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use sergmoro1\blog\Module;
 
-use sergmoro1\user\models\User;
+use common\models\User;
 use sergmoro1\blog\models\Comment;
 use sergmoro1\blog\models\CommentSearch;
 
@@ -17,7 +17,6 @@ use sergmoro1\blog\models\CommentSearch;
  */
 class CommentController extends ModalController
 {
-	public $modelName = 'Comment';
     public function newModel() { return new Comment(); }
     public function newSearch() { return new CommentSearch(); }
 

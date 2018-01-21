@@ -4,8 +4,6 @@ namespace sergmoro1\blog\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-use sergmoro1\blog\models\Tag;
-
 class TagSearch extends Tag
 {
     public function rules()

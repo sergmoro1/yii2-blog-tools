@@ -8,6 +8,8 @@ use creocoder\nestedsets\NestedSetsBehavior;
 use sergmoro1\blog\components\RuSlug;
 use sergmoro1\blog\Module;
 
+use common\models\Post;
+
 class Rubric extends ActiveRecord
 {
 	/**
@@ -124,7 +126,7 @@ class Rubric extends ActiveRecord
 	public function afterFind()
 	{
 		parent::afterFind();
-	    $this->post_count = \common\models\Post::find()
+	    $this->post_count = Post::find()
 		    ->where(['rubric' => $this->id, 'status' => Post::STATUS_PUBLISHED])
 			->count();
 	}

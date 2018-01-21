@@ -3,7 +3,9 @@ namespace sergmoro1\blog\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use sergmoro1\user\models\User;
+
+use common\models\User;
+use common\models\Post;
 
 class CommentSearch extends Comment
 {

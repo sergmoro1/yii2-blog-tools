@@ -2,7 +2,6 @@
 
 namespace sergmoro1\blog\controllers;
 
-use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,7 +41,7 @@ class PostController extends Controller
 			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		$searchModel = new PostSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->get());
+		$dataProvider = $searchModel->search(\Yii::$app->request->get());
 
 		return $this->render('index', [
 			'dataProvider' => $dataProvider,
@@ -94,7 +93,7 @@ class PostController extends Controller
 			$model = new Post();
 			$model->created_at_date = date('d.m.Y', time());
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			if ($model->load(\Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['view', 'id' => $model->id]);
 			} else {
 				return $this->render('create', [
@@ -116,7 +115,7 @@ class PostController extends Controller
 		$model = $this->findModel($id);
 		if (\Yii::$app->user->can('update', ['post' => $model])) {
 			$model->created_at_date = date('d.m.Y', $model->created_at);
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			if ($model->load(\Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['view', 'id' => $model->id]);
 			} else {
 				return $this->render('update', [

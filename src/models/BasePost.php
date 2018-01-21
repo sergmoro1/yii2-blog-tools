@@ -28,7 +28,7 @@ use mrssoft\sitemap\SitemapInterface;
 use sergmoro1\blog\components\RuDate;
 use sergmoro1\blog\components\RuSlug;
 
-class Post extends ActiveRecord implements SitemapInterface, Linkable
+class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 {
 	const STATUS_DRAFT = 1;
 	const STATUS_PUBLISHED = 2;

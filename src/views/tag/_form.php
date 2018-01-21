@@ -31,7 +31,7 @@ use sergmoro1\blog\Module;
 		'prompt' => Module::t('core', 'Select'),
     ]) ?>
 
-	<?= Html::submitButton(Module::t('core', 'Submit'), ['id' => 'submit-btn', 'style' => 'display: none']) ?>
+	<?= Html::submitButton(Module::t('core', 'Submit'), ['id' => 'submit-btn']) ?>
 
 <?php ActiveForm::end(); ?>
 

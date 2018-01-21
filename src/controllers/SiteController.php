@@ -1,7 +1,6 @@
 <?php
 namespace sergmoro1\blog\controllers;
 
-use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -83,7 +82,7 @@ class SiteController extends Controller
 	{
 		return str_replace('back', 'front', (Url::base()
 			? Url::base()
-			: Yii::$app->request->hostInfo
+			: \Yii::$app->request->hostInfo
 		));
 	}
 }

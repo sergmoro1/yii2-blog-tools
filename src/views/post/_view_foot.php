@@ -3,8 +3,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use sergmoro1\blog\Module;
 
-use common\models\Post;
-
 $read_more = isset($prev) || isset($next) ? false : true;
 ?>
 
@@ -22,7 +20,7 @@ $read_more = isset($prev) || isset($next) ? false : true;
 			<span class="read-more" data-post-id="<?= $model->id ?>"><?= Module::t('core', 'read more') ?></span><br>
 			<?= Html::a(Module::t('core', 'go to'), $model->url) ?>
 		<?php else: ?>
-			<?= frontend\widgets\SocialLikes::widget([
+			<?= sergmoro1\blog\widgets\SocialLikes::widget([
 				'url' => Url::to(['post/' . $model->slug], true), 
 				'title' => $model->getTitle(), 
 				'image' => (count($model->files) > 0 ? $model->getImage('thumb') : false),

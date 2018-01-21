@@ -4,7 +4,6 @@
  */
 namespace sergmoro1\blog\controllers;
 
-use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -98,24 +97,24 @@ class RubricController extends Controller
 		{
 			$model->parent_node = $one->id;
 			// new code
-			$loaded = $model->load(Yii::$app->request->post());
+			$loaded = $model->load(\Yii::$app->request->post());
 			
 			// Ajax validation including form open in a modal window
-			if (Yii::$app->request->isAjax && $loaded) {
-				Yii::$app->response->format = Response::FORMAT_JSON;
+			if (\Yii::$app->request->isAjax && $loaded) {
+				\Yii::$app->response->format = Response::FORMAT_JSON;
 				return ActiveForm::validate($model);
 			}
 
 			// The General case
 			if ($loaded && $model->save()) {
-				return $this->redirect(Yii::$app->request->referrer);
+				return $this->redirect(\Yii::$app->request->referrer);
 			} else {
 				return $this->renderAjax('update', [
 					'model' => $model,
 				]);
 			}
 		} else {
-			Yii::$app->session->setFlash(
+			\Yii::$app->session->setFlash(
 				'warning',
 				\Yii::t('blog', 'Node has not parent.')
 			);
@@ -135,7 +134,7 @@ class RubricController extends Controller
 			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
 		if($id == 1)
-			Yii::$app->session->setFlash(
+			\Yii::$app->session->setFlash(
 				'warning',
 				\Yii::t('blog', 'Node can not be deleted.')
 			);

@@ -1,7 +1,6 @@
 <?php
 namespace sergmoro1\blog\controllers;
 
-use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,7 +13,6 @@ use sergmoro1\blog\models\TagSearch;
 class TagController extends ModalController
 {
 	public $_tag; // old tag
-	public $modelName = 'Tag';
     public function newModel() { return new Tag(); }
     public function newSearch() { return new TagSearch(); }
 
@@ -44,11 +42,11 @@ class TagController extends ModalController
 
 		$this->_tag = $model->name;
 		
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
 			// replace all tags in all posts
 			\Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, '{$this->_tag}', '{$model->name}') WHERE tags LIKE '%{$this->_tag}%'")
 				->execute();
-			return $this->redirect(Yii::$app->request->referrer);
+			return $this->redirect(\Yii::$app->request->referrer);
 		} else {
 			return $this->renderAjax('update', [
 				'model' => $model,

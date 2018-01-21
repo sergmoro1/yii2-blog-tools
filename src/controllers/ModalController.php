@@ -55,7 +55,7 @@ class ModalController extends Controller
 
 		// Ajax validation including form open in a modal window
 		if ($request->isAjax && $model->load($request->post())) {
-			\Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+			\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			return ActiveForm::validate($model);
 		}
 	}

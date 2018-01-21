@@ -6,6 +6,8 @@ use yii\db\ActiveRecord;
 use sergmoro1\blog\components\RuDate;
 use sergmoro1\blog\Module;
 
+use common\models\Post;
+
 class Comment extends ActiveRecord
 {
 	/**
