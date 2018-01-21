@@ -337,7 +337,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 	 */
 	public function getPublishedPostCount()
 	{
-		return Post::find()
+		return BasePost::find()
 			->where(['status' => self::STATUS_PUBLISHED])
 			->count();
 	}
@@ -350,7 +350,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 	 */
 	public function getRecentPosts($limit = 3, $slug = false, $tag = false)
 	{
-		$query = Post::find()
+		$query = BasePost::find()
 			->where(['status' => self::STATUS_PUBLISHED]);
 
 		// posts from selected rubric and all it's sub rubric
