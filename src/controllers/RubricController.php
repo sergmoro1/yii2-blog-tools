@@ -69,7 +69,7 @@ class RubricController extends Controller
 
         $model = new Rubric();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(\Yii::$app->request->post())) {
 			if($model->prependTo($this->findModel($model->parent_node)))
 				return $this->redirect(['index']);
         } else {
