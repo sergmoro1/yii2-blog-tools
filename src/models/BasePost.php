@@ -350,7 +350,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 	 */
 	public function getRecentPosts($limit = 3, $slug = false, $tag = false)
 	{
-		$query = BasePost::find()
+		$query = self::find()
 			->where(['status' => self::STATUS_PUBLISHED]);
 
 		// posts from selected rubric and all it's sub rubric
