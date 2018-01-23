@@ -28,6 +28,8 @@ use mrssoft\sitemap\SitemapInterface;
 use sergmoro1\blog\components\RuDate;
 use sergmoro1\blog\components\RuSlug;
 
+use common\models\User;
+
 class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 {
 	const STATUS_DRAFT = 1;
