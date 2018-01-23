@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $model->getTitle();
 		<?php if(mb_strlen(trim($model->resume), 'UTF-8') > 0 ): ?>
 			<h3><?= Module::t('core', 'Resume'); ?></h3>
 			<div class='alert alert-success'>
-				<?= $model->excludeByLanguage('resume'); ?>
+				<?= $model->resume ?>
 			</div>
 		<?php endif; ?>
 		
