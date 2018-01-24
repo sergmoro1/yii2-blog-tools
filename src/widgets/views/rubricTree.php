@@ -15,10 +15,10 @@ use sergmoro1\blog\components\WebSlug;
     <div class="rubric-tree">
         <?php 
             if($rubric->id > 1)
-                echo Html::a($rubric->getPrettyName(), ['post/rubric/' . WebSlug::getWebname($rubric->name)]) . 
+                echo Html::a($rubric->getPrettyName(), ['post/index', 'rubric' => WebSlug::getWebname($rubric->name)]) . 
                     ($rubric->post_count ? ' <span class="badge">' . $rubric->post_count . '</span>' : ''); 
             elseif($rubric->post_count > 0)
-                echo Html::a($rubric->name, ['post/index', 'rubric'=>1]) . ' <span class="badge">' . $rubric->post_count . '</span>'; 
+                echo Html::a($rubric->name, ['post/index', 'rubric' => 1]) . ' <span class="badge">' . $rubric->post_count . '</span>'; 
         ?>
     </div>
     <?php endforeach; ?>

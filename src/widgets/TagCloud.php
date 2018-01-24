@@ -3,6 +3,7 @@ namespace sergmoro1\blog\widgets;
 
 use yii\helpers\Html;
 use yii\base\Widget;
+use sergmoro1\blog\components\WebSlug;
 use sergmoro1\blog\models\Tag;
 
 use common\models\Post;
@@ -29,7 +30,7 @@ class TagCloud extends Widget
 			{
 				$this->items[] = Html::a(
 					mb_convert_case(Html::encode($tag), MB_CASE_TITLE, 'UTF-8'), 
-					['post/tag/' . str_replace(' ', '-', $tag)], 
+					['post/index', 'tag' => WebSlug::getWebname($tag)], 
 					$a
 				);
 			}
