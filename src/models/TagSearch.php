@@ -27,24 +27,24 @@ class TagSearch extends Tag
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			'pagination' => [
-				'pageSize' => \Yii::$app->params['recordsPerPage'],
-			],
-			'sort' => [
-				'defaultOrder' => [
-					'name' => SORT_ASC,
-				]
-			],
+            'pagination' => [
+                'pageSize' => \Yii::$app->params['recordsPerPage'],
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'name' => SORT_ASC,
+                ]
+            ],
         ]);
 
         // load the search form data and validate
         if (!($this->load($params) && $this->validate())) {
-			return $dataProvider;
+            return $dataProvider;
         }
         
         // adjust the query by adding the filters
         $query->andFilterWhere(['id' => $this->id])
-			->andFilterWhere(['name' => $this->name]);
+            ->andFilterWhere(['name' => $this->name]);
 
         return $dataProvider;
     }

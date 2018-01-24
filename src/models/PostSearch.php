@@ -28,36 +28,36 @@ class PostSearch extends Post
     {
         $query = Post::find();
         if(\Yii::$app->user->identity->group == User::GROUP_AUTHOR)
-			$query->andFilterWhere(['author_id' => Yii::$app->user->id]);
+            $query->andFilterWhere(['author_id' => Yii::$app->user->id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			'pagination' => [
-				'pageSize' => \Yii::$app->params['postsPerPage'],
-			],
-			'sort' => [
-				'defaultOrder' => [
-					'status' => SORT_ASC, 
-					'created_at' => SORT_DESC,
-				]
-			],
+            'pagination' => [
+                'pageSize' => \Yii::$app->params['postsPerPage'],
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'status' => SORT_ASC, 
+                    'created_at' => SORT_DESC,
+                ]
+            ],
         ]);
 
         // load the search form data and validate
         if (!($this->load($params) && $this->validate())) {
-			if(isset($_GET['tag'])) {
-				$this->tags = $_GET['tag'];
-			} else
-				return $dataProvider;
+            if(isset($_GET['tag'])) {
+                $this->tags = $_GET['tag'];
+            } else
+                return $dataProvider;
         }
         
         // adjust the query by adding the filters
         $query->andFilterWhere(['id' => $this->id])
-			->andFilterWhere(['like', 'slug', $this->slug])
-			->andFilterWhere(['like', 'title', $this->title])
-			->andFilterWhere(['like', 'tags', $this->tags])
-			->andFilterWhere(['rubric' => $this->rubric])
-			->andFilterWhere(['status' => $this->status]);
+            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'tags', $this->tags])
+            ->andFilterWhere(['rubric' => $this->rubric])
+            ->andFilterWhere(['status' => $this->status]);
 
         return $dataProvider;
     }

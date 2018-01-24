@@ -20,8 +20,8 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="<?= Url::to('@web/favicon.ico') ?>" type="image/x-icon">
     
-	<!-- Custom Fonts -->
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode(\Yii::$app->name . ' - ' . $this->title) ?></title>
@@ -46,72 +46,72 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/site/index']) ?>">
-					<?= Yii::$app->name ?>
-				</a>
+                    <?= Yii::$app->name ?>
+                </a>
             </div>
 
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-				<li><?= Html::a(Yii::t('app', 'frontend'), ['/blog/site/frontend']) ?></li>
-				<?php if(Yii::$app->user->isGuest): ?>
-				<li><?= Html::a(Yii::t('app', 'Login'), ['/user/site/login']) ?></li>
-				<?php else: ?>
+                <li><?= Html::a(Yii::t('app', 'frontend'), ['/blog/site/frontend']) ?></li>
+                <?php if(Yii::$app->user->isGuest): ?>
+                <li><?= Html::a(Yii::t('app', 'Login'), ['/user/site/login']) ?></li>
+                <?php else: ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<?php if($image = Yii::$app->user->identity->getImage('thumb')): ?>
-							<img class="img-circle avatar" src="<?= $image ?>">
-						<?php else: ?>
-							<i class="fa fa-user"></i>
-						<?php endif; ?>
-						<?= Yii::$app->user->identity->name ?>
-						<b class="caret"></b>
-					</a>
+                        <?php if($image = Yii::$app->user->identity->getImage('thumb')): ?>
+                            <img class="img-circle avatar" src="<?= $image ?>">
+                        <?php else: ?>
+                            <i class="fa fa-user"></i>
+                        <?php endif; ?>
+                        <?= Yii::$app->user->identity->name ?>
+                        <b class="caret"></b>
+                    </a>
                     <ul class="dropdown-menu">
-						<?php if(Yii::$app->user->can('gear')): ?>
-						    <li><?= Html::a('<i class="fa fa-gear"></i> ' . Yii::t('app', 'Gear'), ['/site/gear']) ?></li>
-						<?php else: ?>
-							<li><?= Html::a('<i class="fa fa-user"></i> ' . Yii::t('app', 'Profile'), ['/user/user/index']) ?><li>
-						<?php endif; ?>
+                        <?php if(Yii::$app->user->can('gear')): ?>
+                            <li><?= Html::a('<i class="fa fa-gear"></i> ' . Yii::t('app', 'Gear'), ['/site/gear']) ?></li>
+                        <?php else: ?>
+                            <li><?= Html::a('<i class="fa fa-user"></i> ' . Yii::t('app', 'Profile'), ['/user/user/index']) ?><li>
+                        <?php endif; ?>
                         <li class="divider"></li>
                         <li>
-							<li><?= Html::a('<i class="fa fa-fw fa-power-off"></i> ' . Yii::t('app', 'Logout'), ['/user/site/logout'], ['data-method' => 'post']) ?></li>
+                            <li><?= Html::a('<i class="fa fa-fw fa-power-off"></i> ' . Yii::t('app', 'Logout'), ['/user/site/logout'], ['data-method' => 'post']) ?></li>
                         </li>
                     </ul>
                 </li>
-				<?php endif; ?>
-			</ul>
+                <?php endif; ?>
+            </ul>
 
             <!-- Sidebar Menu Items - these collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-				<?php if(Yii::$app->user->isGuest): ?>
+                <?php if(Yii::$app->user->isGuest): ?>
                 <ul class="nav navbar-nav side-nav">
 
-					<li class='vertical'>
-						<h2>Vorst.ru</h2>
-						<p><?= Yii::t('app', 'Websites development') ?></p>
-					</li>
-				</ul>
+                    <li class='vertical'>
+                        <h2>Vorst.ru</h2>
+                        <p><?= Yii::t('app', 'Websites development') ?></p>
+                    </li>
+                </ul>
 
-				<?php else: ?>
+                <?php else: ?>
 
-					<?= sergmoro1\blog\widgets\Menu::widget(['items' => \Yii::$app->params['sidebar']]) ?>
+                    <?= sergmoro1\blog\widgets\Menu::widget(['items' => \Yii::$app->params['sidebar']]) ?>
 
-				<?php endif; ?>
+                <?php endif; ?>
 
 
-			</div>
+            </div>
 
         </nav> <!-- /.navbar-collapse -->
 
         <div id="page-wrapper">
 
             <div class="container-fluid">
-				
-				<h3><?= $this->title ?></h3>
-				
-				<?= Alert::widget() ?>
-				<?= $content ?>
+                
+                <h3><?= $this->title ?></h3>
+                
+                <?= Alert::widget() ?>
+                <?= $content ?>
 
             </div> <!-- /.container-fluid -->
 

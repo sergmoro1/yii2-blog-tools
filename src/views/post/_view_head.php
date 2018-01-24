@@ -10,10 +10,10 @@ use common\models\Post;
 <?php endif; ?>
 
 <h2 class='post-title'>
-	<?= $model->getTitle() ?>
+    <?= $model->getTitle() ?>
 </h2>
 <h3 class='post-subtitle'>
-	<?= $model->subtitle ?>
+    <?= $model->subtitle ?>
 </h3>
 
 <?php if(!isset($backend)): ?>
@@ -21,10 +21,10 @@ use common\models\Post;
 <?php endif; ?>
 
 <div class='post-meta'>
-	<i class="fa fa-calendar"></i> <?= $model->getFullDate('created_at'); ?>
-	<?php if($read_more && $thumb = $model->getImage('thumb')): ?>
-		<a href="<?= $model->url ?>">
-			<img src="<?= $thumb ?>" alt="<?= $model->getCurrentDescription(); ?>">
-		</a>
-	<?php endif; ?>
+    <i class="fa fa-calendar"></i> <?= $model->getFullDate('created_at'); ?>
+    <?php if($read_more && $thumb = $model->getImage('thumb')): ?>
+        <a href="<?= $model->url ?>">
+            <img src="<?= $thumb ?>" alt="<?= $model->getCurrentDescription(); ?>">
+        </a>
+    <?php endif; ?>
 </div>

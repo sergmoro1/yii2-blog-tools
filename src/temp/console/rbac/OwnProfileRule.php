@@ -18,9 +18,9 @@ class OwnProfileRule extends Rule
      */
     public function execute($user_id, $item, $params)
     {
-		// model = user
-		return isset($params['model']) && !(strpos(get_class($params['model']), 'User') === false)
-			? $params['model']->id == $user_id
-			: false;
+        // model = user
+        return isset($params['model']) && !(strpos(get_class($params['model']), 'User') === false)
+            ? $params['model']->id == $user_id
+            : false;
     }
 }

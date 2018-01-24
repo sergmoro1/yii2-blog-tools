@@ -10,225 +10,225 @@ use common\models\Post;
 
 class Comment extends ActiveRecord
 {
-	/**
-	 * The followings are the available columns in table 'tbl_comment':
-	 * @var integer $id
-	 * @var integer $model
-	 * @var integer $parent_id
-	 * @var string $author
-	 * @var string $location
-	 * @var string $email
-	 * @var string $content
-	 * @var integer $status
-	 * @var integer $created_at
-	 * @var string $thread
-	 * @var boolean $reply
-	 */
-	const STATUS_PENDING = 1;
-	const STATUS_APPROVED = 2;
-	const STATUS_ARCHIVED = 3;
+    /**
+     * The followings are the available columns in table 'tbl_comment':
+     * @var integer $id
+     * @var integer $model
+     * @var integer $parent_id
+     * @var string $author
+     * @var string $location
+     * @var string $email
+     * @var string $content
+     * @var integer $status
+     * @var integer $created_at
+     * @var string $thread
+     * @var boolean $reply
+     */
+    const STATUS_PENDING = 1;
+    const STATUS_APPROVED = 2;
+    const STATUS_ARCHIVED = 3;
 
-	public $agree;
-	public $verifyCode;
+    public $agree;
+    public $verifyCode;
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public static function tableName()
-	{
-		return '{{%comment}}';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public static function tableName()
+    {
+        return '{{%comment}}';
+    }
 
-	public function behaviors()
-	{
-		return [
-			'RuDate' => ['class' => RuDate::className()],
-		];
-	}
+    public function behaviors()
+    {
+        return [
+            'RuDate' => ['class' => RuDate::className()],
+        ];
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return [
-			[['content', 'author', 'email'], 'required'],
-			[['author', 'email', 'location'], 'string', 'max' => 128],
-			['thread', 'string', 'max' => 32],
-			['status', 'in', 'range'=>[self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_ARCHIVED]],
-			[['parent_id', 'model'], 'integer'],
-			['reply', 'boolean'],
-			['email', 'email'],
-			['content', 'string', 'max' => 512],
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return [
+            [['content', 'author', 'email'], 'required'],
+            [['author', 'email', 'location'], 'string', 'max' => 128],
+            ['thread', 'string', 'max' => 32],
+            ['status', 'in', 'range'=>[self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_ARCHIVED]],
+            [['parent_id', 'model'], 'integer'],
+            ['reply', 'boolean'],
+            ['email', 'email'],
+            ['content', 'string', 'max' => 512],
             ['agree', 'match', 'pattern' => '/^1$/', 'message' => Module::t('core', 'Please confirm that you agree to the processing of data sent by you.')],
-			// verifyCode needs to be entered correctly
-			['verifyCode', 'captcha', 'skipOnEmpty' => !\Yii::$app->user->isGuest],
-		];
-	}
+            // verifyCode needs to be entered correctly
+            ['verifyCode', 'captcha', 'skipOnEmpty' => !\Yii::$app->user->isGuest],
+        ];
+    }
 
-	public function getPost()
-	{
-		return $this->hasOne(Post::className(), ['id' => 'parent_id']);
-	}
+    public function getPost()
+    {
+        return $this->hasOne(Post::className(), ['id' => 'parent_id']);
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'Id',
-			'parent_id' => Module::t('core', 'Parent'),
-			'model' => Module::t('core', 'Model'),
-			'thread' => Module::t('core', 'Thread'),
-			'status' => Module::t('core', 'Status'),
-			'author' => Module::t('core', 'Name'),
-			'location' => Module::t('core', 'Location'),
-			'content' => Module::t('core', 'Content'),
-			'agree' => Module::t('core', 'Consent to the processing of sent data'),
-			'created_at' => Module::t('core', 'Created'),
-			'verifyCode' => Module::t('core', 'Verification Code'),
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'Id',
+            'parent_id' => Module::t('core', 'Parent'),
+            'model' => Module::t('core', 'Model'),
+            'thread' => Module::t('core', 'Thread'),
+            'status' => Module::t('core', 'Status'),
+            'author' => Module::t('core', 'Name'),
+            'location' => Module::t('core', 'Location'),
+            'content' => Module::t('core', 'Content'),
+            'agree' => Module::t('core', 'Consent to the processing of sent data'),
+            'created_at' => Module::t('core', 'Created'),
+            'verifyCode' => Module::t('core', 'Verification Code'),
+        );
+    }
 
-	/**
-	 * Approves a comment.
-	 */
-	public function approve()
-	{
-		static::save(['status' => Comment::STATUS_APPROVED]);
-	}
+    /**
+     * Approves a comment.
+     */
+    public function approve()
+    {
+        static::save(['status' => Comment::STATUS_APPROVED]);
+    }
 
-	/**
-	 * @param Post the post that this comment belongs to. If null, the method
-	 * will query for the post.
-	 * @return string the permalink URL for this comment
-	 */
-	public function getUrl($model = null)
-	{
-		if($model === null)
-			$model = $this->model == Post::COMMENT_FOR 
-				? $this->post
-				: false;
-		return $model ? $model->url . '#c' . $this->id : '';
-	}
+    /**
+     * @param Post the post that this comment belongs to. If null, the method
+     * will query for the post.
+     * @return string the permalink URL for this comment
+     */
+    public function getUrl($model = null)
+    {
+        if($model === null)
+            $model = $this->model == Post::COMMENT_FOR 
+                ? $this->post
+                : false;
+        return $model ? $model->url . '#c' . $this->id : '';
+    }
 
-	public function getShortContent($max = 10)
-	{
-		$words = explode(' ', $this->content);
-		$out = '';
-		for($i=0; $i < count($words) && $i < $max; $i++)
-			$out .= $words[$i] . ' ';
-		return rtrim(trim($out), '.') . (count($words) < $max ? '' : '...');
-	}
+    public function getShortContent($max = 10)
+    {
+        $words = explode(' ', $this->content);
+        $out = '';
+        for($i=0; $i < count($words) && $i < $max; $i++)
+            $out .= $words[$i] . ' ';
+        return rtrim(trim($out), '.') . (count($words) < $max ? '' : '...');
+    }
 
-	/**
-	 * @return string the hyperlink display for the current comment's author
-	 */
-	public function getAuthorLink()
-	{
-		if(!empty($this->url))
-			return Html::a(Html::encode($this->author), $this->url);
-		else
-			return Html::encode($this->author);
-	}
+    /**
+     * @return string the hyperlink display for the current comment's author
+     */
+    public function getAuthorLink()
+    {
+        if(!empty($this->url))
+            return Html::a(Html::encode($this->author), $this->url);
+        else
+            return Html::encode($this->author);
+    }
 
-	/**
-	 * @return integer the number of comments that are pending approval
-	 */
-	public function getPendingCommentCount()
-	{
-		return Comment::find()
-			->where(['status' => self::STATUS_PENDING])
-			->count();
-	}
+    /**
+     * @return integer the number of comments that are pending approval
+     */
+    public function getPendingCommentCount()
+    {
+        return Comment::find()
+            ->where(['status' => self::STATUS_PENDING])
+            ->count();
+    }
 
-	/**
-	 * @param integer the maximum number of comments that should be returned
-	 * @return array the most recently added comments
-	 */
-	public function findRecentComments($limit = 5)
-	{
-		return Comment::find()
-			->where(['status' => self::STATUS_APPROVED])
-			->orderBy('created_at DESC')
-			->limit($limit)
-			->all();
-	}
+    /**
+     * @param integer the maximum number of comments that should be returned
+     * @return array the most recently added comments
+     */
+    public function findRecentComments($limit = 5)
+    {
+        return Comment::find()
+            ->where(['status' => self::STATUS_APPROVED])
+            ->orderBy('created_at DESC')
+            ->limit($limit)
+            ->all();
+    }
 
-	/**
-	 * @param integer $user_id
-	 * @return array of IDs all user's posts
-	 */
-	public function getUserPosts($user_id)
-	{
-		$a = [];
-		foreach(Post::find()
-			->select(['id'])
-			->where(['author_id' => $user_id])
-			->all() as $post)
-			
-			$a[] = $post->id;
-		return $a;
-	}
+    /**
+     * @param integer $user_id
+     * @return array of IDs all user's posts
+     */
+    public function getUserPosts($user_id)
+    {
+        $a = [];
+        foreach(Post::find()
+            ->select(['id'])
+            ->where(['author_id' => $user_id])
+            ->all() as $post)
+            
+            $a[] = $post->id;
+        return $a;
+    }
 
-	public function getDate()
-	{
-		$now = time();
-		if(($hours = floor(($now - $this->created_at) / 3600)) <= 24)
-			return $hours == 1 ? Module::t('core', 'one hour ago') : $hours . Module::t('core', 'hours ago');
-		elseif($hpurs <= 48)
-			return Module::t('core', 'yesterday');
-		else
-			return $this->getFullDate('created_at');
-	}
+    public function getDate()
+    {
+        $now = time();
+        if(($hours = floor(($now - $this->created_at) / 3600)) <= 24)
+            return $hours == 1 ? Module::t('core', 'one hour ago') : $hours . Module::t('core', 'hours ago');
+        elseif($hpurs <= 48)
+            return Module::t('core', 'yesterday');
+        else
+            return $this->getFullDate('created_at');
+    }
 
-	/**
-	 * This is invoked before the record is saved.
-	 * @return boolean whether the record should be saved.
-	 */
-	public function beforeSave($insert)
-	{
-		if(parent::beforeSave($insert))
-		{
-			if($insert)
-				$this->created_at = time();
-			return true;
-		}
-		else
-			return false;
-	}
-	
-	public static function getTestimonials($limit = 5)
-	{
-		if($post = Post::findOne(['slug' => 'testimonial']))
-		{
-			return Comment::find()
-				->where([
-					'model' => Post::COMMENT_FOR, 
-					'parent_id' => $post->id,
-				])
-				->orderBy('created_at DESC')
-				->limit($limit)
-				->all();
-		} else
-			return null;
-	}
+    /**
+     * This is invoked before the record is saved.
+     * @return boolean whether the record should be saved.
+     */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert))
+        {
+            if($insert)
+                $this->created_at = time();
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    public static function getTestimonials($limit = 5)
+    {
+        if($post = Post::findOne(['slug' => 'testimonial']))
+        {
+            return Comment::find()
+                ->where([
+                    'model' => Post::COMMENT_FOR, 
+                    'parent_id' => $post->id,
+                ])
+                ->orderBy('created_at DESC')
+                ->limit($limit)
+                ->all();
+        } else
+            return null;
+    }
 
-	public function getPartContent($limit = 500)
-	{
-		$out = '';
-		$words = explode(' ', $this->content);
-		foreach($words as $word) {
-			if(mb_strlen($out, 'UTF-8') <= $limit)
-				$out .= $word . ' ';
-			else {
-				$out .= ' ...';
-				break;
-			}
-		}
-		return $out;
-	}
+    public function getPartContent($limit = 500)
+    {
+        $out = '';
+        $words = explode(' ', $this->content);
+        foreach($words as $word) {
+            if(mb_strlen($out, 'UTF-8') <= $limit)
+                $out .= $word . ' ';
+            else {
+                $out .= ' ...';
+                break;
+            }
+        }
+        return $out;
+    }
 }

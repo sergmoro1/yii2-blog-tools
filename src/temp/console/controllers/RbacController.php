@@ -39,7 +39,7 @@ class RbacController extends Controller
         $auth->add($createPost);
         $auth->add($changePostStatus);
         
-		$auth->addChild($createPost, $create);
+        $auth->addChild($createPost, $create);
 
         // Fund
         $viewFund = $auth->createPermission('viewFund');
@@ -49,11 +49,11 @@ class RbacController extends Controller
         $postAuthor = new PostAuthorRule();
         $auth->add($postAuthor);
 
-		$updateOwnPost = $auth->createPermission('updateOwnPost');
-		$updateOwnPost->ruleName = $postAuthor->name;
-		$auth->add($updateOwnPost);
+        $updateOwnPost = $auth->createPermission('updateOwnPost');
+        $updateOwnPost->ruleName = $postAuthor->name;
+        $auth->add($updateOwnPost);
 
-		$auth->addChild($updateOwnPost, $update);
+        $auth->addChild($updateOwnPost, $update);
         
         // Comment
         $replyComment = $auth->createPermission('replyComment');
@@ -64,21 +64,21 @@ class RbacController extends Controller
         $ownComment = new OwnCommentRule();
         $auth->add($ownComment);
 
-		$replyOwnComment = $auth->createPermission('replyOwnComment');
-		$replyOwnComment->ruleName = $ownComment->name;
-		$auth->add($replyOwnComment);
+        $replyOwnComment = $auth->createPermission('replyOwnComment');
+        $replyOwnComment->ruleName = $ownComment->name;
+        $auth->add($replyOwnComment);
 
-		$auth->addChild($replyOwnComment, $replyComment);
+        $auth->addChild($replyOwnComment, $replyComment);
 
         // Rule - Own Answers For Comments
         $ownAnswer = new OwnAnswerRule();
         $auth->add($ownAnswer);
 
-		$updateOwnAnswer = $auth->createPermission('updateOwnAnswer');
-		$updateOwnAnswer->ruleName = $ownAnswer->name;
-		$auth->add($updateOwnAnswer);
+        $updateOwnAnswer = $auth->createPermission('updateOwnAnswer');
+        $updateOwnAnswer->ruleName = $ownAnswer->name;
+        $auth->add($updateOwnAnswer);
 
-		$auth->addChild($updateOwnAnswer, $update);
+        $auth->addChild($updateOwnAnswer, $update);
 
         // User
 
@@ -86,11 +86,11 @@ class RbacController extends Controller
         $ownProfile = new OwnProfileRule();
         $auth->add($ownProfile);
 
-		$updateOwnProfile = $auth->createPermission('updateOwnProfile');
-		$updateOwnProfile->ruleName = $ownProfile->name;
-		$auth->add($updateOwnProfile);
+        $updateOwnProfile = $auth->createPermission('updateOwnProfile');
+        $updateOwnProfile->ruleName = $ownProfile->name;
+        $auth->add($updateOwnProfile);
 
-		$auth->addChild($updateOwnProfile, $update);
+        $auth->addChild($updateOwnProfile, $update);
 
         // Settings
 

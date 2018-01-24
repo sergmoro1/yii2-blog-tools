@@ -18,16 +18,16 @@ class ModalController extends Controller
      */
     public function actionIndex()
     {
-		if (!\Yii::$app->user->can('index', [], false))
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('index', [], false))
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
-		$searchModel = $this->newSearch();
-		$dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $searchModel = $this->newSearch();
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
-		return $this->render('index', [
-			'searchModel' => $searchModel,
-			'dataProvider' => $dataProvider,
-		]);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -37,34 +37,34 @@ class ModalController extends Controller
      */
     public function actionView($id)
     {
-		if (!\Yii::$app->user->can('view'))
-			return $this->alert(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('view'))
+            return $this->alert(Module::t('core', 'Access denied.'));
 
-		return $this->renderAjax('view', [
-			'model' => $this->findModel($id),
-		]);
+        return $this->renderAjax('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
 
     public function actionValidate($scenario = false)
-	{
-		$model = $this->newModel();
-		if($scenario)
-			$model->scenario = $scenario;
-		$request = \Yii::$app->getRequest();
+    {
+        $model = $this->newModel();
+        if($scenario)
+            $model->scenario = $scenario;
+        $request = \Yii::$app->getRequest();
 
-		// Ajax validation including form open in a modal window
-		if ($request->isAjax && $model->load($request->post())) {
-			\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-			return ActiveForm::validate($model);
-		}
-	}
+        // Ajax validation including form open in a modal window
+        if ($request->isAjax && $model->load($request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+    }
 
     public function fillin($model, $update = true)
     {
-		return $model;
-	}
-	
+        return $model;
+    }
+    
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -72,19 +72,19 @@ class ModalController extends Controller
      */
     public function actionCreate()
     {
-		if (!\Yii::$app->user->can('create'))
-			return $this->alert(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('create'))
+            return $this->alert(Module::t('core', 'Access denied.'));
 
-		$model = $this->newModel();
-		$model = $this->fillin($model, false);
-		
-		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index']);
-		} else {
-			return $this->renderAjax('create', [
-				'model' => $model,
-			]);
-		}
+        $model = $this->newModel();
+        $model = $this->fillin($model, false);
+        
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -95,19 +95,19 @@ class ModalController extends Controller
      */
     public function actionUpdate($id)
     {
-		$model = $this->findModel($id);
-		if (!\Yii::$app->user->can('update', ['model' => $model]))
-			return $this->alert(Module::t('core', 'Access denied.'));
+        $model = $this->findModel($id);
+        if (!\Yii::$app->user->can('update', ['model' => $model]))
+            return $this->alert(Module::t('core', 'Access denied.'));
 
-		$model = $this->fillin($model);
-		
-		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(\Yii::$app->request->referrer);
-		} else {
-			return $this->renderAjax('update', [
-				'model' => $model,
-			]);
-		}
+        $model = $this->fillin($model);
+        
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(\Yii::$app->request->referrer);
+        } else {
+            return $this->renderAjax('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -118,16 +118,16 @@ class ModalController extends Controller
      */
     public function actionDelete($id)
     {
-		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('delete'))
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
-		$this->findModel($id)->delete();
+        $this->findModel($id)->delete();
 
-		return $this->redirect(['index']);
+        return $this->redirect(['index']);
     }
     
     public function alert($message)
     {
         return '<div class="alert alert-danger" role="alert">'. $message .'</div>';
-	}
+    }
 }

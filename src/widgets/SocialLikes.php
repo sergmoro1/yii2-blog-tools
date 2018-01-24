@@ -8,17 +8,17 @@ use yii\helpers\Html;
 
 class SocialLikes extends Widget
 {
-	public $url;
-	public $title;
-	public $image;
-	
+    public $url;
+    public $title;
+    public $image;
+    
     public function run()
     {
-		return $this->render('socialLikes', [
-			'url' => $this->url,
-			'title' => $this->title,
-			'image' => $this->image,
-		]);
-	}
+        return $this->render('socialLikes', [
+            'url' => $this->url,
+            'title' => $this->title,
+            'image' => $this->image,
+        ]);
+    }
 }
 ?>

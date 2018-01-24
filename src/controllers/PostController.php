@@ -17,7 +17,7 @@ use sergmoro1\blog\models\PostSearch;
  */
 class PostController extends Controller
 {
-	private $_model;
+    private $_model;
 
     public function behaviors()
     {
@@ -37,16 +37,16 @@ class PostController extends Controller
      */
     public function actionIndex()
     {
-		if (!\Yii::$app->user->can('index'))
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('index'))
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
-		$searchModel = new PostSearch();
-		$dataProvider = $searchModel->search(\Yii::$app->request->get());
+        $searchModel = new PostSearch();
+        $dataProvider = $searchModel->search(\Yii::$app->request->get());
 
-		return $this->render('index', [
-			'dataProvider' => $dataProvider,
-			'searchModel' => $searchModel,
-		]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+        ]);
     }
 
     /**
@@ -57,29 +57,29 @@ class PostController extends Controller
      */
     public function actionView($id = 0, $slug= '')
     {
-		$model = $this->findModel($id, $slug);
-		if (\Yii::$app->user->can('viewPost', ['post' => $model])) {
-			return $this->render('view', [
-				'model' => $model,
-			]);
-		} else
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        $model = $this->findModel($id, $slug);
+        if (\Yii::$app->user->can('viewPost', ['post' => $model])) {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
-	public function actionMore($slug, $offset)
-	{
-		if(\Yii::$app->getRequest()->isAjax) {
-			$model = $this->loadModel(0, $slug);
-			if($comments = $model->getComments($offset))
-				return $this->renderAjax('_comments', [
-					'post' => $model,
-					'comments' => $comments,
-				]);
-			else
-				return 'No more.';
-		} else
-			throw new ForbiddenHttpException(Module::t('core', 'Only ajax request suitable.'));
-	}
+    public function actionMore($slug, $offset)
+    {
+        if(\Yii::$app->getRequest()->isAjax) {
+            $model = $this->loadModel(0, $slug);
+            if($comments = $model->getComments($offset))
+                return $this->renderAjax('_comments', [
+                    'post' => $model,
+                    'comments' => $comments,
+                ]);
+            else
+                return 'No more.';
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Only ajax request suitable.'));
+    }
 
     /**
      * Creates a new Post model.
@@ -89,19 +89,19 @@ class PostController extends Controller
     public function actionCreate()
     {
 
-		if (\Yii::$app->user->can('createPost')) {
-			$model = new Post();
-			$model->created_at_date = date('d.m.Y', time());
+        if (\Yii::$app->user->can('createPost')) {
+            $model = new Post();
+            $model->created_at_date = date('d.m.Y', time());
 
-			if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->id]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-				]);
-			}
-		} else
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+            if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -112,18 +112,18 @@ class PostController extends Controller
      */
     public function actionUpdate($id)
     {
-		$model = $this->findModel($id);
-		if (\Yii::$app->user->can('update', ['post' => $model])) {
-			$model->created_at_date = date('d.m.Y', $model->created_at);
-			if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
-		} else
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('update', ['post' => $model])) {
+            $model->created_at_date = date('d.m.Y', $model->created_at);
+            if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -134,16 +134,16 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
-		if (\Yii::$app->user->can('delete')) {
-			$model = $this->findModel($id);
-			foreach($model->files as $file)
-				$file->delete();
+        if (\Yii::$app->user->can('delete')) {
+            $model = $this->findModel($id);
+            foreach($model->files as $file)
+                $file->delete();
 
-			$model->delete();
+            $model->delete();
 
-			return $this->redirect(['index']);
-		} else
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+            return $this->redirect(['index']);
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -156,14 +156,14 @@ class PostController extends Controller
      */
     public function findModel($id, $slug = '')
     {
-		if($this->_model === null) 
-		{
-			if(($this->_model = $id ? Post::findOne($id) : Post::findOne(['slug' => $slug])) !== null) 
-			{
-				return $this->_model;
-			} else {
-				throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
-			}
-		}
-	}
+        if($this->_model === null) 
+        {
+            if(($this->_model = $id ? Post::findOne($id) : Post::findOne(['slug' => $slug])) !== null) 
+            {
+                return $this->_model;
+            } else {
+                throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
+            }
+        }
+    }
 }

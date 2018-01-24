@@ -11,7 +11,7 @@ body {
     background-color: #222;
 }
 .navbar-header .language-switcher {
-	display: inline-block;
+    display: inline-block;
     padding-top: 15px;
     padding-bottom: 15px;
     line-height: 20px;
@@ -236,5 +236,5 @@ ul.alert-dropdown {
     color: #df8a13;
 }
 .avatar {
-	width: 20px;
+    width: 20px;
 }

@@ -34,9 +34,9 @@ class m160206_193635_create_rubric extends Migration
 
     public function down()
     {
-		$this->dropIndex('lft', '{{%rubric}}');
-		$this->dropIndex('rgt', '{{%rubric}}');
-		$this->dropIndex('level', '{{%rubric}}');
+        $this->dropIndex('lft', '{{%rubric}}');
+        $this->dropIndex('rgt', '{{%rubric}}');
+        $this->dropIndex('level', '{{%rubric}}');
 
         $this->dropTable('{{%rubric}}');
     }

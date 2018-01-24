@@ -35,26 +35,26 @@ class RubricController extends Controller
      */
     public function actionIndex()
     {
-		if (!\Yii::$app->user->can('index'))
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('index'))
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $query = Rubric::find()->where('id>1');
  
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			'pagination' => [
-				'pageSize' => 100,
-			],
-			'sort' => [
-				'defaultOrder' => [
-					'position' => SORT_ASC, 
-				]
-			],
+            'pagination' => [
+                'pageSize' => 100,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'position' => SORT_ASC, 
+                ]
+            ],
         ]);
 
-		return $this->render('index', [
-			'dataProvider' => $dataProvider,
-		]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -64,14 +64,14 @@ class RubricController extends Controller
      */
     public function actionCreate()
     {
-		if (!\Yii::$app->user->can('create'))
-			return $this->alert(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('create'))
+            return $this->alert(Module::t('core', 'Access denied.'));
 
         $model = new Rubric();
 
         if ($model->load(\Yii::$app->request->post())) {
-			if($model->prependTo($this->findModel($model->parent_node)))
-				return $this->redirect(['index']);
+            if($model->prependTo($this->findModel($model->parent_node)))
+                return $this->redirect(['index']);
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -87,39 +87,39 @@ class RubricController extends Controller
      */
     public function actionUpdate($id)
     {
-		if (!\Yii::$app->user->can('update'))
-			return $this->alert(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('update'))
+            return $this->alert(Module::t('core', 'Access denied.'));
 
-		$model = $this->findModel($id);
+        $model = $this->findModel($id);
 
-		// $parent_node is empty, so it must be set
-		if($one = $model->parents(1)->one())
-		{
-			$model->parent_node = $one->id;
-			// new code
-			$loaded = $model->load(\Yii::$app->request->post());
-			
-			// Ajax validation including form open in a modal window
-			if (\Yii::$app->request->isAjax && $loaded) {
-				\Yii::$app->response->format = Response::FORMAT_JSON;
-				return ActiveForm::validate($model);
-			}
+        // $parent_node is empty, so it must be set
+        if($one = $model->parents(1)->one())
+        {
+            $model->parent_node = $one->id;
+            // new code
+            $loaded = $model->load(\Yii::$app->request->post());
+            
+            // Ajax validation including form open in a modal window
+            if (\Yii::$app->request->isAjax && $loaded) {
+                \Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
 
-			// The General case
-			if ($loaded && $model->save()) {
-				return $this->redirect(\Yii::$app->request->referrer);
-			} else {
-				return $this->renderAjax('update', [
-					'model' => $model,
-				]);
-			}
-		} else {
-			\Yii::$app->session->setFlash(
-				'warning',
-				\Yii::t('blog', 'Node has not parent.')
-			);
-			return $this->redirect(['index']);
-		}
+            // The General case
+            if ($loaded && $model->save()) {
+                return $this->redirect(\Yii::$app->request->referrer);
+            } else {
+                return $this->renderAjax('update', [
+                    'model' => $model,
+                ]);
+            }
+        } else {
+            \Yii::$app->session->setFlash(
+                'warning',
+                \Yii::t('blog', 'Node has not parent.')
+            );
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -130,25 +130,25 @@ class RubricController extends Controller
      */
     public function actionDelete($id)
     {
-		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('delete'))
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
-		if($id == 1)
-			\Yii::$app->session->setFlash(
-				'warning',
-				\Yii::t('blog', 'Node can not be deleted.')
-			);
-		else {
-			$node = $this->findModel($id);
-			// find all node childrens
-			$childrens = $node->children()->all();
-			$node->deleteWithChildren();
-			// update deleted rubrics to 1 in all posts with rubrics are $id or $childrens ID
-			$ids = $id;
-			foreach($childrens as $node)
-				$ids .= ',' . $node->id;
-			Post::updateAll(['rubric' => 1], 'rubric IN (' . $ids . ')');
-		}
+        if($id == 1)
+            \Yii::$app->session->setFlash(
+                'warning',
+                \Yii::t('blog', 'Node can not be deleted.')
+            );
+        else {
+            $node = $this->findModel($id);
+            // find all node childrens
+            $childrens = $node->children()->all();
+            $node->deleteWithChildren();
+            // update deleted rubrics to 1 in all posts with rubrics are $id or $childrens ID
+            $ids = $id;
+            foreach($childrens as $node)
+                $ids .= ',' . $node->id;
+            Post::updateAll(['rubric' => 1], 'rubric IN (' . $ids . ')');
+        }
 
         return $this->redirect(['index']);
     }
@@ -172,5 +172,5 @@ class RubricController extends Controller
     public function alert($message)
     {
         return '<div class="alert alert-danger" role="alert">'. $message .'</div>';
-	}
+    }
 }

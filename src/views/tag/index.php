@@ -12,11 +12,11 @@ $this->title = Module::t('core', 'Tags');
 $this->params['breadcrumbs'][] = $this->title;;
 
 echo Modal::widget([
-	'id' => 'tag-win',
-	'toggleButton' => false,
-	'header' => $this->title,
-	'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
-		Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".tag-form #submit-btn").click()']),
+    'id' => 'tag-win',
+    'toggleButton' => false,
+    'header' => $this->title,
+    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
+        Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".tag-form #submit-btn").click()']),
 ]);
 
 ?>
@@ -25,43 +25,43 @@ echo Modal::widget([
 
 <div class='row'>
 <div class='col-sm-8'>
-	
-	<div class="table-responsive">
+    
+    <div class="table-responsive">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'layout' => "{items}\n{summary}\n{pager}",
         'columns' => [
             [
-				'attribute' => 'id',
-				'options' => ['style' => 'width:4%;'],
-			],
-			[
-				'attribute' => 'show',
-				'format' => 'html',
-				'value' => function($data) {
-					return $data->show ? '+' : '-';
-				}
-			],
-			'name',
-			'frequency',
+                'attribute' => 'id',
+                'options' => ['style' => 'width:4%;'],
+            ],
             [
-				'class' => 'yii\grid\ActionColumn',
-				'options' => ['style' => 'width:10%;'],
-				'template' => '{update} {delete}',
-				'buttons' => [
-					'update' => function ($url, $model) {
-						return Html::a(
-							'<span class="glyphicon glyphicon-pencil"></span>', 
-							$url, [
-								'data-toggle' => 'modal',
-								'data-target' => '#tag-win',
-								'onclick' => "$('#tag-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
-							]
-						);
-					},
-				],
-			],
+                'attribute' => 'show',
+                'format' => 'html',
+                'value' => function($data) {
+                    return $data->show ? '+' : '-';
+                }
+            ],
+            'name',
+            'frequency',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'options' => ['style' => 'width:10%;'],
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, $model) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>', 
+                            $url, [
+                                'data-toggle' => 'modal',
+                                'data-target' => '#tag-win',
+                                'onclick' => "$('#tag-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
+                            ]
+                        );
+                    },
+                ],
+            ],
         ],
     ]); ?>
     </div>
@@ -69,7 +69,7 @@ echo Modal::widget([
 </div>
 
 <div class='col-sm-4'>
-	<?= $this->render('help') ?>
+    <?= $this->render('help') ?>
 </div>
 
 </div> <!-- ./row -->

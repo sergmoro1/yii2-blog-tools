@@ -34,12 +34,12 @@ class SiteController extends Controller
     public function actionGear()
     {
         $model = new \backend\models\GearForm();
-		copy(\Yii::getAlias('@frontend/config/params.php'), \Yii::getAlias('@frontend/runtime/params.php'));
+        copy(\Yii::getAlias('@frontend/config/params.php'), \Yii::getAlias('@frontend/runtime/params.php'));
         $model->params = file_get_contents(\Yii::getAlias('@frontend/runtime/params.php'));
         if ($model->load(Yii::$app->request->post())) {
-			copy(\Yii::getAlias('@frontend/config/params.php'), \Yii::getAlias('@frontend/runtime/params_'. date('dmy', time()) .'.php'));
-			file_put_contents(\Yii::getAlias('@frontend/runtime/params.php'), $model->params);
-			copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/config/params.php'));
+            copy(\Yii::getAlias('@frontend/config/params.php'), \Yii::getAlias('@frontend/runtime/params_'. date('dmy', time()) .'.php'));
+            file_put_contents(\Yii::getAlias('@frontend/runtime/params.php'), $model->params);
+            copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/config/params.php'));
             return $this->goHome();
         }
 

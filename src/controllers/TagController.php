@@ -12,7 +12,7 @@ use sergmoro1\blog\models\TagSearch;
 
 class TagController extends ModalController
 {
-	public $_tag; // old tag
+    public $_tag; // old tag
     public function newModel() { return new Tag(); }
     public function newSearch() { return new TagSearch(); }
 
@@ -36,22 +36,22 @@ class TagController extends ModalController
      */
     public function actionUpdate($id)
     {
-		$model = $this->findModel($id);
-		if (!\Yii::$app->user->can('update'))
-			return $this->alert(Module::t('core', 'Access denied.'));
+        $model = $this->findModel($id);
+        if (!\Yii::$app->user->can('update'))
+            return $this->alert(Module::t('core', 'Access denied.'));
 
-		$this->_tag = $model->name;
-		
-		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-			// replace all tags in all posts
-			\Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, '{$this->_tag}', '{$model->name}') WHERE tags LIKE '%{$this->_tag}%'")
-				->execute();
-			return $this->redirect(\Yii::$app->request->referrer);
-		} else {
-			return $this->renderAjax('update', [
-				'model' => $model,
-			]);
-		}
+        $this->_tag = $model->name;
+        
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            // replace all tags in all posts
+            \Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, '{$this->_tag}', '{$model->name}') WHERE tags LIKE '%{$this->_tag}%'")
+                ->execute();
+            return $this->redirect(\Yii::$app->request->referrer);
+        } else {
+            return $this->renderAjax('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -62,22 +62,22 @@ class TagController extends ModalController
      */
     public function actionDelete($id)
     {
-		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('delete'))
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
-		$model = $this->findModel($id);
+        $model = $this->findModel($id);
 
-		// delete selected tag in all posts
-		foreach(Post::find()->where(['like', 'tags', $model->name])->all() as $post) {
-			$a = $model->string2array($post->tags);
-			$i = array_search($model->name, $a);
-			unset($a[$i]);
-			$post->tags = $model->array2string($a);
-			$post->save();
-		}
-		$model->delete();
+        // delete selected tag in all posts
+        foreach(Post::find()->where(['like', 'tags', $model->name])->all() as $post) {
+            $a = $model->string2array($post->tags);
+            $i = array_search($model->name, $a);
+            unset($a[$i]);
+            $post->tags = $model->array2string($a);
+            $post->save();
+        }
+        $model->delete();
 
-		return $this->redirect(['index']);
+        return $this->redirect(['index']);
     }
 
     /**

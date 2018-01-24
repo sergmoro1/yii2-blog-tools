@@ -7,14 +7,14 @@ use yii\helpers\Html;
 
 class Menu extends Widget
 {
-	public $items;
-	public $view = 'menu';
+    public $items;
+    public $view = 'menu';
 
     public function run()
     {
-		echo $this->render($this->view, [
-			'items' => $this->items,
-		]);
-	}
+        echo $this->render($this->view, [
+            'items' => $this->items,
+        ]);
+    }
 }
 

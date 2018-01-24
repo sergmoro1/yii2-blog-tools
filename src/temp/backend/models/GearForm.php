@@ -23,13 +23,13 @@ class GearForm extends Model
         ];
     }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'params' => 'Параметры',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'params' => 'Параметры',
+        );
+    }
 }

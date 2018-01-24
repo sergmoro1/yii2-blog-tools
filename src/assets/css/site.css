@@ -94,23 +94,23 @@ a.desc:after {
 .post-image {margin: 20px 0px;}
 
 .comment-reply .control-label {
-    padding-top: 7px;	
+    padding-top: 7px;    
 }
 #bfiles .table td textarea {width: 100%;}
 
 .vertical {
-	margin-top: 30px;
-	writing-mode: tb-rl;
+    margin-top: 30px;
+    writing-mode: tb-rl;
 }
 .vertical h2 {
-	font-size: 68pt;
-	margin: 0px;
-	padding: 0px;
+    font-size: 68pt;
+    margin: 0px;
+    padding: 0px;
 }
 .vertical p {
-	font-size: 32pt;
-	margin: 0px;
-	padding: 0px;
+    font-size: 32pt;
+    margin: 0px;
+    padding: 0px;
 }
 pre.small {
   font-size: 0.7em;

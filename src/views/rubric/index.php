@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' =
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Modal::widget([
-	'id' => 'rubric-win',
-	'toggleButton' => false,
-	'header' => $this->title,
-	'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
-		Html::button('Сохранить', ['class' => 'btn btn-primary', 'onclick' => '$(".rubric-form #submit-btn").click()']),
+    'id' => 'rubric-win',
+    'toggleButton' => false,
+    'header' => $this->title,
+    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
+        Html::button('Сохранить', ['class' => 'btn btn-primary', 'onclick' => '$(".rubric-form #submit-btn").click()']),
 ]);
 
 ?>
@@ -28,59 +28,59 @@ echo Modal::widget([
 
 <div class='row'>
 <div class='col-sm-8'>
-	<p>
-		<?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
-			'id' => 'rubric-add',
-			'data-toggle' => 'modal',
-			'data-target' => '#rubric-win',
-			'class' => 'btn btn-success',
-			'onclick' => "$('#rubric-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
-		]) ?>
-	</p>
+    <p>
+        <?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
+            'id' => 'rubric-add',
+            'data-toggle' => 'modal',
+            'data-target' => '#rubric-win',
+            'class' => 'btn btn-success',
+            'onclick' => "$('#rubric-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
+        ]) ?>
+    </p>
 
-	<div class="table-responsive">
+    <div class="table-responsive">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'layout' => "{items}\n{summary}\n{pager}",
         'columns' => [
-			'position',
-			[
-				'attribute' => 'show',
-				'format' => 'html',
-				'value' => function($data) {
-					$show = true;
-					foreach($data->parents()->all() as $parent)
-						$show = $show && $parent->show;
-					return $data->show && $show ? '+' : '-';
-				}
-			],
-			[
-				'attribute' => 'name',
-				'format' => 'html',
-				'value' => function($data) {
-					return $data->getPrettyName(true) . ' (<small>' . $data->slug . '</small>)';
-				}
-			],
-			[
-				'attribute' => 'post_count',
-			],
+            'position',
             [
-				'class' => 'yii\grid\ActionColumn',
-				'options' => ['style' => 'width:50px;'],
-				'template' => '{update} {delete}',
-				'buttons' => [
-					'update' => function ($url, $model) {
-						return Html::a(
-							'<span class="glyphicon glyphicon-pencil"></span>', 
-							$url, [
-								'data-toggle' => 'modal',
-								'data-target' => '#rubric-win',
-								'onclick' => "$('#rubric-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
-							]
-						);
-					},
-				],
-			],
+                'attribute' => 'show',
+                'format' => 'html',
+                'value' => function($data) {
+                    $show = true;
+                    foreach($data->parents()->all() as $parent)
+                        $show = $show && $parent->show;
+                    return $data->show && $show ? '+' : '-';
+                }
+            ],
+            [
+                'attribute' => 'name',
+                'format' => 'html',
+                'value' => function($data) {
+                    return $data->getPrettyName(true) . ' (<small>' . $data->slug . '</small>)';
+                }
+            ],
+            [
+                'attribute' => 'post_count',
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'options' => ['style' => 'width:50px;'],
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, $model) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>', 
+                            $url, [
+                                'data-toggle' => 'modal',
+                                'data-target' => '#rubric-win',
+                                'onclick' => "$('#rubric-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
+                            ]
+                        );
+                    },
+                ],
+            ],
         ],
     ]); ?>
     </div>
@@ -88,7 +88,7 @@ echo Modal::widget([
 </div>
 
 <div class='col-sm-4'>
-	<?= $this->render('help') ?>
+    <?= $this->render('help') ?>
 </div>
 
 </div> <!-- ./row -->

@@ -1,5 +1,5 @@
 <style>
-	.en {color: #3C763D;}
+    .en {color: #3C763D;}
 </style>
 
 <?php
@@ -27,32 +27,32 @@ $this->params['breadcrumbs'][] = $model->getTitle();
         ]) ?>
     </p>
 
-	<div class='post-preview'>
-		<?php echo $this->render('_view_head', [
-			'model' => $model, 
-			'read_more' => false, 
-			'backend' => true,
-		]); ?>
+    <div class='post-preview'>
+        <?php echo $this->render('_view_head', [
+            'model' => $model, 
+            'read_more' => false, 
+            'backend' => true,
+        ]); ?>
 
-		<div class="excerpt">
-			<?= $model->excerpt ?>
-		</div>
+        <div class="excerpt">
+            <?= $model->excerpt ?>
+        </div>
 
-		<?= $model->content ?>
-		
-		<?php if(mb_strlen(trim($model->resume), 'UTF-8') > 0 ): ?>
-			<h3><?= Module::t('core', 'Resume'); ?></h3>
-			<div class='alert alert-success'>
-				<?= $model->resume ?>
-			</div>
-		<?php endif; ?>
-		
-		<?php echo $this->render('_view_foot', [
-			'model' => $model, 
-			'prev_next' => true, 
-			'read_more' => false, 
-			'backend' => true,
-		]); ?>
-	</div>
+        <?= $model->content ?>
+        
+        <?php if(mb_strlen(trim($model->resume), 'UTF-8') > 0 ): ?>
+            <h3><?= Module::t('core', 'Resume'); ?></h3>
+            <div class='alert alert-success'>
+                <?= $model->resume ?>
+            </div>
+        <?php endif; ?>
+        
+        <?php echo $this->render('_view_foot', [
+            'model' => $model, 
+            'prev_next' => true, 
+            'read_more' => false, 
+            'backend' => true,
+        ]); ?>
+    </div>
 
 </div>

@@ -39,29 +39,29 @@ class CommentController extends ModalController
      */
     public function actionReply($id)
     {
-		$comment = $this->findModel($id);
-		if (!\Yii::$app->user->can('replyComment', ['comment' => $comment]))
-			return $this->alert(\Yii::t('app', 'Access denied.'));
+        $comment = $this->findModel($id);
+        if (!\Yii::$app->user->can('replyComment', ['comment' => $comment]))
+            return $this->alert(\Yii::t('app', 'Access denied.'));
 
-		$model = $this->newModel();
+        $model = $this->newModel();
 
-		$model->parent_id = $comment->parent_id;
-		$model->model = $comment->model;
-		$model->thread = $comment->thread;
-		\Yii::$app->db->createCommand("UPDATE {{%comment}} SET reply=0 WHERE thread='{$comment->thread}'")->execute();
-		$model->author = \Yii::$app->user->identity->name;
-		$model->email = \Yii::$app->user->identity->email;
-		$model->status = Comment::STATUS_APPROVED;
-		$model->reply = 1;
-		
-		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(\Yii::$app->request->referrer);
-		} else {
-			return $this->renderAjax('reply', [
-				'model' => $model,
-				'comment' => $comment,
-			]);
-		}
+        $model->parent_id = $comment->parent_id;
+        $model->model = $comment->model;
+        $model->thread = $comment->thread;
+        \Yii::$app->db->createCommand("UPDATE {{%comment}} SET reply=0 WHERE thread='{$comment->thread}'")->execute();
+        $model->author = \Yii::$app->user->identity->name;
+        $model->email = \Yii::$app->user->identity->email;
+        $model->status = Comment::STATUS_APPROVED;
+        $model->reply = 1;
+        
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(\Yii::$app->request->referrer);
+        } else {
+            return $this->renderAjax('reply', [
+                'model' => $model,
+                'comment' => $comment,
+            ]);
+        }
     }
 
     /**

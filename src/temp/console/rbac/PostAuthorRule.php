@@ -18,8 +18,8 @@ class PostAuthorRule extends Rule
      */
     public function execute($user_id, $item, $params)
     {
-		return isset($params['post']) 
-			? $params['post']->author_id == $user_id
-			: true;
+        return isset($params['post']) 
+            ? $params['post']->author_id == $user_id
+            : true;
     }
 }

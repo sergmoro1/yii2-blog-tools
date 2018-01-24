@@ -18,10 +18,10 @@ class OwnCommentRule extends Rule
      */
     public function execute($user_id, $item, $params)
     {
-		if(!isset($params['comment']))
-			return true;
-		return $params['comment']->model == 1	
-			? in_array($params['comment']->parent_id, $params['comment']->getUserPosts($user_id))
-			: true;
+        if(!isset($params['comment']))
+            return true;
+        return $params['comment']->model == 1    
+            ? in_array($params['comment']->parent_id, $params['comment']->getUserPosts($user_id))
+            : true;
     }
 }

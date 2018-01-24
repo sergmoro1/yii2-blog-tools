@@ -19,9 +19,9 @@ class OwnAnswerRule extends Rule
      */
     public function execute($user_id, $item, $params)
     {
-		// model = comment
+        // model = comment
         return isset($params['model']) && !(strpos(get_class($params['model']), 'Comment') === false)
-			? $params['model']->author == User::findOne($user_id)->name 
-			: true;
+            ? $params['model']->author == User::findOne($user_id)->name 
+            : true;
     }
 }

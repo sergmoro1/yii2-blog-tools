@@ -11,23 +11,23 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
-	<div class='col-sm-6'>
+    <div class='col-sm-6'>
 
-	<label class="control-label" for="comment-author">
-			<?= $model->getAttributeLabel('author') ?>
-	</label>
-	<div class='well' id='comment-author'>
-		<?= $model->author ?>
-	</div>
-	<label class="control-label" for="comment-content">
-			<?= $model->getAttributeLabel('content') ?>
-	</label>
-	<div class='well' id='comment-content'>
-		<?= $model->content ?>
-	</div>
+    <label class="control-label" for="comment-author">
+            <?= $model->getAttributeLabel('author') ?>
+    </label>
+    <div class='well' id='comment-author'>
+        <?= $model->author ?>
+    </div>
+    <label class="control-label" for="comment-content">
+            <?= $model->getAttributeLabel('content') ?>
+    </label>
+    <div class='well' id='comment-content'>
+        <?= $model->content ?>
+    </div>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-	
-	</div>
+    
+    </div>
 </div>

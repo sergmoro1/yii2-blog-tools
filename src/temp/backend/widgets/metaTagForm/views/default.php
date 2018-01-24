@@ -12,7 +12,7 @@ use yii\helpers\Html;
 
 $out= [];
 foreach($languageList as $language)
-	$out[$language] = "<fieldset><legend>$language</legend>";
+    $out[$language] = "<fieldset><legend>$language</legend>";
 foreach ($model->metaTags as $i => $data) {
     $out[$data->language] .= Html::beginTag('div', ['class' => 'form-group']);
 
@@ -40,19 +40,19 @@ foreach($languageList as $language)
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel-default"> <!-- panel -->
-	<div class="panel-heading" role="tab" id="headingSEO">
-	  <h4 class="panel-title">
-		<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSEO" aria-expanded="true" aria-controls="collapseOne">
-		  SEO rus|eng
-		</a>
-	  </h4>
-	</div>
-	<div id="collapseSEO" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSEO">
+    <div class="panel-heading" role="tab" id="headingSEO">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSEO" aria-expanded="true" aria-controls="collapseOne">
+          SEO rus|eng
+        </a>
+      </h4>
+    </div>
+    <div id="collapseSEO" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSEO">
       <div class="row">
       <?php foreach($languageList as $language): ?>
-	    <div class="col-sm-<?= floor(12 / count($languageList)) ?>">
-		  <?= $out[$language]?>
-	    </div>
+        <div class="col-sm-<?= floor(12 / count($languageList)) ?>">
+          <?= $out[$language]?>
+        </div>
       <?php endforeach; ?>
       </div>
     </div>
