@@ -197,11 +197,9 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     /**
      * @return string the URL that shows the detail of the post
      */
-    public function getUrl($friendlyUrl = true)
+    public function getUrl()
     {
-        return $friendlyUrl
-            ? Url::to(['post/' . $this->slug, 'title' => $this->getTitle()])
-            : Url::to(['post/view', 'id' => $this->id]);
+        return Url::to(['post/view', 'slug' => $this->slug]);
     }
 
     /**
