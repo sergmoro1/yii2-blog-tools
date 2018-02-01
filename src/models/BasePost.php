@@ -241,7 +241,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     /**
      * @return string only part ot the title useed as a link
      */
-    public function getTitleLink($friendlyUrl = true)
+    public function getTitleLink($friendlyUrl = true, $options = [])
     {
         mb_internal_encoding("UTF-8");
         $title = $this->title;
@@ -250,7 +250,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         if(($right = mb_strpos($title, ']')) === false)
             $right = mb_strlen($title);
         return mb_substr($title, 0, $left) . 
-            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), $this->getUrl($friendlyUrl)) . 
+            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), $this->getUrl($friendlyUrl), $options) . 
             mb_substr($title, $right + 1, mb_strlen($title) - $right - ($right ? 1 : 0));
     }
 
@@ -285,7 +285,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     /**
      * @return title link list of previous posts
      */
-    public function Previous()
+    public function Previous($friendlyUrl = true, $options = [])
     {
         $a = array();
         $previous = $this->previous;
@@ -302,14 +302,14 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ->orderBy('created_at DESC')
             ->one()
         )
-            return $post->getTitleLink();
+            return $post->getTitleLink($friendlyUrl, $options);
         return '';
     }
 
     /**
      * @return title link list of next posts
      */
-    public function Next()
+    public function Next($friendlyUrl = true, $options = [])
     {
         $a = [];
         $next = $this->id;
@@ -318,7 +318,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ->one()
         )
         {
-            $a[] = $post->getTitleLink();
+            $a[] = $post->getTitleLink($friendlyUrl, $options);
             $next = $post->id;
         }
         if($a)
