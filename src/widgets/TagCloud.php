@@ -3,6 +3,7 @@ namespace sergmoro1\blog\widgets;
 
 use yii\helpers\Html;
 use yii\base\Widget;
+use sergmoro1\blog\Module;
 use sergmoro1\blog\components\WebSlug;
 use sergmoro1\blog\models\Tag;
 
@@ -19,7 +20,7 @@ class TagCloud extends Widget
 	
 	public function init()
 	{
-		$this->title = \Yii::t('app', $this->title);
+        $this->title = Module::t('core', $this->title);
 		if(Post::getPublishedPostCount() > 0 && ($tags = Tag::findTagWeights(\Yii::$app->params['tagCloudCount'])))
 		{
 			$this->items = [];
@@ -30,8 +31,10 @@ class TagCloud extends Widget
 			{
 				$this->items[] = Html::a(
 					mb_convert_case(Html::encode($tag), MB_CASE_TITLE, 'UTF-8'), 
-					['post/index', 'tag' => WebSlug::getWebname($tag)], 
-					$a
+					(\Yii::$app->components['urlManager']['enablePrettyUrl']
+					    ? ['post/tag/' . WebSlug::getWebname($tag)] 
+					    : ['post/index', 'tag' => WebSlug::getWebname($tag)]
+					), $a
 				);
 			}
 		}

@@ -16,7 +16,7 @@ class RubricTree extends Widget
 
     public function init()
     {
-        $this->title = mb_strtoupper(Module::t('core', $this->title), 'UTF-8');
+        $this->title = Module::t('core', $this->title);
         parent::init();
     }
 

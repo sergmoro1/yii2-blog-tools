@@ -79,7 +79,9 @@ class Rubric extends ActiveRecord
 
     public function getUrl()
     {
-        return Url::to(['post/rubric/' . $this->slug]);
+		return \Yii::$app->components['urlManager']['enablePrettyUrl']
+		    ? Url::to(['post/rubric/' . $this->slug])
+		    : Url::to(['post/index', 'rubric' => $this->slug]);
     }
 
     public static function items($rootTitle = null)
