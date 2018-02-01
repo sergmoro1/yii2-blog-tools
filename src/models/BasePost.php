@@ -292,7 +292,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         while($previous)
         {
             $post = $this->findOne($previous);
-            $a[] = $post->getTitleLink();
+            $a[] = $post->getTitleLink($friendlyUrl, $options);
             $previous = $post->previous;
         }
         if($a)
