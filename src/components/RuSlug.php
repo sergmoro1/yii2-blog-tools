@@ -18,12 +18,12 @@ use yii\base\Behavior;
 
 class RuSlug extends Behavior
 {
-    public $slug = 'slug';
+    public $slugName = 'slug';
     public $attribute = 'title';
     public $delimiter = '-';
     
     public function translit() {
-        $slug = $this->slug;
+        $slug = $this->slugName;
         $attribute = $this->attribute;
         if(!trim($this->owner->$slug))
         {

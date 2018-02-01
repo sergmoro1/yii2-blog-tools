@@ -10,6 +10,7 @@ use sergmoro1\blog\models\Rubric;
 
 class RubricTree extends Widget
 {
+	public $show_post_count = false;
     public $view = 'rubricTree';
     public $title = 'Rubrics';
 
@@ -19,25 +20,21 @@ class RubricTree extends Widget
         parent::init();
     }
 
-    public function getBranches()
-    {
-        $rubrics = Rubric::find()
-            ->select('id, name, level')
-            ->where('id > 1 AND rubric.show')
-            ->orderBy('position asc')
-            ->all();
-        foreach($rubrics as $rubric)
-            $rubric->post_count = \common\models\Post::find()
-                ->where(['rubric' => $rubric->id])
-                ->count();
-        return $rubrics;
-    }
+	public function getRubrics()
+	{
+		$rubrics = Rubric::find()
+			->where('id > 1 AND rubric.show')
+			->orderBy('position asc')
+			->all();
+		return $rubrics;
+	}
 
     public function run()
     {
         echo $this->render($this->view, [
-            'title' => $this->title,
-            'rubrics' => $this->getBranches(),
+			'show_post_count' => $this->show_post_count,
+			'title' => $this->title,
+			'rubrics' => $this->getRubrics(),
         ]);
     }
 }

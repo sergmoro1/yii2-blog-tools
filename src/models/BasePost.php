@@ -74,7 +74,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             [['slug', 'title', 'subtitle'], 'string', 'max'=>128],
             ['slug', 'unique'],
             ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => \Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
-            ['tags', 'match', 'pattern' => '/^[\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
+			['tags', 'match', 'pattern' => '/^[а-яА-Я\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
             ['tags', 'normalizeTags'],
             ['created_at_date', 'date', 'format' => 'dd.MM.yyyy', 'timestampAttribute' => 'created_at'],
             [['resume', 'created_at', 'updated_at'], 'safe'],
