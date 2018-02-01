@@ -328,7 +328,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ->orderBy('created_at ASC')
             ->one()
         )
-            return $post->getTitleLink();
+            return $post->getTitleLink($friendlyUrl, $options);
         return '';
     }
 
