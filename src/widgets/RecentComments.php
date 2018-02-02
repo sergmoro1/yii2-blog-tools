@@ -15,7 +15,7 @@ class RecentComments extends Widget
 
     public function init()
     {
-        $this->title = mb_strtoupper(Module::t('core', 'Comments'), 'UTF-8');
+        $this->title = Module::t('core', 'Comments');
         parent::init();
     }
 

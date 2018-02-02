@@ -12,7 +12,8 @@ use common\models\Post;
 class TagCloud extends Widget
 {
 	public $title = 'Tags';
-	public $use_weight = false;
+	public $useWeight = false;
+	public $coeff = 1.5;
 	public $linkClass = '';
 	public $view = 'tagCloud';
 
@@ -24,11 +25,13 @@ class TagCloud extends Widget
 		if(Post::getPublishedPostCount() > 0 && ($tags = Tag::findTagWeights(\Yii::$app->params['tagCloudCount'])))
 		{
 			$this->items = [];
-			$a = $this->use_weight ? ['style'=>"font-size:{$weight}pt"] : [];
-			$a['class'] = $this->linkClass;
 			
 			foreach($tags as $tag=>$weight)
 			{
+				$weight *= $this->coeff;
+				$a = $this->useWeight ? ['style' => "font-size: {$weight}pt"] : [];
+				if($this->linkClass)
+					$a['class'] = $this->linkClass;
 				$this->items[] = Html::a(
 					mb_convert_case(Html::encode($tag), MB_CASE_TITLE, 'UTF-8'), 
 					(\Yii::$app->components['urlManager']['enablePrettyUrl']

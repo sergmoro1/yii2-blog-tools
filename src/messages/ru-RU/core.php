@@ -41,7 +41,7 @@ return [
     'Only ajax request suitable.' => 'Нужен только ajax запрос.',
     'Parent' => 'Родитель',
     'Parent node' => 'Родительский узел',
-    'Part of the title can be selected by [] as a link of the post, in Russian / English' => '',
+    'Part of the title can be selected by [] as a link of the post' => 'Часть заголовка может быть выбелена [] как ссылка на пост',
     'Please confirm that you agree to the processing of data sent by you.' => 
         'Пожалуйста, подтвердите, что вы согласны на обработку данных, отправленных вами.',
     'Position' => 'Позиция',

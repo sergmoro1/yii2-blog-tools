@@ -41,12 +41,11 @@ use sergmoro1\lookup\models\Lookup;
     
     <?= $form->field($model, 'title')
         ->textInput(['maxlength' => true])
-        ->hint(Module::t('core', 'Part of the title can be selected by [] as a link of the post, in Russian / English'))
+        ->hint(Module::t('core', 'Part of the title can be selected by [] as a link of the post'))
     ?>
 
     <?= $form->field($model, 'subtitle')
         ->textInput(['maxlength' => true]) 
-        ->hint(Module::t('core', 'in Russian / English')) 
     ?>
 
     <?= $form->field($model, 'slug')

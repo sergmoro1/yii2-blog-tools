@@ -199,7 +199,9 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
      */
     public function getUrl()
     {
-        return Url::to(['post/view', 'slug' => $this->slug]);
+		return \Yii::$app->components['urlManager']['enablePrettyUrl']
+		    ? Url::to(['post/' . $this->slug])
+		    : Url::to(['post/view', 'slug' => $this->slug]);
     }
 
     /**
