@@ -36,7 +36,7 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
-    <?= Html::submitButton('Submit', ['id' => 'submit-btn', 'style' => 'display: none']) ?>
+    <?= Html::submitButton('Submit', ['id' => 'submit-btn', 'style' => 'display: none;']) ?>
 
 <?php ActiveForm::end(); ?>
 

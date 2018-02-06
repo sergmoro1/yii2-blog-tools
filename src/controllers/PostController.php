@@ -115,6 +115,7 @@ class PostController extends Controller
         $model = $this->findModel($id);
         if (\Yii::$app->user->can('update', ['post' => $model])) {
             $model->created_at_date = date('d.m.Y', $model->created_at);
+
             if ($model->load(\Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {

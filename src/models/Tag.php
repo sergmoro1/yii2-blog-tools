@@ -1,6 +1,6 @@
 <?php
 /**
- * The followings are the available columns in table 'tbl_tag':
+ * The followings are the available columns in table 'tag':
  * @var integer $id
  * @var string $name
  * @var integer $frequency

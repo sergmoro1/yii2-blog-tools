@@ -1,17 +1,18 @@
 <?php
+
 use yii\helpers\Html;
 use sergmoro1\blog\Module;
 
 /* @var $this yii\web\View */
-/* @var $model models\Tag */
+/* @var $model common\models\User */
 
 $this->title = Module::t('core', 'Update');
-$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Tags'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Authors'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="event-update">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="post-update">
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -13,9 +13,21 @@ use vova07\imperavi\Widget;
 use sergmoro1\uploader\widgets\Byone;
 use sergmoro1\blog\Module;
 
+use sergmoro1\blog\models\Author;
 use sergmoro1\blog\models\Rubric;
 use sergmoro1\lookup\models\Lookup;
+//use hiqdev\yii2\assets\select2\Select2Asset;
+use backend\assets\Select2Asset;
 
+$select2 = new Select2Asset(['sourcePath' => '@vendor/bower-asset/select2/dist']);
+$select2->register($this);
+
+$script = <<<JS
+$(document).ready(function() {
+    $('#post-authors').select2();
+});
+JS;
+$this->registerJS($script);
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -122,6 +134,12 @@ use sergmoro1\lookup\models\Lookup;
 
     <?= $form->field($model, 'rubric')->dropdownList(
         Rubric::items(Module::t('core', 'Root'))
+    ); ?>
+
+    <?= $form->field($model, 'authors')            
+        ->dropDownList(Author::getAll(), [
+            'multiple'=>'multiple',
+        ]             
     ); ?>
 
 </div>

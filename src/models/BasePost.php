@@ -22,9 +22,11 @@ namespace sergmoro1\blog\models;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\web\Link;
 use yii\web\Linkable;
 use mrssoft\sitemap\SitemapInterface;
+use sergmoro1\blog\Module;
 use sergmoro1\blog\components\RuDate;
 use sergmoro1\blog\components\RuSlug;
 
@@ -39,8 +41,10 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     const COMMENT_FOR = 1;
 
     public $created_at_date;
+    public $authors = [];
     
     private $_oldTags;
+    private $_oldAuthors;
     
     /**
      * @return string the associated database table name
@@ -77,7 +81,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 			['tags', 'match', 'pattern' => '/^[а-яА-Я\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
             ['tags', 'normalizeTags'],
             ['created_at_date', 'date', 'format' => 'dd.MM.yyyy', 'timestampAttribute' => 'created_at'],
-            [['resume', 'created_at', 'updated_at'], 'safe'],
+            [['resume', 'created_at', 'updated_at', 'authors'], 'safe'],
         ];
     }
 
@@ -101,9 +105,14 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     }
 
 
-    public function getAuthor()
+    public function getUser()
     {
-        return User::findOne($this->author_id);
+        return User::findOne($this->user_id);
+    }
+
+    public function getAuthors()
+    {
+        return PostAuthor::find()->where(['post_id' => $this->post_id])->all();
     }
 
     public function getComments($offset = 0)
@@ -148,19 +157,20 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     public function attributeLabels()
     {
         return [
-            'author_id' => \Yii::t('app', 'Author'),
-            'previous' => \Yii::t('app', 'Previous post'),
-            'title' => \Yii::t('app', 'Title'),
-            'subtitle' => \Yii::t('app', 'Sub Title'),
-            'excerpt' => \Yii::t('app', 'Excerpt'),
-            'content' => \Yii::t('app', 'Content'),
-            'resume' => \Yii::t('app', 'Resume'),
-            'tags' => \Yii::t('app', 'Tags'),
-            'rubric' => \Yii::t('app', 'Rubric'),
-            'status' => \Yii::t('app', 'Status'),
-            'created_at' => \Yii::t('app', 'Created'),
-            'created_at_date' => \Yii::t('app', 'Created'),
-            'updated_at' => \Yii::t('app', 'Modified'),
+            'user_id' => Module::t('core', 'Author'),
+            'previous' => Module::t('core', 'Previous post'),
+            'title' => Module::t('core', 'Title'),
+            'subtitle' => Module::t('core', 'Sub Title'),
+            'excerpt' => Module::t('core', 'Excerpt'),
+            'content' => Module::t('core', 'Content'),
+            'resume' => Module::t('core', 'Resume'),
+            'tags' => Module::t('core', 'Tags'),
+            'rubric' => Module::t('core', 'Rubric'),
+            'status' => Module::t('core', 'Status'),
+            'authors' => Module::t('core', 'Authors'),
+            'created_at' => Module::t('core', 'Created'),
+            'created_at_date' => Module::t('core', 'Created'),
+            'updated_at' => Module::t('core', 'Modified'),
         ];
     }
 
@@ -409,6 +419,8 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     {
         parent::afterFind();
         $this->_oldTags = $this->tags;
+        $this->_oldAuthors = ArrayHelper::getColumn(PostAuthor::find()->where(['post_id' => $this->id])->all(), 'author_id');
+        $this->authors = $this->_oldAuthors;
     }
 
     /**
@@ -424,7 +436,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             $this->clearGarbage(['excerpt', 'content', 'resume']);
             if($this->isNewRecord)
             {
-                $this->author_id = \Yii::$app->user->id;
+                $this->user_id = \Yii::$app->user->id;
             }
             return true;
         }
@@ -439,6 +451,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     {
         parent::afterSave($insert, $changedAttributes);
         Tag::updateFrequency($this->_oldTags, $this->tags);
+        PostAuthor::updateAuthors($this->id, $this->_oldAuthors, $this->authors);
     }
 
     /**
@@ -449,6 +462,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         parent::afterDelete();
         Comment::deleteAll(['model' => self::COMMENT_FOR, 'parent_id' => $this->id]);
         Tag::updateFrequency($this->tags, '');
+        PostAuthor::updateAuthors($this->id, $this->_oldAuthors, []);
     }
 
     /**

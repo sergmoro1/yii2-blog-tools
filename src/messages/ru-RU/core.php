@@ -20,6 +20,7 @@ return [
     'Access denied.' => 'Доступ запрещен.',
     'Are you sure you want to delete this item?' => 'Вы уверены, что хотите удалить этот елемент?',
     'Author' => 'Автор',
+    'Authors' => 'Авторы',
     'Backend' => 'Админ-панель',
     'Blog' => 'Блог',
     'Cancel' => 'Отмена',

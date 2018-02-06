@@ -5,6 +5,8 @@ use yii\db\Migration;
 
 class m160206_162112_create_post extends Migration
 {
+	public $table = '{{%post}}';
+	
     public function up()
     {
         $tableOptions = null;
@@ -13,9 +15,9 @@ class m160206_162112_create_post extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%post}}', [
+        $this->createTable($this->table, [
             'id' => $this->primaryKey(),
-            'author_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer()->notNull(),
             'slug' => $this->string(128)->notNull()->unique(),
             'previous' => $this->integer()->notNull(),
             'title' => $this->string(128)->notNull(),
@@ -31,13 +33,12 @@ class m160206_162112_create_post extends Migration
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('rubric', '{{%post}}', 'rubric');
-        // $this->createIndex('FK_post_author', '{{%post}}', 'author_id');
-        $this->addForeignKey ('FK_post_author', '{{%post}}', 'author_id', '{{%user}}', 'id', 'CASCADE');
+        $this->createIndex('rubric', $this->table, 'rubric');
+        $this->addForeignKey ('FK_post_user', $this->table, 'user_id', '{{%user}}', 'id', 'CASCADE');
     }
 
     public function down()
     {
-        $this->dropTable('{{%post}}');
+        $this->dropTable($this->table);
     }
 }
