@@ -112,7 +112,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 
     public function getAuthors()
     {
-        return PostAuthor::find()->where(['post_id' => $this->post_id])->all();
+        return PostAuthor::find()->where(['post_id' => $this->id])->all();
     }
 
     public function getComments($offset = 0)
