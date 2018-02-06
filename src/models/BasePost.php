@@ -115,6 +115,14 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         return PostAuthor::find()->where(['post_id' => $this->id])->all();
     }
 
+    public function getListAuthors($glue = ', ')
+    {
+		$a = [];
+        foreach($this->getAuthors() as $link)
+			$a[] = $link->author->name;
+		return implode($glue, $a);
+    }
+
     public function getComments($offset = 0)
     {
         $rows = \Yii::$app->db
