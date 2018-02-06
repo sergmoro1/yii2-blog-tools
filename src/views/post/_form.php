@@ -16,11 +16,9 @@ use sergmoro1\blog\Module;
 use sergmoro1\blog\models\Author;
 use sergmoro1\blog\models\Rubric;
 use sergmoro1\lookup\models\Lookup;
-//use hiqdev\yii2\assets\select2\Select2Asset;
-use backend\assets\Select2Asset;
+use sergmoro1\blog\assets\Select2Asset;
 
-$select2 = new Select2Asset(['sourcePath' => '@vendor/bower-asset/select2/dist']);
-$select2->register($this);
+Select2Asset::register($this);
 
 $script = <<<JS
 $(document).ready(function() {
