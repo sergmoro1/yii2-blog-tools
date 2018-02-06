@@ -18,6 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class='row'>
 <div class='col-sm-8'>
 
+	<p>
+        <?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
+            'id' => 'author-add',
+            'class' => 'btn btn-success',
+        ]) ?>
+	</p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

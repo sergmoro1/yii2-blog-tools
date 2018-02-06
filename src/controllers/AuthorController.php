@@ -6,7 +6,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use sergmoro1\user\Module;
+use sergmoro1\blog\Module;
 
 use sergmoro1\blog\models\Author;
 use sergmoro1\blog\models\AuthorSearch;
@@ -46,8 +46,30 @@ class AuthorController extends Controller
     }
 
     /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Creates a new Author model.
+     * If creation is successful, the browser will be redirected to the 'index' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+
+        if (\Yii::$app->user->can('create')) {
+            $model = new Author();
+
+            if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+    }
+
+    /**
+     * Updates an existing Author model.
+     * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */

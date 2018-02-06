@@ -1,9 +1,8 @@
 <?php
 namespace console\controllers;
  
-use Yii;
 use yii\console\Controller;
-use console\rbac\PostAuthorRule;
+use console\rbac\PostModeratorRule;
 use console\rbac\OwnCommentRule;
 use console\rbac\OwnAnswerRule;
 use console\rbac\OwnProfileRule;
@@ -13,7 +12,7 @@ class RbacController extends Controller
 {
     public function actionInit()
     {
-        $auth = Yii::$app->authManager;
+        $auth = \Yii::$app->authManager;
         // delete previous /console/rbac/items.php, /console/rbac/rules.php
         $auth->removeAll();
  
@@ -39,18 +38,12 @@ class RbacController extends Controller
         $auth->add($createPost);
         $auth->add($changePostStatus);
         
-        $auth->addChild($createPost, $create);
-
-        // Fund
-        $viewFund = $auth->createPermission('viewFund');
-        $auth->add($viewFund);
-
-        // Rule- Post Author
-        $postAuthor = new PostAuthorRule();
-        $auth->add($postAuthor);
+        // Rule- Post Moderator
+        $postModerator = new PostModeratorRule();
+        $auth->add($postModerator);
 
         $updateOwnPost = $auth->createPermission('updateOwnPost');
-        $updateOwnPost->ruleName = $postAuthor->name;
+        $updateOwnPost->ruleName = $postModerator->name;
         $auth->add($updateOwnPost);
 
         $auth->addChild($updateOwnPost, $update);
@@ -124,7 +117,6 @@ class RbacController extends Controller
         // Admin
         $auth->addChild($admin, $replyComment);
         $auth->addChild($admin, $changePostStatus);
-        $auth->addChild($admin, $viewFund);
         $auth->addChild($admin, $create);
         $auth->addChild($admin, $update);
         $auth->addChild($admin, $delete);

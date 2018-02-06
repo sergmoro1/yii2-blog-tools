@@ -13,7 +13,7 @@ class CommentSearch extends Comment
     {
         // only fields in rules() are searchable
         return [
-            [['id', 'status'], 'integer'],
+            [['id', 'model', 'status'], 'integer'],
             [['author', 'content'], 'safe'],
         ];
     }
@@ -29,15 +29,15 @@ class CommentSearch extends Comment
         $query = Comment::find();
         if(\Yii::$app->user->identity->group == User::GROUP_AUTHOR)
         {
-            // only comments for User's posts
-            $userPosts= [];
+            // only comments for User's posts (or other models)
+            $userPosts = [];
             foreach(Post::find()
                 ->select(['id'])
-                ->where(['author_id' => Yii::$app->user->id])
+                ->where(['user_id' => \Yii::$app->user->id])
                 ->all() as $post)
                 $userPosts[] = $post->id;
             // post_id IN $userPosts
-            $query->andFilterWhere(['post_id' => $userPosts]);
+            $query->andFilterWhere(['parent_id' => $userPosts]);
         }
  
         $dataProvider = new ActiveDataProvider([

@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="post-update">
+<div class="author-update">
 
     <?= $this->render('_form', [
         'model' => $model,

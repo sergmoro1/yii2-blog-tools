@@ -17,19 +17,13 @@ return [
     ],
     'createPost' => [
         'type' => 2,
-        'children' => [
-            'create',
-        ],
     ],
     'changePostStatus' => [
         'type' => 2,
     ],
-    'viewFund' => [
-        'type' => 2,
-    ],
     'updateOwnPost' => [
         'type' => 2,
-        'ruleName' => 'postAuthor',
+        'ruleName' => 'postModerator',
         'children' => [
             'update',
         ],
@@ -81,7 +75,6 @@ return [
         'children' => [
             'replyComment',
             'changePostStatus',
-            'viewFund',
             'create',
             'update',
             'delete',

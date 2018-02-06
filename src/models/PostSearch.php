@@ -28,7 +28,7 @@ class PostSearch extends Post
     {
         $query = Post::find();
         if(\Yii::$app->user->identity->group == User::GROUP_AUTHOR)
-            $query->andFilterWhere(['author_id' => Yii::$app->user->id]);
+            $query->andFilterWhere(['user_id' => \Yii::$app->user->id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

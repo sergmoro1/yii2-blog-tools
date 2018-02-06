@@ -75,6 +75,7 @@ class Author extends ActiveRecord
     {
         return array(
             'name' => Module::t('core', 'Name'),
+            'created_at' => Module::t('core', 'Created at'),
         );
     }
 

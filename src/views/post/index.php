@@ -58,9 +58,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['style' => 'width:9%;'],
             ],
             [
-                'attribute' => 'author_id',
+                'attribute' => 'user_id',
                 'value' => function($data) {
-                    return common\models\User::findOne($data->author_id)->name;
+                    return $data->user->name;
                 }
             ],
 

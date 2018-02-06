@@ -157,7 +157,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     public function attributeLabels()
     {
         return [
-            'user_id' => Module::t('core', 'Author'),
+            'user_id' => Module::t('core', 'Moderator'),
             'previous' => Module::t('core', 'Previous post'),
             'title' => Module::t('core', 'Title'),
             'subtitle' => Module::t('core', 'Sub Title'),

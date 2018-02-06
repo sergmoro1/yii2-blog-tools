@@ -167,7 +167,7 @@ class Comment extends ActiveRecord
         $a = [];
         foreach(Post::find()
             ->select(['id'])
-            ->where(['author_id' => $user_id])
+            ->where(['user_id' => $user_id])
             ->all() as $post)
             
             $a[] = $post->id;

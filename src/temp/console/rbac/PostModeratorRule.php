@@ -6,9 +6,9 @@ use yii\rbac\Rule;
 /**
  * Checks if post.author_id matches user_id passed via params
  */
-class PostAuthorRule extends Rule
+class PostModeratorRule extends Rule
 {
-    public $name = 'postAuthor';
+    public $name = 'postModerator';
 
     /**
      * @param string|integer $user_id the user ID.
@@ -19,7 +19,7 @@ class PostAuthorRule extends Rule
     public function execute($user_id, $item, $params)
     {
         return isset($params['post']) 
-            ? $params['post']->author_id == $user_id
-            : true;
+            ? $params['post']->user_id == $user_id
+            : false;
     }
 }
