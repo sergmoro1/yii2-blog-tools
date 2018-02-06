@@ -31,6 +31,11 @@ class PostAuthor extends ActiveRecord
         ];
     }
 
+    public function getAuthor()
+    {
+        return Author::findOne($this->author_id);
+    }
+
 	/**
 	 * @param integer $post_id
 	 * @param array $old Authors ids
