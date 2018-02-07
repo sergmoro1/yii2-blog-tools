@@ -41,8 +41,6 @@ $this->registerJS($script);
 
     <?= Byone::widget([
         'model' => $model,
-        'minFileSize' => 0.005,
-        'maxFileSize' => 5, // 5Mb
         'draggable' => true,
         'appendixView' => '/post/appendix.php',
         'cropAllowed' => true,
