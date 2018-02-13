@@ -43,8 +43,8 @@ class PostAuthor extends ActiveRecord
 	 */
 	public function updateAuthors($post_id, $old, $new)
 	{
-		if(!is_array($new))
-		    $new = [];
+        if(!is_array($old)) $old = [];
+        if(!is_array($new)) $new = [];
         // delete authors if some names have been deleted in a form
         foreach(array_diff($old, $new) as $i => $author_id) {
 		    if($link = PostAuthor::find()->where(['post_id' => $post_id, 'author_id' => $author_id])->one())
