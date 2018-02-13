@@ -3,7 +3,7 @@ namespace sergmoro1\blog\models;
 
 use yii\helpers\Html;
 use yii\db\ActiveRecord;
-use sergmoro1\blog\components\RuDate;
+use sergmoro1\rudate\RuDate;
 use sergmoro1\blog\Module;
 
 use common\models\Post;
