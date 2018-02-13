@@ -176,9 +176,9 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             'rubric' => Module::t('core', 'Rubric'),
             'status' => Module::t('core', 'Status'),
             'authors' => Module::t('core', 'Authors'),
-            'created_at' => Module::t('core', 'Created'),
-            'created_at_date' => Module::t('core', 'Created'),
-            'updated_at' => Module::t('core', 'Modified'),
+            'created_at' => Module::t('core', 'Created at'),
+            'created_at_date' => Module::t('core', 'Created at'),
+            'updated_at' => Module::t('core', 'Modified at'),
         ];
     }
 

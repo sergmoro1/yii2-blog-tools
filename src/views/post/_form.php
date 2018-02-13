@@ -1,6 +1,3 @@
-<style>
-    .en {color: #556b2f;}
-</style>
 <?php
 /* @var $this yii\web\View */
 /* @var $model common\models\Post */

@@ -24,6 +24,7 @@
         "vova07/yii2-imperavi-widget" : "*",
         "notgosu/yii2-meta-tag-module": "dev-master",
         "sergmoro1/yii2-lookup" : "dev-master",
+        "sergmoro1/yii2-ru-date" : "dev-master",
         "sergmoro1/yii2-byone-uploader" : "dev-master"
     },
     "autoload": {

@@ -2,7 +2,6 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\Post */
 
-use yii\helpers\Html;
 use sergmoro1\blog\Module;
 
 $this->title = Module::t('core', 'Update');
