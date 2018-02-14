@@ -217,7 +217,8 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
      */
     public function getUrl()
     {
-		return \Yii::$app->components['urlManager']['enablePrettyUrl']
+		$exist = isset(\Yii::$app->components['urlManager']['enablePrettyUrl']);
+		return $exist && \Yii::$app->components['urlManager']['enablePrettyUrl']
 		    ? Url::to(['post/' . $this->slug])
 		    : Url::to(['post/view', 'slug' => $this->slug]);
     }
@@ -261,7 +262,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     /**
      * @return string only part ot the title useed as a link
      */
-    public function getTitleLink($friendlyUrl = true, $options = [])
+    public function getTitleLink($options = [])
     {
         mb_internal_encoding("UTF-8");
         $title = $this->title;
@@ -270,7 +271,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         if(($right = mb_strpos($title, ']')) === false)
             $right = mb_strlen($title);
         return mb_substr($title, 0, $left) . 
-            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), $this->getUrl($friendlyUrl), $options) . 
+            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), $this->getUrl(), $options) . 
             mb_substr($title, $right + 1, mb_strlen($title) - $right - ($right ? 1 : 0));
     }
 
