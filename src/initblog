@@ -48,6 +48,8 @@ if(!is_dir('./frontend/web/files'))
     mkdir('./frontend/web/files');
 if(!is_dir('./frontend/web/files/post'))
     mkdir('./frontend/web/files/post');
+if(!is_dir('./frontend/web/files/author'))
+    mkdir('./frontend/web/files/author');
 if(!is_dir('./frontend/web/files/user'))
     mkdir('./frontend/web/files/user');
 if(!is_dir('./frontend/web/files/site'))

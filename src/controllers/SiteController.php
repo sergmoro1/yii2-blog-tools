@@ -99,8 +99,8 @@ class SiteController extends Controller
 				copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/runtime/' . $f));
 				// save changes to runtime/params.php
 				file_put_contents(\Yii::getAlias('@frontend/runtime/params.php'), $model->params);
-				copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/config/params.php'));
 				// copy just saved params to a frontend folder
+				copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/config/params.php'));
 				return $this->goHome();
 			} else
 				$error = Module::t('core', 'Wrong syntax') . ($syntax->error_line ? ' in line: ' . $syntax->error_line : ': unpaired brackets') . '.';
