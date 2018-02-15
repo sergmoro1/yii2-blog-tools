@@ -88,7 +88,7 @@ class SiteController extends Controller
 
     public function actionGear()
     {
-        $model = new \backend\models\GearForm();
+        $model = new \sergmoro1\blog\models\GearForm();
         $error = false;
         if ($model->load(\Yii::$app->request->post())) {
 			$syntax = new ParamsSyntaxChecker();

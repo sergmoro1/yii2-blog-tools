@@ -58,6 +58,7 @@ return [
     'Rubrics' => 'Рубрики',
     'Save' => 'Сохранить',
     'Select' => 'Выбрать',
+    'Settings' => 'Параметры',
     'Show' => 'Показывать',
     'Slug' => 'Слаг',
     'Slug may consists a-z, numbers and minus only.' => 'Сдаг может содержать символы a-z, числа и знак минус.',
