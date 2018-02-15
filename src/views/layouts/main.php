@@ -68,7 +68,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                     </a>
                     <ul class="dropdown-menu">
                         <?php if(Yii::$app->user->can('gear')): ?>
-                            <li><?= Html::a('<i class="fa fa-gear"></i> ' . Yii::t('app', 'Gear'), ['/site/gear']) ?></li>
+                            <li><?= Html::a('<i class="fa fa-gear"></i> ' . Yii::t('app', 'Gear'), ['/blog/site/gear']) ?></li>
                         <?php else: ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> ' . Yii::t('app', 'Profile'), ['/user/user/index']) ?><li>
                         <?php endif; ?>
@@ -88,8 +88,8 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                 <ul class="nav navbar-nav side-nav">
 
                     <li class='vertical'>
-                        <h2>Vorst.ru</h2>
-                        <p><?= Yii::t('app', 'Websites development') ?></p>
+                        <h2><?= \Yii::$app->name ?></h2>
+                        <p><?= \Yii::$app->params['slogan'] ?></p>
                     </li>
                 </ul>
 

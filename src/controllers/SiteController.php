@@ -4,13 +4,15 @@ namespace sergmoro1\blog\controllers;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use sergmoro1\blog\Module;
+use sergmoro1\blog\components\ParamsSyntaxChecker;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-    /**
+	/**
      * @inheritdoc
      */
     public function behaviors()
@@ -71,6 +73,47 @@ class SiteController extends Controller
                 'path' => '@frontend/web/files/common',
             ],    
         ];
+    }
+
+    public function actionIndex()
+    {
+        return $this->render('index');
+    }
+
+    /**
+     * Gear or params.
+     *
+     * @return mixed
+     */
+
+    public function actionGear()
+    {
+        $model = new \backend\models\GearForm();
+        $error = false;
+        if ($model->load(\Yii::$app->request->post())) {
+			$syntax = new ParamsSyntaxChecker();
+			if($syntax->check($model->params)) {
+				// new name for params file
+				$f = 'params_'. date('Ymd_Hi', time()) .'.php';
+				// copy current params to runtime folder with a new name of file
+				copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/runtime/' . $f));
+				// save changes to runtime/params.php
+				file_put_contents(\Yii::getAlias('@frontend/runtime/params.php'), $model->params);
+				copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/config/params.php'));
+				// copy just saved params to a frontend folder
+				return $this->goHome();
+			} else
+				$error = Module::t('core', 'Wrong syntax') . ($syntax->error_line ? ' in line: ' . $syntax->error_line : ': unpaired brackets') . '.';
+        } else {
+			// copy params to runtime folder and
+            copy(\Yii::getAlias('@frontend/config/params.php'), \Yii::getAlias('@frontend/runtime/params.php'));
+            // load it
+            $model->params = file_get_contents(\Yii::getAlias('@frontend/runtime/params.php'));
+        }
+		return $this->render('gear', [
+			'model' => $model,
+			'error' => $error,
+		]);
     }
 
     public function actionFrontend()
