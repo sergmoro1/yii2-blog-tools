@@ -28,8 +28,6 @@ copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/widgets/metaTagForm/vi
 // common/models
 copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/common/models/Post.php', './common/models/Post.php');
 copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/common/models/User.php', './common/models/User.php');
-if(is_file('./common/models/LoginForm.php'))
-    unlink('./common/models/LoginForm.php');
 // console/controllers
 copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/controllers/RbacController.php', './console/controllers/RbacController.php');
 // console/rbac
