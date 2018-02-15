@@ -99,9 +99,8 @@ Set up in <code>backend/config/main.php</code> default layout, uploader module a
 
 <pre>
 return [
-    ...
+    'defaultRoute' => '/blog/site/index',
     'layoutPath' => '@vendor/sergmoro1/yii2-blog-tools/src/views/layouts',
-    ...
     'modules' => [
         'uploader' => ['class' => 'sergmoro1\uploader\Module'],
     ],
@@ -112,7 +111,9 @@ return [
             'itemFile' => __DIR__ . '/../../console/rbac/items.php',
             'ruleFile' => __DIR__ . '/../../console/rbac/rules.php',
         ],
-    ...
+        'errorHandler' => [
+            'errorAction' => '/blog/site/error',
+        ],
 </pre>
 
 Set up in <code>common/config/main.php</code> blog, user (if installed) and seo modules.

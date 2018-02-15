@@ -45,7 +45,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Url::to(['/site/index']) ?>">
+                <a class="navbar-brand" href="<?= Url::to(['/blog/site/index']) ?>">
                     <?= Yii::$app->name ?>
                 </a>
             </div>

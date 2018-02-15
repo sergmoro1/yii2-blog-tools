@@ -1,14 +1,7 @@
 #!/usr/bin/env php
 <?php
-// backend/models
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/models/GearForm.php', './backend/models/GearForm.php');
-// backend/controllers
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/controllers/SiteController.php', './backend/controllers/SiteController.php');
 // backend/config
 copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/config/params.php', './backend/config/params.php');
-// backend/views/site
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/views/site/gear.php', './backend/views/site/gear.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/views/site/index.php', './backend/views/site/index.php');
 if(is_file('./backend/views/site/login.php'))
     unlink('./backend/views/site/login.php');
 // backend/views/meta

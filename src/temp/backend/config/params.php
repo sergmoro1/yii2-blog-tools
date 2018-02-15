@@ -5,6 +5,7 @@ return [
     'postsPerPage' => 20,
     'recordsPerPage' => 20,
     'fileSize' => ['max' => 5],
+    'slogan' => 'Websites development',
     'sidebar' => [
         'post' => ['url' => 'blog/post/index', 'caption' => 'Posts', 'icon' => 'newspaper-o'],
         'rubric' => ['url' => 'blog/rubric/index', 'caption' => 'Rubrics', 'icon' => 'list-ul'],
