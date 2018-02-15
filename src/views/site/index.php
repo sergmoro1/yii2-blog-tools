@@ -10,19 +10,11 @@ $this->params['noTitle'] = true;
 
 	<div class="row">
 		<div class="col-sm-12">
-			<h2 class="ru">Cтатьи</h2>
-			<p class="ru">
-				Список постов, фильтры, предпросмотр. Добавление картинок и фото. Русская и английская часть.
-			</p>
-			<p class="ru">
-				Вложенные множества, метки для ускорения поиска. Цепочки постов для связывания статей по смыслу.
-			</p>
-
-			<h2 class="en">Posts</h2>
-			<p class="en">
+			<h2>Posts</h2>
+			<p>
 				Posts list, filtering, preview. Add pictures and photos. Russian and English parts.
 			</p>
-			<p class="en">
+			<p>
 				Nested Set rubrics, tags for searching. Chains of posts for navigation.
 			</p>
 
@@ -31,25 +23,14 @@ $this->params['noTitle'] = true;
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<h2 class="ru">Комментарии</h2>
-			<p class="ru">
-				Коментарий может оставить любой без регистрации.
-			</p>
-			<p class="ru">
-				Комментарий публикуется после подтверждения.
-			</p>
-			<p class="ru">
-				Зарегистрированные пользователи могут оставлять ответы на комментарии к собственным постам.
-			</p>
-
-			<h2 class="en">Comments</h2>
-			<p class="en">
+			<h2>Comments</h2>
+			<p>
 				Comments can leave anyone without registration.
 			</p>
-			<p class="en">
+			<p>
 				The comment is published after approvement.
 			</p>
-			<p class="en">
+			<p>
 				Registered users can leave an answer for comments to own posts.
 			</p>
 
@@ -58,25 +39,14 @@ $this->params['noTitle'] = true;
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<h2 class="ru">Пользователи</h2>
-			<p class="ru">
-				Полный профайл. Любое количество фото.
-			</p>
-			<p class="ru">
-				Две роли - пользователь и админ. Ваши посты может изменить только автор и админ.
-			</p>
-			<p class="ru">
-				Регистрация с подтверждением по email.
-			</p>
-
-			<h2 class="en">Users</h2>
-			<p class="en">
+			<h2>Users</h2>
+			<p>
 				Full profile. Any number of photos.
 			</p>
-			<p class="en">
+			<p>
 				Two roles - user and admin. Your post can change only you.
 			</p>
-			<p class="en">
+			<p>
 				Registration with email confirmation.
 			</p>
 

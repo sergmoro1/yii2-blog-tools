@@ -8,6 +8,8 @@ Full featured.
 <ul>
   <li>post;</li>
   <li>comment;</li>
+  <li>author (post can has one or more authors with avatar & name);</li>
+  <li>user (with avatar);</li>
   <li>rubric (Nested Set);</li>
   <li>tag;</li>
   <li>meta tag.</li>
@@ -31,11 +33,11 @@ Full featured.
   <li>Predefined controllers with rights verification.</li>
 </ul>
 
-<h3>User (if installed)</h3>
+<h3>User</h3>
 <ul>
   <li>Registration with email confirmation;</li>
   <li>Authorization;</li>
-  <li>Images uploading.</li>
+  <li>Password refresh.</li>
 </ul>
 
 <h3>Comment</h3>
@@ -62,8 +64,6 @@ In app directory change <code>composer.json</code>:
 
 <pre>
 $ composer require --prefer-dist sergmoro1/yii2-blog-tools "dev-master"
-// recomended
-$ composer require --prefer-dist sergmoro1/yii2-user "dev-master"
 </pre>
 
 <h3>Run migrations</h3>
@@ -73,7 +73,6 @@ $ php yii migrate --migrationPath=@vendor/notgosu/yii2-meta-tag-module/src/migra
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-byone-uploader/migrations
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-lookup/src/migrations
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-blog-tools/src/migrations
-// if user module was installed
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-user/src/migrations
 </pre>
 
