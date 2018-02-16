@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use sergmoro1\blog\Module;
 use sergmoro1\blog\components\ParamsSyntaxChecker;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller
@@ -88,6 +89,9 @@ class SiteController extends Controller
 
     public function actionGear()
     {
+        if (!\Yii::$app->user->can('gear'))
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+
         $model = new \sergmoro1\blog\models\GearForm();
         $error = false;
         if ($model->load(\Yii::$app->request->post())) {
