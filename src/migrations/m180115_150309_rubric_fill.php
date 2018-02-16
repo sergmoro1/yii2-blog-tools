@@ -10,6 +10,7 @@ class m180115_150309_rubric_fill extends Migration
     public function up()
     {
         $this->insert('{{%rubric}}', [
+            'id' => 1,
             'lft' => 1, 'rgt' => 2, 'level' => 1, 
             'name' => 'Root', 'slug' => 'root', 
             'position' => 1, 'show' => 0, 

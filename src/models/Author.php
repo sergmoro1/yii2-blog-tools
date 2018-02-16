@@ -84,7 +84,7 @@ class Author extends ActiveRecord
 	}
 	
     public function getAll() {
-		return ArrayHelper::map(self::find()->all(), 'id', 'name'); 
+		return ArrayHelper::map(Author::find()->all(), 'id', 'name'); 
 	}
 	
     /**
