@@ -104,7 +104,7 @@ $this->registerJS($script);
         ]
     ]); ?>
 
-    <?= backend\widgets\metaTagForm\Widget::widget([
+    <?= sergmoro1\blog\widgets\metaTagForm\Widget::widget([
         'model' => $model,
     ]); ?>
 

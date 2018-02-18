@@ -2,32 +2,17 @@
 
 namespace sergmoro1\blog\controllers;
 
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
 
 use notgosu\yii2\modules\metaTag\Module;
 use notgosu\yii2\modules\metaTag\models\MetaTag;
+use notgosu\yii2\modules\metaTag\controllers\TagController;
 
 /**
  * TagController implements the CRUD actions for MetaTag model.
  */
-class MetaController extends Controller
+class MetaController extends TagController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all MetaTag models.
      * @return mixed
@@ -36,14 +21,19 @@ class MetaController extends Controller
     {
 		if (!\Yii::$app->user->can('index', [], false))
 		    throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
-		
-        $dataProvider = new ActiveDataProvider([
-            'query' => MetaTag::find(),
-        ]);
+		return parent::actionIndex();
+    }
 
-        return $this->render('@backend/views/meta/tag/index', [
-            'dataProvider' => $dataProvider,
-        ]);
+    /**
+     * Displays a single MetaTag model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        if (!\Yii::$app->user->can('view'))
+            throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
+		return parent::actionView($id);
     }
 
     /**
@@ -55,13 +45,13 @@ class MetaController extends Controller
     {
 		if (!\Yii::$app->user->can('create'))
 		    throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
-        
+
         $model = new MetaTag();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
-            return $this->render('@backend/views/meta/tag/create', [
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
@@ -82,7 +72,7 @@ class MetaController extends Controller
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
-            return $this->render('@backend/views/meta/tag/update', [
+            return $this->render('update', [
                 'model' => $model,
             ]);
         }
@@ -98,25 +88,6 @@ class MetaController extends Controller
     {
 		if (!\Yii::$app->user->can('delete'))
 			throw new ForbiddenHttpException(\Module::t('metaTag', 'Access denied.'));
-
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the MetaTag model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return MetaTag the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = MetaTag::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException(Module::t('metaTag', 'The requested model does not exist.'));
-        }
+		parent::actionDelete($id);
     }
 }
