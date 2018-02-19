@@ -107,7 +107,9 @@ class SiteController extends Controller
 				copy(\Yii::getAlias('@frontend/runtime/params.php'), \Yii::getAlias('@frontend/config/params.php'));
 				return $this->goHome();
 			} else
-				$error = Module::t('core', 'Wrong syntax') . ($syntax->error_line ? ' in line: ' . $syntax->error_line : ': unpaired brackets') . '.';
+				$error = Module::t('core', 'Wrong syntax') . ($syntax->error['line'] 
+				    ? ' in line: ' . $syntax->error['line'] . ' (' . $syntax->error['prev'] . ' -> ' . $syntax->error['token'] . ')'
+				    : ': unpaired brackets') . '.';
         } else {
 			// copy params to runtime folder and
             copy(\Yii::getAlias('@frontend/config/params.php'), \Yii::getAlias('@frontend/runtime/params.php'));
