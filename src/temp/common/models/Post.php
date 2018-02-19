@@ -16,7 +16,7 @@ class Post extends \sergmoro1\blog\models\BasePost
 {
     public $sizes = [
         'original' => ['width' => 2400, 'height' => 1600, 'catalog' => 'original'],
-        'main' => ['width' => 1200, 'height' => 400, 'catalog' => ''],
+        'main' => ['width' => 900, 'height' => 600, 'catalog' => ''],
         'medium' => ['width' => 360, 'height' => 240, 'catalog' => 'medium/'],
         'thumb' => ['width' => 120, 'height' => 80, 'catalog' => 'thumb/'],
     ];

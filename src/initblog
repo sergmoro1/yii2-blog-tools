@@ -1,61 +1,40 @@
 #!/usr/bin/env php
 <?php
+// source folder
+$src = './vendor/sergmoro1/yii2-blog-tools/src/temp';
 // backend/config
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/config/params.php', './backend/config/params.php');
+copy($src . '/backend/config/params.php', './backend/config/params.php');
+// delete no needed files
 if(is_file('./backend/views/site/login.php'))
     unlink('./backend/views/site/login.php');
-// backend/views/meta
-if(!is_dir('./backend/views/meta'))
-    mkdir('./backend/views/meta');
-if(!is_dir('./backend/views/meta/tag'))
-    mkdir('./backend/views/meta/tag');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/views/meta/tag/create.php', './backend/views/meta/tag/create.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/views/meta/tag/_form.php', './backend/views/meta/tag/_form.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/views/meta/tag/index.php', './backend/views/meta/tag/index.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/views/meta/tag/update.php', './backend/views/meta/tag/update.php');
-if(!is_dir('./backend/views/meta/widget'))
-    mkdir('./backend/views/meta/widget');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/views/meta/widget/default.php', './backend/views/meta/widget/default.php');
-// backend/views/widgets
-if(!is_dir('./backend/widgets'))
-    mkdir('./backend/widgets');
-if(!is_dir('./backend/widgets/metaTagForm'))
-    mkdir('./backend/widgets/metaTagForm');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/widgets/metaTagForm/Widget.php', './backend/widgets/metaTagForm/Widget.php');
-if(!is_dir('./backend/widgets/metaTagForm/views'))
-    mkdir('./backend/widgets/metaTagForm/views');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/backend/widgets/metaTagForm/views/default.php', './backend/widgets/metaTagForm/views/default.php');
 // common/models
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/common/models/Post.php', './common/models/Post.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/common/models/User.php', './common/models/User.php');
+copyFiles($src, '/common/models/');
 // console/controllers
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/controllers/RbacController.php', './console/controllers/RbacController.php');
+copy($src . '/console/controllers/RbacController.php', './console/controllers/RbacController.php');
 // console/rbac
 if(!is_dir('./console/rbac'))
     mkdir('./console/rbac');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/assignments.php', './console/rbac/assignments.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/items.php', './console/rbac/items.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/OwnAnswerRule.php', './console/rbac/OwnAnswerRule.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/OwnCommentRule.php', './console/rbac/OwnCommentRule.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/OwnProfileRule.php', './console/rbac/OwnProfileRule.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/PostModeratorRule.php', './console/rbac/PostModeratorRule.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/rules.php', './console/rbac/rules.php');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/console/rbac/UserGroupRule.php', './console/rbac/UserGroupRule.php');
+copyFiles($src, '/console/rbac/');
 // frontend/web/files
 if(!is_dir('./frontend/web/files'))
     mkdir('./frontend/web/files');
-if(!is_dir('./frontend/web/files/post'))
-    mkdir('./frontend/web/files/post');
-if(!is_dir('./frontend/web/files/author'))
-    mkdir('./frontend/web/files/author');
-if(!is_dir('./frontend/web/files/user'))
-    mkdir('./frontend/web/files/user');
-if(!is_dir('./frontend/web/files/site'))
-    mkdir('./frontend/web/files/site');
-if(!is_dir('./frontend/web/files/site/page'))
-    mkdir('./frontend/web/files/site/page');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/frontend/web/files/site/page/login-bg.jpg', './frontend/web/files/site/page/login-bg.jpg');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/frontend/web/files/site/page/request-token-bg.jpg', './frontend/web/files/site/page/request-token-bg.jpg');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/frontend/web/files/site/page/reset-password-bg.jpg', './frontend/web/files/site/page/reset-password-bg.jpg');
-copy('./vendor/sergmoro1/yii2-blog-tools/src/temp/frontend/web/files/site/page/signup-bg.jpg', './frontend/web/files/site/page/signup-bg.jpg');
+// make folders for files & photos
+makeFolders('./frontend/web/files/', ['common', 'post', 'author', 'user']);
 
+/**
+ * Copy all files from $source$dest/ to .$dest/
+ */
+function copyFiles($src, $dest) {
+	$path = $src . $dest;
+    foreach(array_slice(scandir($path), 2) as $file)
+        copy($src . $dest . $file, '.' . $dest . $file);
+}
+/**
+ * Make subfolders in a dir
+ */
+function makeFolders($dir, $folders) {
+    foreach($folders as $folder) {
+        if(!is_dir($dir . $folder))
+            mkdir($dir . $folder);
+    }
+}
