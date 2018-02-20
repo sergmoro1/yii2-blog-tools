@@ -7,8 +7,8 @@ use yii\db\Migration;
  */
 class m180205_070340_create_post_author extends Migration
 {
-	public $table = '{{%post_author}}';
-	
+    public $table = '{{%post_author}}';
+    
     // Use up()/down() to run migration code without a transaction.
     public function up()
     {

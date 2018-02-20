@@ -12,29 +12,29 @@ use sergmoro1\blog\Module;
 
 <?php $form = ActiveForm::begin(); ?>
 <div class='row'>
-	<div class="col-lg-8">
-		<?= Byone::widget([
-			'model' => $model,
-			'appendixView' => '/author/appendix',
-			'cropAllowed' => true,
-			'draggable' => true,
-		]) ?>
+    <div class="col-lg-8">
+        <?= Byone::widget([
+            'model' => $model,
+            'appendixView' => '/author/appendix',
+            'cropAllowed' => true,
+            'draggable' => true,
+        ]) ?>
 
-		<?= $form->field($model, 'name')
-			->textInput(['maxlength' => true])
-		?>
+        <?= $form->field($model, 'name')
+            ->textInput(['maxlength' => true])
+        ?>
 
-		<div class="form-group">
-			<?= Html::submitButton(Module::t('core', 'Save'), [
-				'class' => 'btn btn-success',
-			]) ?>
-		</div>
-	</div>
+        <div class="form-group">
+            <?= Html::submitButton(Module::t('core', 'Save'), [
+                'class' => 'btn btn-success',
+            ]) ?>
+        </div>
+    </div>
 
-	<div class="col-lg-4">
+    <div class="col-lg-4">
 
 
-	</div>
+    </div>
 </div>
 
 <?php ActiveForm::end(); ?>

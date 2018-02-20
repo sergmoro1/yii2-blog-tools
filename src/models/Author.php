@@ -15,11 +15,11 @@ use sergmoro1\uploader\models\OneFile;
 
 class Author extends ActiveRecord
 {
-	public $sizes = [
-		'original' => ['width' => 1200, 'height' => 900, 'catalog' => 'original'],
-		'main' => ['width' => 300, 'height' => 300, 'catalog' => '', 'crop' => true],
-		'thumb' => ['width' => 90, 'height' => 90, 'catalog' => 'thumb', 'crop' => true],
-	];
+    public $sizes = [
+        'original' => ['width' => 1200, 'height' => 900, 'catalog' => 'original'],
+        'main' => ['width' => 300, 'height' => 300, 'catalog' => '', 'crop' => true],
+        'thumb' => ['width' => 90, 'height' => 90, 'catalog' => 'thumb', 'crop' => true],
+    ];
 
     /**
      * @return string the associated database table name
@@ -32,26 +32,26 @@ class Author extends ActiveRecord
     /**
      * @inheritdoc
      */
-	public function behaviors()
-	{
+    public function behaviors()
+    {
         return array_merge(parent::behaviors(), [
-			'FilePath' => [
-				'class' => FilePath::className(),
-				'file_path' => '/files/author/',
-			],
+            'FilePath' => [
+                'class' => FilePath::className(),
+                'file_path' => '/files/author/',
+            ],
         ]);
-	}
+    }
 
-	public function getFiles()
-	{
+    public function getFiles()
+    {
         return OneFile::find()
             ->where('parent_id=:parent_id AND model=:model', [
-				':parent_id' => $this->id,
-				':model' => 'sergmoro1\blog\models\Author',
-			])
-			->orderBy('created_at')
+                ':parent_id' => $this->id,
+                ':model' => 'sergmoro1\blog\models\Author',
+            ])
+            ->orderBy('created_at')
             ->all();
-	}
+    }
 
     /**
      * @return array validation rules for model attributes.
@@ -79,14 +79,14 @@ class Author extends ActiveRecord
         );
     }
 
-	public function getFrequency() {
-		return PostAuthor::find()->where(['author_id' => $this->id])->count();
-	}
-	
+    public function getFrequency() {
+        return PostAuthor::find()->where(['author_id' => $this->id])->count();
+    }
+    
     public function getAll() {
-		return ArrayHelper::map(Author::find()->all(), 'id', 'name'); 
-	}
-	
+        return ArrayHelper::map(Author::find()->all(), 'id', 'name'); 
+    }
+    
     /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.

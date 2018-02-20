@@ -25,7 +25,7 @@ makeFolders('./frontend/web/files/', ['common', 'post', 'author', 'user']);
  * Copy all files from $source$dest/ to .$dest/
  */
 function copyFiles($src, $dest) {
-	$path = $src . $dest;
+    $path = $src . $dest;
     foreach(array_slice(scandir($path), 2) as $file)
         copy($src . $dest . $file, '.' . $dest . $file);
 }

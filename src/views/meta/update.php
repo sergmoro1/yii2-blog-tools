@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id
 $this->params['breadcrumbs'][] = Yii::t('metaTag', 'Update');
 ?>
 <div class="panel-body">
-	<?= $this->render('_form', [
-		'model' => $model,
-	]) ?>
+    <?= $this->render('_form', [
+        'model' => $model,
+    ]) ?>
 </div>

@@ -7,8 +7,8 @@ use yii\db\Migration;
  */
 class m180205_054717_create_author extends Migration
 {
-	public $table = '{{%author}}';
-	
+    public $table = '{{%author}}';
+    
     /**
      * @inheritdoc
      */

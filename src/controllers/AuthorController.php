@@ -13,8 +13,8 @@ use sergmoro1\blog\models\AuthorSearch;
 
 class AuthorController extends Controller
 {
-	public $_model = null;
-	
+    public $_model = null;
+    
     public function behaviors()
     {
         return [
@@ -33,16 +33,16 @@ class AuthorController extends Controller
      */
     public function actionIndex()
     {
-		if (\Yii::$app->user->can('index', [], false)) {
-			$searchModel = new AuthorSearch();
-			$dataProvider = $searchModel->search(\Yii::$app->request->get());
+        if (\Yii::$app->user->can('index', [], false)) {
+            $searchModel = new AuthorSearch();
+            $dataProvider = $searchModel->search(\Yii::$app->request->get());
 
-			return $this->render('index', [
-				'dataProvider' => $dataProvider,
-				'searchModel' => $searchModel,
-			]);
-		} else
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]);
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -75,17 +75,17 @@ class AuthorController extends Controller
      */
     public function actionUpdate($id)
     {
-		$model = $this->findModel($id);
-		if (\Yii::$app->user->can('update', ['model' => $model])) {
-			if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index']);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
-		} else
-			throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
+        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('update', ['model' => $model])) {
+            if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        } else
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
     /**
@@ -96,15 +96,15 @@ class AuthorController extends Controller
      */
     public function actionDelete($id)
     {
-		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(\Module::t('core', 'Access denied.'));
+        if (!\Yii::$app->user->can('delete'))
+            throw new ForbiddenHttpException(\Module::t('core', 'Access denied.'));
 
         $model = $this->findModel($id);
-		foreach($model->files as $file)
-			$file->delete();
-		$model->delete();
+        foreach($model->files as $file)
+            $file->delete();
+        $model->delete();
 
-		return $this->redirect(['index']);
+        return $this->redirect(['index']);
     }
 
     /**
@@ -117,14 +117,14 @@ class AuthorController extends Controller
      */
     public function findModel($id)
     {
-		if($this->_model === null) 
-		{
-			if($this->_model = $id ? Author::findOne($id) : null) 
-			{
-				return $this->_model;
-			} else {
-				throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
-			}
-		}
-	}
+        if($this->_model === null) 
+        {
+            if($this->_model = $id ? Author::findOne($id) : null) 
+            {
+                return $this->_model;
+            } else {
+                throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
+            }
+        }
+    }
 }

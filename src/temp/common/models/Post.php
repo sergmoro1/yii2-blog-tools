@@ -6,13 +6,12 @@
 
 namespace common\models;
 
-use Yii;
-use yii\helpers\Html;
-
+use sergmoro1\blog\models\BasePost;
 use sergmoro1\uploader\FilePath;
 use sergmoro1\uploader\models\OneFile;
+use notgosu\yii2\modules\metaTag\components\MetaTagBehavior;
 
-class Post extends \sergmoro1\blog\models\BasePost
+class Post extends BasePost
 {
     public $sizes = [
         'original' => ['width' => 2400, 'height' => 1600, 'catalog' => 'original'],
@@ -29,7 +28,7 @@ class Post extends \sergmoro1\blog\models\BasePost
                 'file_path' => '/files/post/',
             ],
             'seo' => [
-                'class' => \notgosu\yii2\modules\metaTag\components\MetaTagBehavior::className(),
+                'class' => MetaTagBehavior::className(),
                 'languages' => ['ru'],
             ],
         ]);

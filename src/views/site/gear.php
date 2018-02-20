@@ -18,11 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php if($error): ?>
 <div class="alert alert-danger" role="alert">
-	<?= $error ?>
+    <?= $error ?>
 </div>
 <?php else: ?>
 <div class="alert alert-warning" role="alert">
-	<?= Module::t('core', 'Be careful! All symbols are meaningful.') ?>
+    <?= Module::t('core', 'Be careful! All symbols are meaningful.') ?>
 </div>
 <?php endif; ?>
 
@@ -31,18 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $form = ActiveForm::begin(['id' => 'form-gear']); ?>
 
-	<?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
 
-	<?= $form->field($model, 'params')
-		->textArea([
-			'rows' => 20,
-		])->label(false)
-	?>
+    <?= $form->field($model, 'params')
+        ->textArea([
+            'rows' => 20,
+        ])->label(false)
+    ?>
 
-	<?= Html::submitButton(\Yii::t('app', 'Save'), [
-		'class' => 'btn btn-success', 
-		'name' => 'submit-button',
-	]) ?>
+    <?= Html::submitButton(\Yii::t('app', 'Save'), [
+        'class' => 'btn btn-success', 
+        'name' => 'submit-button',
+    ]) ?>
 
 <?php ActiveForm::end(); ?>
 

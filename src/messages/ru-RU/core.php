@@ -80,6 +80,7 @@ return [
     'View' => 'Просмотр',
     'Visible' => '',
     'Websites development' => 'Создание сайтов',
+    'Wrong syntax' => 'Не верный синтаксис',
     'frontend' => '',
     'hours ago' => 'часов назад',
     'in Russian / English' => 'По Русски / English',
@@ -90,4 +91,9 @@ return [
     'Node has not parent.' => 'Узел не имеет родителя.',
     'Add' => 'Добавить',
     'Content' => 'Содержание',
+    'after' => 'после',
+    'near line' => 'рядом со строкой',
+    'should be' => 'должен следовать',
+    'should not be' => 'не должно быть',
+    'unpaired brackets' => 'не парные скобки',
 ];

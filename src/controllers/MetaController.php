@@ -19,9 +19,9 @@ class MetaController extends TagController
      */
     public function actionIndex()
     {
-		if (!\Yii::$app->user->can('index', [], false))
-		    throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
-		return parent::actionIndex();
+        if (!\Yii::$app->user->can('index', [], false))
+            throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
+        return parent::actionIndex();
     }
 
     /**
@@ -33,7 +33,7 @@ class MetaController extends TagController
     {
         if (!\Yii::$app->user->can('view'))
             throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
-		return parent::actionView($id);
+        return parent::actionView($id);
     }
 
     /**
@@ -43,8 +43,8 @@ class MetaController extends TagController
      */
     public function actionCreate()
     {
-		if (!\Yii::$app->user->can('create'))
-		    throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
+        if (!\Yii::$app->user->can('create'))
+            throw new ForbiddenHttpException(Module::t('metaTag', 'Access denied.'));
 
         $model = new MetaTag();
 
@@ -86,8 +86,8 @@ class MetaController extends TagController
      */
     public function actionDelete($id)
     {
-		if (!\Yii::$app->user->can('delete'))
-			throw new ForbiddenHttpException(\Module::t('metaTag', 'Access denied.'));
-		parent::actionDelete($id);
+        if (!\Yii::$app->user->can('delete'))
+            throw new ForbiddenHttpException(\Module::t('metaTag', 'Access denied.'));
+        parent::actionDelete($id);
     }
 }

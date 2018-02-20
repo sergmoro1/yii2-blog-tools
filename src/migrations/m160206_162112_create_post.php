@@ -5,8 +5,8 @@ use yii\db\Migration;
 
 class m160206_162112_create_post extends Migration
 {
-	public $table = '{{%post}}';
-	
+    public $table = '{{%post}}';
+    
     public function up()
     {
         $tableOptions = null;

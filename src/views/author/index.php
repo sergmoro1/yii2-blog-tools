@@ -18,12 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class='row'>
 <div class='col-sm-8'>
 
-	<p>
+    <p>
         <?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
             'id' => 'author-add',
             'class' => 'btn btn-success',
         ]) ?>
-	</p>
+    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -31,35 +31,35 @@ $this->params['breadcrumbs'][] = $this->title;
         'layout' => "{items}\n{summary}\n{pager}",
         'columns' => [
             [
-				'attribute' => 'id',
-				'options' => ['style' => 'width:4%;'],
-			],
-			[
-				'header' => Module::t('core', 'Thumb'),
-				'format' => 'html',
-				'value' => function($data) {
-					return Html::img($data->getImage('thumb'), ['class' => 'img-responsive']);
-				}
-			],
-			'name',
-			[
-				'header' => Module::t('core', 'Frequency'),
-				'value' => function($data) {
-					return $data->frequency;
-				}
-			],
+                'attribute' => 'id',
+                'options' => ['style' => 'width:4%;'],
+            ],
             [
-				'attribute' => 'created_at',
-				'value' => function($data) {
-					return date('d.m.y', $data->created_at);
-				},
-				'options' => ['style' => 'width:9%;'],
-			],
+                'header' => Module::t('core', 'Thumb'),
+                'format' => 'html',
+                'value' => function($data) {
+                    return Html::img($data->getImage('thumb'), ['class' => 'img-responsive']);
+                }
+            ],
+            'name',
             [
-				'class' => 'yii\grid\ActionColumn',
-				'template' => '{update}{delete}', 
-				'options' => ['style' => 'width:6%;'],
-			],
+                'header' => Module::t('core', 'Frequency'),
+                'value' => function($data) {
+                    return $data->frequency;
+                }
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => function($data) {
+                    return date('d.m.y', $data->created_at);
+                },
+                'options' => ['style' => 'width:9%;'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}{delete}', 
+                'options' => ['style' => 'width:6%;'],
+            ],
         ],
     ]); ?>
 

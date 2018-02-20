@@ -78,7 +78,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             [['slug', 'title', 'subtitle'], 'string', 'max'=>128],
             ['slug', 'unique'],
             ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => \Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
-			['tags', 'match', 'pattern' => '/^[а-яА-Я\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
+            ['tags', 'match', 'pattern' => '/^[а-яА-Я\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
             ['tags', 'normalizeTags'],
             ['created_at_date', 'date', 'format' => 'dd.MM.yyyy', 'timestampAttribute' => 'created_at'],
             [['resume', 'created_at', 'updated_at', 'authors'], 'safe'],
@@ -117,10 +117,10 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 
     public function getListAuthors($glue = ', ')
     {
-		$a = [];
+        $a = [];
         foreach($this->getAuthors() as $link)
-			$a[] = $link->author->name;
-		return implode($glue, $a);
+            $a[] = $link->author->name;
+        return implode($glue, $a);
     }
 
     public function getComments($offset = 0)
@@ -217,10 +217,10 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
      */
     public function getUrl()
     {
-		$exist = isset(\Yii::$app->components['urlManager']['enablePrettyUrl']);
-		return $exist && \Yii::$app->components['urlManager']['enablePrettyUrl']
-		    ? Url::to(['post/' . $this->slug])
-		    : Url::to(['post/view', 'slug' => $this->slug]);
+        $exist = isset(\Yii::$app->components['urlManager']['enablePrettyUrl']);
+        return $exist && \Yii::$app->components['urlManager']['enablePrettyUrl']
+            ? Url::to(['post/' . $this->slug])
+            : Url::to(['post/view', 'slug' => $this->slug]);
     }
 
     /**
