@@ -27,7 +27,7 @@ $this->params['noTitle'] = true;
         <div class="col-sm-12">
             <h2>Comments</h2>
             <p>
-                Comments can leave anyone without registration.
+                Comments management.
                 The comment is published after approvement.
             </p>
             <p>
@@ -41,8 +41,7 @@ $this->params['noTitle'] = true;
         <div class="col-sm-12">
             <h2>Users</h2>
             <p>
-                Short profile, avatar.
-                Two roles - <code>user</code> and <code>admin</code>. Your post can change only you.
+                Avatar. Two roles - <code>user</code> and <code>admin</code>. Your post can change only you.
             </p>
             <p>
                 Registration with email confirmation.

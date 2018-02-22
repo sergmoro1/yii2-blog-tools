@@ -271,7 +271,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         if(($right = mb_strpos($title, ']')) === false)
             $right = mb_strlen($title);
         return mb_substr($title, 0, $left) . 
-            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), $this->getUrl(), $options) . 
+            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), $this->url, $options) . 
             mb_substr($title, $right + 1, mb_strlen($title) - $right - ($right ? 1 : 0));
     }
 
@@ -306,14 +306,14 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     /**
      * @return title link list of previous posts
      */
-    public function Previous($friendlyUrl = true, $options = [])
+    public function Previous($options = [])
     {
         $a = array();
         $previous = $this->previous;
         while($previous)
         {
             $post = $this->findOne($previous);
-            $a[] = $post->getTitleLink($friendlyUrl, $options);
+            $a[] = $post->getTitleLink($options);
             $previous = $post->previous;
         }
         if($a)
@@ -323,14 +323,14 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ->orderBy('created_at DESC')
             ->one()
         )
-            return $post->getTitleLink($friendlyUrl, $options);
+            return $post->getTitleLink($options);
         return '';
     }
 
     /**
      * @return title link list of next posts
      */
-    public function Next($friendlyUrl = true, $options = [])
+    public function Next($options = [])
     {
         $a = [];
         $next = $this->id;
@@ -339,7 +339,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ->one()
         )
         {
-            $a[] = $post->getTitleLink($friendlyUrl, $options);
+            $a[] = $post->getTitleLink($options);
             $next = $post->id;
         }
         if($a)
@@ -349,7 +349,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ->orderBy('created_at ASC')
             ->one()
         )
-            return $post->getTitleLink($friendlyUrl, $options);
+            return $post->getTitleLink($options);
         return '';
     }
 
