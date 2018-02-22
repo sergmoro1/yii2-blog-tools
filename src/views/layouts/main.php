@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\models\User;
-use common\widgets\Alert;
+use sergmoro1\blog\widgets\Alert;
 
 sergmoro1\blog\assets\SBAdminAsset::register($this);
 ?>
