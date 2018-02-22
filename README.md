@@ -62,7 +62,7 @@ $ chmod 777 ./frontend/config/params.php
 
 <h3>Configs</h3>
 
-Set up in <code>backend/config/main.php</code> default layout, uploader module and auth component.
+Set up in <code>backend/config/main.php</code>.
 
 <pre>
 return [
@@ -78,12 +78,29 @@ return [
             'itemFile' => __DIR__ . '/../../console/rbac/items.php',
             'ruleFile' => __DIR__ . '/../../console/rbac/rules.php',
         ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'viewPath' => '@vendor/sergmoro1/yii2-user/src/mail',
+            /* Definition of Yandex post office for your domain (example).
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.yandex.ru',
+                'username' => 'admin@your-site.ru',
+                'password' => 'your-password',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
+            */
+        ],
         'errorHandler' => [
             'errorAction' => '/blog/site/error',
         ],
+    ],
+];
 </pre>
 
-Set up in <code>common/config/main.php</code> blog, user and seo modules.
+Set up in <code>common/config/main.php</code>.
 <pre>
 return [
     ...
@@ -95,10 +112,9 @@ return [
         'user' => ['class' => 'sergmoro1\user\Module'],
         'seo' => [
             'class' => 'notgosu\yii2\modules\metaTag\Module',
-            'viewPath' => '@backend/views/meta',
         ],
     ],
-    ...
+];
 </pre>
 
 <h3>Start</h3>
