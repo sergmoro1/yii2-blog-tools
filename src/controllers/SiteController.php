@@ -120,7 +120,7 @@ class SiteController extends Controller
                 $error = Module::t('core', 'Wrong syntax') . ($syntax->error['line'] 
                     ? ' ' . Module::t('core', 'near line') . ': ' . $syntax->error['line'] . 
                         ' ('. Module::t('core', 'after') . ' <code>' . $syntax->error['prev'] . '</code> ' . 
-                        (isset($syntax->error['must']) ?? $syntax->error['must'] 
+                        (isset($syntax->error['must']) && $syntax->error['must'] 
                             ? Module::t('core', 'should be') 
                             : Module::t('core', 'should not be')
                         ) . ' <code>' . $syntax->error['token'] . '</code>)'
