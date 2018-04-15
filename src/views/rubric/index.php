@@ -18,8 +18,8 @@ echo Modal::widget([
     'id' => 'rubric-win',
     'toggleButton' => false,
     'header' => $this->title,
-    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
-        Html::button('Сохранить', ['class' => 'btn btn-primary', 'onclick' => '$(".rubric-form #submit-btn").click()']),
+    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
+        Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".rubric-form #submit-btn").click()']),
 ]);
 
 ?>

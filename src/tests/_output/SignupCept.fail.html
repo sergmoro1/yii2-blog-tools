@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/backend/web/favicon.ico" type="image/x-icon">
+    
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <title>vorst.ru - Signup</title>
+    <link href="/backend/web/assets/23c6f6a6/css/bootstrap.css" rel="stylesheet">
+<link href="/backend/web/assets/147ea5fb/css/sb-admin.css" rel="stylesheet">
+<link href="/backend/web/assets/147ea5fb/css/site.css" rel="stylesheet"></head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/backend/web/index-test.php?r=blog%2Fsite%2Findex">
+                    vorst.ru                </a>
+            </div>
+
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li><a href="/backend/web/index-test.php?r=blog%2Fsite%2Ffrontend">frontend</a></li>
+                                <li><a href="/backend/web/index-test.php?r=user%2Fsite%2Flogin">Login</a></li>
+                            </ul>
+
+            <!-- Sidebar Menu Items - these collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                                <ul class="nav navbar-nav side-nav">
+
+                    <li class='vertical'>
+                        <h2>vorst.ru</h2>
+                        <p>Websites development</p>
+                    </li>
+                </ul>
+
+                
+
+            </div>
+
+        </nav> <!-- /.navbar-collapse -->
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+                
+                <h3>Signup</h3>
+                
+                                
+<div class="row">
+<div class="col-lg-6">
+
+<form id="form-signup" action="/backend/web/index-test.php?r=user%2Fsite%2Fsignup" method="post">
+	<div class="error-summary"><p>Please fix the following errors:</p><ul><li>Password should contain at least 6 characters.</li>
+<li>Email cannot be blank.</li></ul></div>
+	<div class="form-group field-signupform-name required">
+<label class="control-label" for="signupform-name">Name</label>
+<input type="text" id="signupform-name" class="form-control" name="SignupForm[name]" value="Admin" placeholder="Name" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>
+	<div class="form-group field-signupform-email required has-error">
+<label class="control-label" for="signupform-email">Email</label>
+<input type="text" id="signupform-email" class="form-control" name="SignupForm[email]" value="" placeholder="Email" aria-required="true" aria-invalid="true">
+
+<p class="help-block help-block-error">Email cannot be blank.</p>
+</div>
+	<div class="form-group field-signupform-password required has-error">
+<label class="control-label" for="signupform-password">Password</label>
+<input type="password" id="signupform-password" class="form-control" name="SignupForm[password]" value="wrong" placeholder="Password" aria-required="true" aria-invalid="true">
+
+<p class="help-block help-block-error">Password should contain at least 6 characters.</p>
+</div>
+	<br>
+	<button type="submit" class="btn btn-default" name="signup-button">To signup</button>	<br><br>
+
+</form>
+</div> <!-- / .col ... -->
+</div> <!-- / .row -->
+
+
+            </div> <!-- /.container-fluid -->
+
+        </div> <!-- /#page-wrapper -->
+
+    </div> <!-- /#wrapper -->
+
+<script src="/backend/web/assets/c333a0f9/jquery.js"></script>
+<script src="/backend/web/assets/84844566/yii.js"></script>
+<script src="/backend/web/assets/84844566/yii.validation.js"></script>
+<script src="/backend/web/assets/84844566/yii.activeForm.js"></script>
+<script src="/backend/web/assets/23c6f6a6/js/bootstrap.js"></script>
+<script src="/backend/web/assets/147ea5fb/js/jquery.compatible.js"></script>
+<script>jQuery(function ($) {
+jQuery('#form-signup').yiiActiveForm([{"id":"signupform-name","name":"name","container":".field-signupform-name","input":"#signupform-name","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {value = yii.validation.trim($form, attribute, []);yii.validation.required(value, messages, {"message":"Name cannot be blank."});yii.validation.string(value, messages, {"message":"Name must be a string.","min":2,"tooShort":"Name should contain at least 2 characters.","max":255,"tooLong":"Name should contain at most 255 characters.","skipOnEmpty":1});}},{"id":"signupform-email","name":"email","container":".field-signupform-email","input":"#signupform-email","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {value = yii.validation.trim($form, attribute, []);yii.validation.required(value, messages, {"message":"Email cannot be blank."});yii.validation.email(value, messages, {"pattern":/^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/,"fullPattern":/^[^@]*<[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/,"allowName":false,"message":"Email is not a valid email address.","enableIDN":false,"skipOnEmpty":1});yii.validation.string(value, messages, {"message":"Email must be a string.","max":255,"tooLong":"Email should contain at most 255 characters.","skipOnEmpty":1});}},{"id":"signupform-password","name":"password","container":".field-signupform-password","input":"#signupform-password","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Password cannot be blank."});yii.validation.string(value, messages, {"message":"Password must be a string.","min":6,"tooShort":"Password should contain at least 6 characters.","skipOnEmpty":1});}}], []);
+});</script></body>
+</html>
+

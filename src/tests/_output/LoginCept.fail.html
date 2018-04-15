@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/backend/web/favicon.ico" type="image/x-icon">
+    
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <title>vorst.ru - Вход</title>
+    <link href="/backend/web/assets/23c6f6a6/css/bootstrap.css" rel="stylesheet">
+<link href="/backend/web/assets/147ea5fb/css/sb-admin.css" rel="stylesheet">
+<link href="/backend/web/assets/147ea5fb/css/site.css" rel="stylesheet"></head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/backend/web/index-test.php?r=blog%2Fsite%2Findex">
+                    vorst.ru                </a>
+            </div>
+
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li><a href="/backend/web/index-test.php?r=blog%2Fsite%2Ffrontend">frontend</a></li>
+                                <li><a href="/backend/web/index-test.php?r=user%2Fsite%2Flogin">Вход</a></li>
+                            </ul>
+
+            <!-- Sidebar Menu Items - these collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                                <ul class="nav navbar-nav side-nav">
+
+                    <li class='vertical'>
+                        <h2>vorst.ru</h2>
+                        <p>Websites development</p>
+                    </li>
+                </ul>
+
+                
+
+            </div>
+
+        </nav> <!-- /.navbar-collapse -->
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+                
+                <h3>Вход</h3>
+                
+                                
+<div class="row">
+<div class="col-lg-6">
+
+<p>
+	Эта страница для зарегистрированных пользователей. Если это не про вас, то вы можете воспользоваться ссылкой <a href="/backend/web/index-test.php?r=user%2Fsite%2Fsignup">регистрация</a>.
+</p>
+
+<form id="login-form" action="/backend/web/index-test.php?r=user%2Fsite%2Flogin" method="post">
+	<div class="error-summary"><p>Исправьте следующие ошибки:</p><ul><li>Необходимо заполнить «Пароль».</li>
+<li>Необходимо заполнить «Имя».</li></ul></div>
+	<div class="form-group field-loginform-name required has-error">
+<label class="control-label" for="loginform-name">Имя</label>
+<input type="text" id="loginform-name" class="form-control" name="LoginForm[name]" value="" placeholder="Имя" aria-required="true" aria-invalid="true">
+
+<p class="help-block help-block-error">Необходимо заполнить «Имя».</p>
+</div>
+	<div class="form-group field-loginform-password required has-error">
+<label class="control-label" for="loginform-password">Пароль</label>
+<input type="password" id="loginform-password" class="form-control" name="LoginForm[password]" value="" placeholder="Пароль" aria-required="true" aria-invalid="true">
+
+<p class="help-block help-block-error">Необходимо заполнить «Пароль».</p>
+</div>	
+	<div class="form-group field-loginform-rememberme">
+<div class="checkbox">
+<label for="loginform-rememberme">
+<input type="hidden" name="LoginForm[rememberMe]" value="0"><input type="checkbox" id="loginform-rememberme" name="LoginForm[rememberMe]" value="1" checked>
+Запомнить меня
+</label>
+<p class="help-block help-block-error"></p>
+
+</div>
+</div>	
+	<p>
+		Если вы забыли пароль, вы можете <a href="/backend/web/index-test.php?r=user%2Fsite%2Frequest-password-reset">восстановить его</a>.
+	</p>
+
+	<button type="submit" class="btn btn-default" name="login-button">Вход</button>	
+	<br><br>
+
+</form>
+</div> <!-- / .col ... -->
+</div> <!-- / .row -->
+
+            </div> <!-- /.container-fluid -->
+
+        </div> <!-- /#page-wrapper -->
+
+    </div> <!-- /#wrapper -->
+
+<script src="/backend/web/assets/c333a0f9/jquery.js"></script>
+<script src="/backend/web/assets/84844566/yii.js"></script>
+<script src="/backend/web/assets/84844566/yii.validation.js"></script>
+<script src="/backend/web/assets/84844566/yii.activeForm.js"></script>
+<script src="/backend/web/assets/23c6f6a6/js/bootstrap.js"></script>
+<script src="/backend/web/assets/147ea5fb/js/jquery.compatible.js"></script>
+<script>jQuery(function ($) {
+jQuery('#login-form').yiiActiveForm([{"id":"loginform-name","name":"name","container":".field-loginform-name","input":"#loginform-name","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Необходимо заполнить «Имя»."});}},{"id":"loginform-password","name":"password","container":".field-loginform-password","input":"#loginform-password","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Необходимо заполнить «Пароль»."});}},{"id":"loginform-rememberme","name":"rememberMe","container":".field-loginform-rememberme","input":"#loginform-rememberme","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.boolean(value, messages, {"trueValue":"1","falseValue":"0","message":"Значение «Запомнить меня» должно быть равно «1» или «0».","skipOnEmpty":1});}}], []);
+});</script></body>
+</html>
+

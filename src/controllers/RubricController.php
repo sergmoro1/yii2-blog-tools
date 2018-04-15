@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
 use sergmoro1\blog\Module;
 
 use common\models\Post;
@@ -57,6 +58,20 @@ class RubricController extends Controller
         ]);
     }
 
+    public function actionValidate($_position = null, $_slug = null)
+    {
+        $model = new Rubric();
+        $model->_position = $_position;
+        $model->_slug = $_slug;
+        $request = \Yii::$app->getRequest();
+
+        // Ajax validation including form open in a modal window
+        if ($request->isAjax && $model->load($request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+    }
+
     /**
      * Creates a new Rubric model.
      * If creation is successful, the browser will be redirected to the 'index' page.
@@ -68,10 +83,12 @@ class RubricController extends Controller
             return $this->alert(Module::t('core', 'Access denied.'));
 
         $model = new Rubric();
-
-        if ($model->load(\Yii::$app->request->post())) {
-            if($model->prependTo($this->findModel($model->parent_node)))
-                return $this->redirect(['index']);
+        $request = \Yii::$app->getRequest();
+        $loaded = $model->load($request->post());
+        
+        // prependTo() call validate() and save()
+        if ($loaded && $model->prependTo($this->findModel($model->parent_node))) {
+            return $this->redirect(['index']);
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -99,12 +116,6 @@ class RubricController extends Controller
             // new code
             $loaded = $model->load(\Yii::$app->request->post());
             
-            // Ajax validation including form open in a modal window
-            if (\Yii::$app->request->isAjax && $loaded) {
-                \Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
-            }
-
             // The General case
             if ($loaded && $model->save()) {
                 return $this->redirect(\Yii::$app->request->referrer);
@@ -116,7 +127,7 @@ class RubricController extends Controller
         } else {
             \Yii::$app->session->setFlash(
                 'warning',
-                \Yii::t('blog', 'Node has not parent.')
+                \Yii::t('core', 'Node has not parent.')
             );
             return $this->redirect(['index']);
         }
@@ -136,7 +147,7 @@ class RubricController extends Controller
         if($id == 1)
             \Yii::$app->session->setFlash(
                 'warning',
-                \Yii::t('blog', 'Node can not be deleted.')
+                \Yii::t('core', 'Node can not be deleted.')
             );
         else {
             $node = $this->findModel($id);

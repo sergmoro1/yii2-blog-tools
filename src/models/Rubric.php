@@ -22,6 +22,9 @@ class Rubric extends ActiveRecord
      * @var integer $position
      * @var integer $visible
      */
+    public $_position; // old position
+    public $_slug; // old slug
+    
     public $parent_node; // the parent node for just added
     public $post_count; // posts count in a rubric
     
@@ -55,12 +58,31 @@ class Rubric extends ActiveRecord
         return [
             [['parent_node', 'name', 'slug'], 'required'],
             [['name', 'slug'], 'string', 'max'=>255],
-            ['slug', 'unique'],
             ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Module::t('core', 'Slug may consists a-z, numbers and minus only.')],
             [['position', 'show'], 'integer'],
+            [['position', 'slug'], 'uniqueExceptItself'],
+            ['show', 'default', 'value' => 1],
         ];
     }
 
+    /**
+     * Checks unique except of the value of the attribute.
+     */
+    public function uniqueExceptItself($attribute, $params)
+    {
+		$_attribute = '_' . $attribute;
+		$value = $this->$attribute;
+		$_value = $this->$_attribute;
+        if($value <> $_value) {
+			$found = false;
+			if(Rubric::find()->select([$attribute])->where([$attribute => $value])->count() > 0) {
+                $this->addError($attribute, Module::t('core', '{attribute} "{value}" has already been taken.', [
+                    'attribute' => ucfirst($attribute), 'value' => $value,
+                ]));
+            }
+        }
+    }
+    
     /**
      * @return array customized attribute labels (name=>label)
      */
@@ -128,6 +150,8 @@ class Rubric extends ActiveRecord
     public function afterFind()
     {
         parent::afterFind();
+        $this->_position = $this->position;
+        $this->_slug = $this->slug;
         $this->post_count = Post::find()
             ->where(['rubric' => $this->id, 'status' => Post::STATUS_PUBLISHED])
             ->count();

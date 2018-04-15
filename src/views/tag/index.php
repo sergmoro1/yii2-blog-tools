@@ -15,7 +15,7 @@ echo Modal::widget([
     'id' => 'tag-win',
     'toggleButton' => false,
     'header' => $this->title,
-    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' . 
+    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
         Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".tag-form #submit-btn").click()']),
 ]);
 

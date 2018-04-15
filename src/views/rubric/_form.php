@@ -5,6 +5,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
+
 ?>
 
 <div class="rubric-form">
@@ -12,6 +14,8 @@ use yii\bootstrap\ActiveForm;
 <?php $form = ActiveForm::begin([
     'id' => 'rubric-form',
     'layout' => 'horizontal',
+    'enableAjaxValidation' => true,
+    'validationUrl' => Url::toRoute(['rubric/validate', '_position' => $model->position, '_slug' => $model->slug]),        
     'fieldConfig' => [
         'horizontalCssClasses' => [
             'label' => 'col-sm-4',

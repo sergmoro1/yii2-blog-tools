@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" уже используется.',
     'Access denied.' => 'Доступ запрещен.',
     'Are you sure you want to delete this item?' => 'Вы уверены, что хотите удалить этот елемент?',
     'Author' => 'Автор',
