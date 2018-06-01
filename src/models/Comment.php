@@ -7,6 +7,7 @@ use sergmoro1\rudate\RuDate;
 use sergmoro1\blog\Module;
 
 use common\models\Post;
+use common\models\User;
 
 class Comment extends ActiveRecord
 {
@@ -15,21 +16,17 @@ class Comment extends ActiveRecord
      * @var integer $id
      * @var integer $model
      * @var integer $parent_id
-     * @var string $author
-     * @var string $location
-     * @var string $email
+     * @var integer $user_id
      * @var string $content
      * @var integer $status
-     * @var integer $created_at
      * @var string $thread
-     * @var boolean $reply
+     * @var boolean $last
+     * @var integer $created_at
      */
+
     const STATUS_PENDING = 1;
     const STATUS_APPROVED = 2;
     const STATUS_ARCHIVED = 3;
-
-    public $agree;
-    public $verifyCode;
 
     /**
      * @return string the associated database table name
@@ -54,17 +51,13 @@ class Comment extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return [
-            [['content', 'author', 'email'], 'required'],
-            [['author', 'email', 'location'], 'string', 'max' => 128],
+            [['model', 'parent_id', 'user_id', 'content'], 'required'],
             ['thread', 'string', 'max' => 32],
             ['status', 'in', 'range'=>[self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_ARCHIVED]],
-            [['parent_id', 'model'], 'integer'],
-            ['reply', 'boolean'],
-            ['email', 'email'],
+            ['status', 'default', 'value' => self::STATUS_PENDING],
+            [['model', 'parent_id', 'user_id'], 'integer'],
+            ['last', 'boolean'],
             ['content', 'string', 'max' => 512],
-            ['agree', 'match', 'pattern' => '/^1$/', 'message' => Module::t('core', 'Please confirm that you agree to the processing of data sent by you.')],
-            // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha', 'skipOnEmpty' => !\Yii::$app->user->isGuest],
         ];
     }
 
@@ -80,16 +73,13 @@ class Comment extends ActiveRecord
     {
         return array(
             'id' => 'Id',
-            'parent_id' => Module::t('core', 'Parent'),
             'model' => Module::t('core', 'Model'),
+            'parent_id' => Module::t('core', 'Parent'),
+            'user_id' => Module::t('core', 'Name'),
             'thread' => Module::t('core', 'Thread'),
             'status' => Module::t('core', 'Status'),
-            'author' => Module::t('core', 'Name'),
-            'location' => Module::t('core', 'Location'),
             'content' => Module::t('core', 'Content'),
-            'agree' => Module::t('core', 'Consent to the processing of sent data'),
             'created_at' => Module::t('core', 'Created'),
-            'verifyCode' => Module::t('core', 'Verification Code'),
         );
     }
 
@@ -100,7 +90,19 @@ class Comment extends ActiveRecord
     {
         static::save(['status' => Comment::STATUS_APPROVED]);
     }
-
+    
+    public function canBeAnswered() {
+		$countInThread = Comment::find()
+		    ->where(['thread' => $this->thread, 'user_id' => \Yii::$app->user->id])
+		    ->count();
+		return !\Yii::$app->user->isGuest &&
+		    $this->last && // this is a last comment in a thread
+		    \Yii::$app->user->identity->group == User::GROUP_COMMENTATOR && // you are a commentator
+		    $this->user_id != \Yii::$app->user->id && // last comment not yours
+		    $countInThread > 0; // you begin this thread
+            
+	}
+    
     /**
      * @param Post the post that this comment belongs to. If null, the method
      * will query for the post.
@@ -115,13 +117,28 @@ class Comment extends ActiveRecord
         return $model ? $model->url . '#c' . $this->id : '';
     }
 
-    public function getShortContent($max = 10)
+    public function getPartContent($limit = 500)
     {
-        $words = explode(' ', $this->content);
         $out = '';
-        for($i=0; $i < count($words) && $i < $max; $i++)
-            $out .= $words[$i] . ' ';
-        return rtrim(trim($out), '.') . (count($words) < $max ? '' : '...');
+        $words = explode(' ', $this->content);
+        mb_internal_encoding('UTF-8');
+        foreach($words as $word) {
+            if(mb_strlen($out) <= $limit)
+                $out .= $word . ' ';
+            else {
+                $out .= ' ...';
+                break;
+            }
+        }
+        return $out;
+    }
+
+    /**
+     * @return string the hyperlink display for the current comment's author
+     */
+    public function getAuthor()
+    {
+        return User::findOne($this->user_id);
     }
 
     /**
@@ -130,9 +147,9 @@ class Comment extends ActiveRecord
     public function getAuthorLink()
     {
         if(!empty($this->url))
-            return Html::a(Html::encode($this->author), $this->url);
+            return Html::a($this->author->name, $this->url);
         else
-            return Html::encode($this->author);
+            return $this->author->name;
     }
 
     /**
@@ -194,7 +211,11 @@ class Comment extends ActiveRecord
         if(parent::beforeSave($insert))
         {
             if($insert)
+            {
+                // all comments in the thread can't be replied except the last, so change previous last to 0
+                \Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=0 WHERE thread='{$this->thread}' AND last=1")->execute();
                 $this->created_at = time();
+            }
             return true;
         }
         else
@@ -215,20 +236,5 @@ class Comment extends ActiveRecord
                 ->all();
         } else
             return null;
-    }
-
-    public function getPartContent($limit = 500)
-    {
-        $out = '';
-        $words = explode(' ', $this->content);
-        foreach($words as $word) {
-            if(mb_strlen($out, 'UTF-8') <= $limit)
-                $out .= $word . ' ';
-            else {
-                $out .= ' ...';
-                break;
-            }
-        }
-        return $out;
     }
 }

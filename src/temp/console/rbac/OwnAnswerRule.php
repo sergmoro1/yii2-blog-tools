@@ -5,7 +5,7 @@ use yii\rbac\Rule;
 use common\models\User;
 
 /**
- * Checks if comment_author matches user.name
+ * Checks if comment.user_id matches current User Id
  */
 class OwnAnswerRule extends Rule
 {
@@ -21,7 +21,7 @@ class OwnAnswerRule extends Rule
     {
         // model = comment
         return isset($params['model']) && !(strpos(get_class($params['model']), 'Comment') === false)
-            ? $params['model']->author == User::findOne($user_id)->name 
+            ? $params['model']->user_id == $user_id 
             : false;
     }
 }

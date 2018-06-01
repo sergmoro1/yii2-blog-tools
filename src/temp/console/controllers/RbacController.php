@@ -4,6 +4,7 @@ namespace console\controllers;
 use yii\console\Controller;
 use console\rbac\PostModeratorRule;
 use console\rbac\OwnCommentRule;
+use console\rbac\StrangerCommentRule;
 use console\rbac\OwnAnswerRule;
 use console\rbac\OwnProfileRule;
 use console\rbac\UserGroupRule;
@@ -49,9 +50,14 @@ class RbacController extends Controller
         $auth->addChild($updateOwnPost, $update);
         
         // Comment
-        $replyComment = $auth->createPermission('replyComment');
 
-        $auth->add($replyComment);
+        // Rule - Reply only for Stranger comment an only the Last in a Thread
+        $strangerComment = new StrangerCommentRule();
+        $auth->add($strangerComment);
+
+        $replyStranger = $auth->createPermission('replyStranger');
+        $replyStranger->ruleName = $strangerComment->name;
+        $auth->add($replyStranger);
 
         // Rule - Comments Only For Own Posts
         $ownComment = new OwnCommentRule();
@@ -61,7 +67,7 @@ class RbacController extends Controller
         $replyOwnComment->ruleName = $ownComment->name;
         $auth->add($replyOwnComment);
 
-        $auth->addChild($replyOwnComment, $replyComment);
+        $auth->addChild($replyOwnComment, $replyStranger);
 
         // Rule - Own Answers For Comments
         $ownAnswer = new OwnAnswerRule();
@@ -75,7 +81,7 @@ class RbacController extends Controller
 
         // User
 
-        // Rule - Own Answers For Comments
+        // Rule - Own User Profile
         $ownProfile = new OwnProfileRule();
         $auth->add($ownProfile);
 
@@ -97,6 +103,10 @@ class RbacController extends Controller
         $group = new UserGroupRule();
         $auth->add($group);
 
+        $commentator = $auth->createRole('commentator');
+        $commentator->ruleName  = $group->name;
+        $auth->add($commentator);
+
         $author = $auth->createRole('author');
         $author->ruleName  = $group->name;
         $auth->add($author);
@@ -105,22 +115,27 @@ class RbacController extends Controller
         $admin->ruleName  = $group->name;
         $auth->add($admin);
  
+        // Commentator
+        $auth->addChild($commentator, $updateOwnProfile);
+
         // Author
         $auth->addChild($author, $index);
         $auth->addChild($author, $createPost);
         $auth->addChild($author, $viewPost);
         $auth->addChild($author, $updateOwnPost);
+        $auth->addChild($author, $replyStranger);
         $auth->addChild($author, $replyOwnComment);
         $auth->addChild($author, $updateOwnAnswer);
-        $auth->addChild($author, $updateOwnProfile);
         
         // Admin
-        $auth->addChild($admin, $replyComment);
         $auth->addChild($admin, $changePostStatus);
         $auth->addChild($admin, $create);
         $auth->addChild($admin, $update);
         $auth->addChild($admin, $delete);
         $auth->addChild($admin, $gear);
+
+        // Author can all that can Commentator
+        $auth->addChild($author, $commentator);
         // Admin can all that can Author
         $auth->addChild($admin, $author);
     }

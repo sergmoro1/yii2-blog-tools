@@ -75,6 +75,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ['previous', 'default', 'value' => 0],
             ['previous', 'already_selected', 'message' => \Yii::t('app', 'This article is already selected as the previous one.')],
             ['status', 'in', 'range'=>[self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_ARCHIVED]],
+            ['status', 'default', 'value' => 1],
             [['slug', 'title', 'subtitle'], 'string', 'max'=>128],
             ['slug', 'unique'],
             ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => \Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
@@ -416,8 +417,8 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         if($comment->thread == '-')
             $comment->thread = time() . uniqid();
         else
-            \Yii::$app->db->createCommand("UPDATE {{%comment}} SET reply=0 WHERE thread='{$comment->thread}'")->execute();
-        $comment->reply = 1;
+            \Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=0 WHERE thread='{$comment->thread}' AND last=1")->execute();
+        $comment->last = 1;
         return $comment->save();
     }
 

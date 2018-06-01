@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $modelmodels\Rubric */
+/* @var $model models\Comment */
 
 use yii\helpers\Html;
 use sergmoro1\blog\Module;
@@ -10,13 +10,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['
 
 if($model->model == 1) // Post
 $this->params['breadcrumbs'][] = ['label' => $model->post->getTitle(), 'url' => ['post/' . $model->post->slug]];
-if($model->model == 2) // Fund
-$this->params['breadcrumbs'][] = ['label' => $model->fund->caption, 'url' => ['fund/' . $model->fund->slug]];
 
-$this->params['breadcrumbs'][] = $model->author;
+$this->params['breadcrumbs'][] = $model->author->name;
 ?>
 
-<div class="rubric-update">
+<div class="comment-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
     

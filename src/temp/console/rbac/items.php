@@ -28,14 +28,15 @@ return [
             'update',
         ],
     ],
-    'replyComment' => [
+    'replyStranger' => [
         'type' => 2,
+        'ruleName' => 'strangerComment',
     ],
     'replyOwnComment' => [
         'type' => 2,
         'ruleName' => 'ownComment',
         'children' => [
-            'replyComment',
+            'replyStranger',
         ],
     ],
     'updateOwnAnswer' => [
@@ -56,6 +57,13 @@ return [
         'type' => 2,
         'description' => 'Change Settings',
     ],
+    'commentator' => [
+        'type' => 1,
+        'ruleName' => 'userGroup',
+        'children' => [
+            'updateOwnProfile',
+        ],
+    ],
     'author' => [
         'type' => 1,
         'ruleName' => 'userGroup',
@@ -64,16 +72,16 @@ return [
             'createPost',
             'viewPost',
             'updateOwnPost',
+            'replyStranger',
             'replyOwnComment',
             'updateOwnAnswer',
-            'updateOwnProfile',
+            'commentator',
         ],
     ],
     'admin' => [
         'type' => 1,
         'ruleName' => 'userGroup',
         'children' => [
-            'replyComment',
             'changePostStatus',
             'create',
             'update',

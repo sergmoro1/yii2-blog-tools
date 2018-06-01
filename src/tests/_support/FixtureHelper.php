@@ -3,6 +3,9 @@
 namespace sergmoro1\blog\tests\_support;
 
 use sergmoro1\blog\tests\common\fixtures\UserFixture;
+use sergmoro1\blog\tests\common\fixtures\PostFixture;
+use sergmoro1\blog\tests\common\fixtures\CommentFixture;
+use sergmoro1\blog\tests\common\fixtures\TagFixture;
 use Codeception\Module;
 use yii\test\FixtureTrait;
 use yii\test\InitDbFixture;
@@ -66,6 +69,18 @@ class FixtureHelper extends Module
             'user' => [
                 'class' => UserFixture::className(),
                 'dataFile' => '@vendor/sergmoro1/yii2-blog-tools/src/tests/common/fixtures/data/init_login.php',
+            ],
+            'post' => [
+                'class' => PostFixture::className(),
+                'dataFile' => '@vendor/sergmoro1/yii2-blog-tools/src/tests/common/fixtures/data/post.php',
+            ],
+            'comment' => [
+                'class' => CommentFixture::className(),
+                'dataFile' => '@vendor/sergmoro1/yii2-blog-tools/src/tests/common/fixtures/data/comment.php',
+            ],
+            'tag' => [
+                'class' => TagFixture::className(),
+                'dataFile' => '@vendor/sergmoro1/yii2-blog-tools/src/tests/common/fixtures/data/tag.php',
             ],
         ];
     }

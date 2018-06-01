@@ -16,16 +16,16 @@ class m160206_175933_create_comment extends Migration
         $this->createTable('{{%comment}}', [
             'id' => $this->primaryKey(),
             'model' => $this->integer()->notNull(),
-            'parent_id' => $this->integer(),
+            'parent_id' => $this->integer()->notNull(),
             'author' => $this->string(128)->notNull(),
-            'location' => $this->string(128)->defaultValue('')->notNull(),
+            'location' => $this->string(128)->defaultValue(''),
             'email' => $this->string(128)->notNull(),
             'content' => $this->text(),
-            'status' => $this->integer()->notNull(),
-            'thread' => $this->string(32)->notNull()->defaultValue(time() + rand(1000, 9999)),
-            'reply' => $this->boolean()->notNull()->defaultValue(0),
+            'status' => $this->integer()->defaultValue(1),
+            'thread' => $this->string(32)->defaultValue(time() + rand(1000, 9999)),
+            'reply' => $this->boolean()->defaultValue(0),
 
-            'created_at' => $this->integer()->notNull(),
+            'created_at' => $this->integer(),
         ], $tableOptions);
     }
 

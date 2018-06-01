@@ -19,18 +19,18 @@ class m160206_162112_create_post extends Migration
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'slug' => $this->string(128)->notNull()->unique(),
-            'previous' => $this->integer()->notNull(),
+            'previous' => $this->integer()->defaultValue(0),
             'title' => $this->string(128)->notNull(),
-            'subtitle' => $this->string(128)->notNull(),
+            'subtitle' => $this->string(128),
             'excerpt' => $this->text()->notNull(),
             'content' => $this->text()->notNull(),
-            'resume' => $this->text()->notNull(),
+            'resume' => $this->text(),
             'tags' => $this->text(),
-            'rubric' => $this->integer()->notNull(),
-            'status' => $this->integer()->notNull(),
+            'rubric' => $this->integer()->defaultValue(1),
+            'status' => $this->integer()->defaultValue(1),
 
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ], $tableOptions);
 
         $this->createIndex('rubric', $this->table, 'rubric');

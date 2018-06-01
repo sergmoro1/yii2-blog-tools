@@ -32,7 +32,7 @@ $I->expectTo('see the record with slug = "news" has level=2');
 $I->assertEquals(Rubric::findOne(['slug' => 'news'])->level, 2);
 
 $I->amGoingTo('delete just added rubric');
-$I->sendAjaxPostRequest(Url::to(['rubric/delete', 'id' => $model->id]));
+$I->sendAjaxPostRequest(Url::to(['/blog/rubric/delete', 'id' => $model->id]));
 $I->seeResponseCodeIs(302);
 
 $I->expectTo('see the record with slug = "root" has rgt=2 again');

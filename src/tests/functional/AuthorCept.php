@@ -42,7 +42,7 @@ $I->see('Vasiya Pupkin', '.table td');
 $I->amGoingTo('update Author');
 $id = Author::findOne(['name' => 'Vasiya Pupkin'])->id;
 
-$I->amOnPage(Url::to(['author/update', 'id' => $id]));
+$I->amOnPage(Url::to(['/blog/author/update', 'id' => $id]));
 $I->see('Update', 'h3');
 $I->fillField('input[name="Author[name]"]', 'Вася Пупкин');
 $I->click('Save', '.btn-success');
@@ -51,5 +51,5 @@ $I->see('Вася Пупкин', '.table td');
 
 $I->amGoingTo('delete Author');
 
-$I->sendAjaxPostRequest(Url::to(['author/delete', 'id' => $id]));
+$I->sendAjaxPostRequest(Url::to(['/blog/author/delete', 'id' => $id]));
 $I->seeResponseCodeIs(302);

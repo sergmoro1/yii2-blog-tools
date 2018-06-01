@@ -118,7 +118,9 @@ class RubricController extends Controller
             
             // The General case
             if ($loaded && $model->save()) {
-                return $this->redirect(\Yii::$app->request->referrer);
+                return YII_DEBUG 
+                    ? $this->redirect(['index'])
+                    : $this->redirect(\Yii::$app->request->referrer);
             } else {
                 return $this->renderAjax('update', [
                     'model' => $model,

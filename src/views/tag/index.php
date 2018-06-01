@@ -8,8 +8,10 @@ use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
 use sergmoro1\blog\Module;
 
+$this->registerJs('var popUp = {"id": "#tag-win", "action": ["update"]};', yii\web\View::POS_HEAD);
+sergmoro1\blog\assets\PopUpAsset::register($this);
+
 $this->title = Module::t('core', 'Tags');
-$this->params['breadcrumbs'][] = $this->title;;
 
 echo Modal::widget([
     'id' => 'tag-win',
@@ -54,9 +56,9 @@ echo Modal::widget([
                         return Html::a(
                             '<span class="glyphicon glyphicon-pencil"></span>', 
                             $url, [
+                                'class' => 'update',
                                 'data-toggle' => 'modal',
                                 'data-target' => '#tag-win',
-                                'onclick' => "$('#tag-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
                             ]
                         );
                     },

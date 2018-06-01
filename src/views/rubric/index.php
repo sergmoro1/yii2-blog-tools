@@ -10,6 +10,9 @@ use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 
+$this->registerJs('var popUp = {"id": "#rubric-win", "action": ["update"]};', yii\web\View::POS_HEAD);
+sergmoro1\blog\assets\PopUpAsset::register($this);
+
 $this->title = Module::t('core', 'Rubrics');
 $this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['post/index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -73,9 +76,9 @@ echo Modal::widget([
                         return Html::a(
                             '<span class="glyphicon glyphicon-pencil"></span>', 
                             $url, [
+                                'class' => 'update',
                                 'data-toggle' => 'modal',
                                 'data-target' => '#rubric-win',
-                                'onclick' => "$('#rubric-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
                             ]
                         );
                     },

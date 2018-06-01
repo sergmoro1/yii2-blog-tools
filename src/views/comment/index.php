@@ -1,9 +1,3 @@
-<style>
-p.answer {
-    text-align: right;
-    color: #3C763D;
-}
-</style>
 <?php
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -14,6 +8,9 @@ use yii\bootstrap\Modal;
 use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
+
+$this->registerJs('var popUp = {"id": "#comment-win", "action": ["reply", "update"]};', yii\web\View::POS_HEAD);
+sergmoro1\blog\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Comments');
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
@@ -53,13 +50,17 @@ echo Modal::widget([
                 }
             ],
             [
-                'attribute' => 'author',
-                'format' => 'html',
+                'attribute' => 'user_id',
                 'value' => function($data) {
-                    return $data->author . ($data->location ? ' <small>(' . $data->location . ')</small>' : '');
+                    return $data->author->name;
                 }
             ],
-            'email',
+            [
+                'header' => 'email',
+                'value' => function($data) {
+                    return $data->author->email;
+                }
+            ],
             [
                 'attribute' => 'content',
                 'options' => ['style' => 'width:50%;'],
@@ -74,7 +75,7 @@ echo Modal::widget([
                         $this->params['thread'] = $data->thread;
                         $this->params['indention'] = '';
                     }
-                    return $this->params['indention'] . ' ' . $data->content;
+                    return $this->params['indention'] . ' ' . $data->getPartContent(100);
                 }
             ],
             [
@@ -97,22 +98,24 @@ echo Modal::widget([
                 'options' => ['style' => 'width:8%;'],
                 'buttons' => [
                     'reply' => function ($url, $model) {
+						if(!$model->last || $model->user_id == \Yii::$app->user->id)
+						    return '';
                         return Html::a(
-                            '<i class="fa fa-reply"></i>', 
+                            '<i class="fa fa-reply" title="'. Module::t('core', 'Reply') .'"></i>', 
                             $url, [
+                                'class' => 'reply',
                                 'data-toggle' => 'modal',
                                 'data-target' => '#comment-win',
-                                'onclick' => "$('#comment-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
                             ]
                         );
                     },
                     'update' => function ($url, $model) {
                         return Html::a(
-                            '<i class="fa fa-pencil"></i>', 
+                            '<i class="fa fa-pencil" title="'. Module::t('core', 'Update') .'"></i>', 
                             $url, [
+                                'class' => 'update',
                                 'data-toggle' => 'modal',
                                 'data-target' => '#comment-win',
-                                'onclick' => "$('#comment-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
                             ]
                         );
                     },

@@ -39,8 +39,8 @@ $ composer require --prefer-dist sergmoro1/yii2-blog-tools "dev-master"
 $ php yii migrate --migrationPath=@vendor/notgosu/yii2-meta-tag-module/src/migrations
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-byone-uploader/migrations
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-lookup/src/migrations
-$ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-blog-tools/src/migrations
 $ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-user/src/migrations
+$ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-blog-tools/src/migrations
 </pre>
 
 <h3>Git init</h3>
@@ -74,7 +74,7 @@ return [
     'components' => [
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
-            'defaultRoles' => ['author', 'admin'],
+            'defaultRoles' => ['commentator', 'author', 'admin'],
             'itemFile' => __DIR__ . '/../../console/rbac/items.php',
             'ruleFile' => __DIR__ . '/../../console/rbac/rules.php',
         ],
@@ -114,6 +114,41 @@ return [
             'class' => 'notgosu\yii2\modules\metaTag\Module',
         ],
     ],
+    'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+        ],
+		'user' => [
+			'class' => 'yii\web\User',
+		],
+        'i18n' => [
+			'translations' => [
+				'app*' => [
+					'class' => 'yii\i18n\PhpMessageSource',
+					'basePath' => '@app/../messages',
+					'sourceLanguage' => 'en-US',
+					'fileMap' => [
+						'app' => 'app.php',
+						'app/error' => 'error.php',
+					],
+				],
+				'metaTag' => [
+					'class' => 'yii\i18n\PhpMessageSource',
+				],
+				// sergmoro1/user/models/LoginForm is used in frontend/controllers/SiteController, so
+				// it is not used within the Module then translation should be defined twice
+				// here and in a sergmoro1/user/Module::registerTranslations()
+				'sergmoro1/user/*' => [
+					'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'en-US',
+                    'basePath' => '@vendor/sergmoro1/yii2-user/src/messages',
+                    'fileMap' => [
+                        'sergmoro1/user/core' => 'core.php',
+                    ],
+				],
+			],
+		],
+	],
 ];
 </pre>
 

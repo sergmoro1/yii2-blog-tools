@@ -17,6 +17,8 @@ class UserGroupRule extends Rule
                 return $group == User::GROUP_ADMIN;
             } elseif ($item->name === 'author') {
                  return $group == User::GROUP_ADMIN || $group == User::GROUP_AUTHOR;
+            } elseif ($item->name === 'commentator') {
+                 return $group == User::GROUP_ADMIN || $group == User::GROUP_AUTHOR || $group == User::GROUP_COMMENTATOR;
             }
         }
         return false;

@@ -1,10 +1,12 @@
 <?php
 namespace console\rbac;
 
+use Yii;
 use yii\rbac\Rule;
+use common\models\User;
 
 /**
- * Checks if comment.post_id matches for User's Posts
+ * Checks if comment.post_id matches for Posts Ids of current User
  */
 class OwnCommentRule extends Rule
 {
@@ -18,7 +20,8 @@ class OwnCommentRule extends Rule
      */
     public function execute($user_id, $item, $params)
     {
-        if(!isset($params['comment']))
+		// admin can reply for all comments 
+        if(!isset($params['comment']) || Yii::$app->user->identity->group == User::GROUP_ADMIN)
             return true;
         return $params['comment']->model == 1    
             ? in_array($params['comment']->parent_id, $params['comment']->getUserPosts($user_id))

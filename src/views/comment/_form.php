@@ -1,7 +1,6 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model models\Comment */
-/* @var $form yii\widgets\ActiveForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -19,7 +18,6 @@ use sergmoro1\blog\Module;
     'fieldConfig' => [
         'horizontalCssClasses' => [
             'label' => 'col-sm-4',
-            'offset' => 'col-sm-offset-4',
             'wrapper' => 'col-sm-6',
         ],
     ],
@@ -27,11 +25,16 @@ use sergmoro1\blog\Module;
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'author')
-        ->textInput([
-            'maxlength' => 128, 
-        ]
-    ) ?>
+	<div class="form-group">
+		<label class="control-label col-sm-4">
+			<?= Module::t('core', 'Author') ?>
+		</label>
+		<div class="col-sm-6">
+			<div class="well well-sm">
+				<?= $model->author->name ?>
+			</div>
+		</div>
+	</div>
 
     <?= $form->field($model, 'content')
         ->textArea([

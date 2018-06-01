@@ -8,6 +8,7 @@ use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\models\User;
 use sergmoro1\blog\widgets\Alert;
+use sergmoro1\blog\widgets\Menu;
 
 sergmoro1\blog\assets\SBAdminAsset::register($this);
 ?>
@@ -70,7 +71,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                         <?php if(Yii::$app->user->can('gear')): ?>
                             <li><?= Html::a('<i class="fa fa-gear"></i> ' . Yii::t('app', 'Gear'), ['/blog/site/gear']) ?></li>
                         <?php else: ?>
-                            <li><?= Html::a('<i class="fa fa-user"></i> ' . Yii::t('app', 'Profile'), ['/user/user/index']) ?><li>
+                            <li><?= Html::a('<i class="fa fa-user"></i> ' . Yii::t('app', 'Profile'), ['/user/user/update', 'id' => Yii::$app->user->id]) ?><li>
                         <?php endif; ?>
                         <li class="divider"></li>
                         <li>
@@ -84,7 +85,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
             <!-- Sidebar Menu Items - these collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-                <?php if(Yii::$app->user->isGuest): ?>
+                <?php if(Yii::$app->user->isGuest || Yii::$app->user->identity->group == User::GROUP_COMMENTATOR): ?>
                 <ul class="nav navbar-nav side-nav">
 
                     <li class='vertical'>
@@ -95,7 +96,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
 
                 <?php else: ?>
 
-                    <?= sergmoro1\blog\widgets\Menu::widget(['items' => \Yii::$app->params['sidebar']]) ?>
+                    <?= Menu::widget(['items' => \Yii::$app->params['sidebar']]) ?>
 
                 <?php endif; ?>
 

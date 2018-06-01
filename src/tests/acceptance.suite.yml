@@ -15,4 +15,4 @@ modules:
             password: ''
     config:
         PhpBrowser:
-            url: http://localhost/backend/web
+            url: http://localhost
