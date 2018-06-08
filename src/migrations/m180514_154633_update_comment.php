@@ -12,6 +12,9 @@ class m180514_154633_update_comment extends Migration
 		// add link to user
         $this->addColumn('{{%comment}}', 'user_id', $this->integer());
 
+		// rename
+        $this->renameColumn('{{%comment}}', 'reply', 'last');
+
 		// save all commentators as a user
         foreach(Comment::find()->all() as $comment) {
 			// if user has not registered yet
@@ -32,8 +35,6 @@ class m180514_154633_update_comment extends Migration
 			$comment->save();
         }
         
-		// rename
-        $this->renameColumn('{{%comment}}', 'reply', 'last');
 		// drop columns
 		$this->dropColumn('{{%comment}}', 'author');
 		$this->dropColumn('{{%comment}}', 'location');
