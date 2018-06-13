@@ -8,7 +8,7 @@ Imperavi redactor. Files & Images uploading. Photos chain for carousel slider.
 
 Comment management. Nested set rubric.
 
-Avatars for users and authores. User registration with email confirmation.
+Avatars for users and authors. User registration with email confirmation.
 
 RBAC.
 

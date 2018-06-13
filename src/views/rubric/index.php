@@ -10,7 +10,7 @@ use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 
-$this->registerJs('var popUp = {"id": "#rubric-win", "action": ["update"]};', yii\web\View::POS_HEAD);
+$this->registerJs('var popUp = {"id": "#rubric-win", "actions": ["update"]};', yii\web\View::POS_HEAD);
 sergmoro1\blog\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Rubrics');

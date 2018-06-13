@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
 use sergmoro1\blog\Module;
 
-$this->registerJs('var popUp = {"id": "#tag-win", "action": ["update"]};', yii\web\View::POS_HEAD);
+$this->registerJs('var popUp = {"id": "#tag-win", "actions": ["update"]};', yii\web\View::POS_HEAD);
 sergmoro1\blog\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Tags');

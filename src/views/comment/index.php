@@ -9,7 +9,7 @@ use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 
-$this->registerJs('var popUp = {"id": "#comment-win", "action": ["reply", "update"]};', yii\web\View::POS_HEAD);
+$this->registerJs('var popUp = {"id": "#comment-win", "actions": ["reply", "update"]};', yii\web\View::POS_HEAD);
 sergmoro1\blog\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Comments');
