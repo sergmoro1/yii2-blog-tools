@@ -169,7 +169,8 @@ class Comment extends ActiveRecord
     public function findRecentComments($limit = 5)
     {
         return Comment::find()
-            ->where(['status' => self::STATUS_APPROVED])
+            ->innerJoin('user', 'comment.user_id = user.id')
+            ->where(['comment.status' => self::STATUS_APPROVED, 'group' => User::GROUP_COMMENTATOR])
             ->orderBy('created_at DESC')
             ->limit($limit)
             ->all();
