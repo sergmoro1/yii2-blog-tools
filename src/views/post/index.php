@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'title',
                 'format' => 'html',
                 'value' => function($data) {
-                    return $data->getTitleLink(false) . ' <small>' . $data->subtitle . '</small>';
+                    return $data->getTitleLink() . ' <small>' . $data->subtitle . '</small>';
                 }
             ],
             'tags:ntext',
