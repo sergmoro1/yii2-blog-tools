@@ -8,8 +8,8 @@ use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
 use sergmoro1\blog\Module;
 
-$this->registerJs('var popUp = {"id": "#tag-win", "actions": ["update"]};', yii\web\View::POS_HEAD);
-sergmoro1\blog\assets\PopUpAsset::register($this);
+$this->registerJs('var popUp = {"id": "tag", "actions": ["update"]};', yii\web\View::POS_HEAD);
+sergmoro1\modal\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Tags');
 
@@ -17,8 +17,9 @@ echo Modal::widget([
     'id' => 'tag-win',
     'toggleButton' => false,
     'header' => $this->title,
-    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
-        Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".tag-form #submit-btn").click()']),
+    'footer' => 
+        '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
+        '<button type="button" class="btn btn-primary">'. Module::t('core', 'Save') .'</button>', 
 ]);
 
 ?>
@@ -54,7 +55,7 @@ echo Modal::widget([
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a(
-                            '<span class="glyphicon glyphicon-pencil"></span>', 
+                            \Yii::$app->params['icons']['pencil'], 
                             $url, [
                                 'class' => 'update',
                                 'data-toggle' => 'modal',

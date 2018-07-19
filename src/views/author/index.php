@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class='col-sm-8'>
 
     <p>
-        <?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
+        <?= Html::a(\Yii::$app->params['icons']['plus'] . ' ' . Module::t('core', 'Add'), ['create'], [
             'id' => 'author-add',
             'class' => 'btn btn-success',
         ]) ?>

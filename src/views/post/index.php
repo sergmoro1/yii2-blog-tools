@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="post-index">
     <p>
-        <?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(\Yii::$app->params['icons']['plus'] . ' ' . Module::t('core', 'Add'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

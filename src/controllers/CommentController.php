@@ -4,10 +4,9 @@ namespace sergmoro1\blog\controllers;
 
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 use sergmoro1\blog\Module;
+use sergmoro1\modal\controllers\ModalController;
 use common\models\User;
 use sergmoro1\blog\models\Comment;
 use sergmoro1\blog\models\CommentSearch;
@@ -19,18 +18,6 @@ class CommentController extends ModalController
 {
     public function newModel() { return new Comment(); }
     public function newSearch() { return new CommentSearch(); }
-
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Reply on a comment.
@@ -86,21 +73,5 @@ class CommentController extends ModalController
         \Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=1 WHERE thread='{$model->thread}' ORDER BY created_at DESC LIMIT 1")->execute();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Post model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Post the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Comment::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
-        }
     }
 }

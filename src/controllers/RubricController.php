@@ -10,8 +10,8 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
-use sergmoro1\blog\Module;
 
+use sergmoro1\blog\Module;
 use common\models\Post;
 use common\models\User;
 use sergmoro1\blog\models\Rubric;
@@ -167,10 +167,10 @@ class RubricController extends Controller
     }
 
     /**
-     * Finds the Rubric model based on its primary key value.
+     * Finds model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Rubric the loaded model
+     * @return the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -180,10 +180,5 @@ class RubricController extends Controller
         } else {
             throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
         }
-    }
-
-    public function alert($message)
-    {
-        return '<div class="alert alert-danger" role="alert">'. $message .'</div>';
     }
 }

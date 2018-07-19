@@ -1,9 +1,9 @@
 <?php
-use yii\helpers\Html;
-use sergmoro1\blog\Module;
-
 /* @var $this yii\web\View */
 /* @var $model models\Tag */
+
+use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
 $this->title = Module::t('core', 'Update');
 $this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Tags'), 'url' => ['index']];

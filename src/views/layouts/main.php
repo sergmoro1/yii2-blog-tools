@@ -21,9 +21,6 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="<?= Url::to('@web/favicon.ico') ?>" type="image/x-icon">
     
-    <!-- Custom Fonts -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode(\Yii::$app->name . ' - ' . $this->title) ?></title>
     <?php $this->head() ?>
@@ -62,20 +59,20 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                         <?php if($image = Yii::$app->user->identity->getImage('thumb')): ?>
                             <img class="img-circle avatar" src="<?= $image ?>">
                         <?php else: ?>
-                            <i class="fa fa-user"></i>
+                            <span class="glyphicon glyphicon-user"></span>
                         <?php endif; ?>
                         <?= Yii::$app->user->identity->name ?>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         <?php if(Yii::$app->user->can('gear')): ?>
-                            <li><?= Html::a('<i class="fa fa-gear"></i> ' . Yii::t('app', 'Gear'), ['/blog/site/gear']) ?></li>
+                            <li><?= Html::a('<span class="glyphicon glyphicon-cog"></span> ' . Yii::t('app', 'Gear'), ['/blog/site/gear']) ?></li>
                         <?php else: ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> ' . Yii::t('app', 'Profile'), ['/user/user/update', 'id' => Yii::$app->user->id]) ?><li>
                         <?php endif; ?>
                         <li class="divider"></li>
                         <li>
-                            <li><?= Html::a('<i class="fa fa-fw fa-power-off"></i> ' . Yii::t('app', 'Logout'), ['/user/site/logout'], ['data-method' => 'post']) ?></li>
+                            <li><?= Html::a('<i class="glyphicon glyphicon-off"></i> ' . Yii::t('app', 'Logout'), ['/user/site/logout'], ['data-method' => 'post']) ?></li>
                         </li>
                     </ul>
                 </li>

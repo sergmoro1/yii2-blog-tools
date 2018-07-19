@@ -9,7 +9,7 @@ $this->title = Module::t('core', 'Update');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
 
 if($model->model == 1) // Post
-$this->params['breadcrumbs'][] = ['label' => $model->post->getTitle(), 'url' => ['post/' . $model->post->slug]];
+$this->params['breadcrumbs'][] = ['label' => $model->post->getTitle(), 'url' => ['post/view', 'slug' => $model->post->slug]];
 
 $this->params['breadcrumbs'][] = $model->author->name;
 ?>

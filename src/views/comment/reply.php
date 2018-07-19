@@ -9,7 +9,7 @@ $this->title = Module::t('core', 'Reply');
 $this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['index']];
 
 if($comment->model == 1) // Post
-$this->params['breadcrumbs'][] = ['label' => $comment->post->getTitle(), 'url' => ['post/' . $comment->post->slug]];
+$this->params['breadcrumbs'][] = ['label' => $comment->post->getTitle(), 'url' => ['post/view', 'slug' => $comment->post->slug]];
 
 $this->params['breadcrumbs'][] = $comment->author->name;
 ?>

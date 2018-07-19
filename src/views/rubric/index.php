@@ -10,8 +10,8 @@ use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 
-$this->registerJs('var popUp = {"id": "#rubric-win", "actions": ["update"]};', yii\web\View::POS_HEAD);
-sergmoro1\blog\assets\PopUpAsset::register($this);
+$this->registerJs('var popUp = {"id": "rubric", "actions": ["update"]};', yii\web\View::POS_HEAD);
+sergmoro1\modal\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Rubrics');
 $this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['post/index']];
@@ -21,8 +21,9 @@ echo Modal::widget([
     'id' => 'rubric-win',
     'toggleButton' => false,
     'header' => $this->title,
-    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
-        Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".rubric-form #submit-btn").click()']),
+    'footer' => 
+        '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
+        '<button type="button" class="btn btn-primary">'. Module::t('core', 'Save') .'</button>', 
 ]);
 
 ?>
@@ -32,12 +33,11 @@ echo Modal::widget([
 <div class='row'>
 <div class='col-sm-8'>
     <p>
-        <?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
+        <?= Html::a(\Yii::$app->params['icons']['plus'] . ' ' . Module::t('core', 'Add'), ['create'], [
             'id' => 'rubric-add',
             'data-toggle' => 'modal',
             'data-target' => '#rubric-win',
             'class' => 'btn btn-success',
-            'onclick' => "$('#rubric-win .modal-dialog .modal-content .modal-body').load($(this).attr('href'))",
         ]) ?>
     </p>
 
@@ -74,7 +74,7 @@ echo Modal::widget([
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a(
-                            '<span class="glyphicon glyphicon-pencil"></span>', 
+                            \Yii::$app->params['icons']['pencil'], 
                             $url, [
                                 'class' => 'update',
                                 'data-toggle' => 'modal',

@@ -9,8 +9,8 @@ use sergmoro1\blog\Module;
 
 use sergmoro1\lookup\models\Lookup;
 
-$this->registerJs('var popUp = {"id": "#comment-win", "actions": ["reply", "update"]};', yii\web\View::POS_HEAD);
-sergmoro1\blog\assets\PopUpAsset::register($this);
+$this->registerJs('var popUp = {"id": "comment", "actions": ["reply", "update"]};', yii\web\View::POS_HEAD);
+sergmoro1\modal\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Comments');
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
@@ -20,8 +20,9 @@ echo Modal::widget([
     'size' => Modal::SIZE_LARGE,
     'toggleButton' => false,
     'header' => $this->title,
-    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
-        Html::button(Module::t('core', 'Save'), ['class' => 'btn btn-primary', 'onclick' => '$(".comment-form #submit-btn").click()']),
+    'footer' => 
+        '<button type="button" class="btn btn-default" data-dismiss="modal">'. Module::t('core', 'Cancel') .'</button>' . 
+        '<button type="button" class="btn btn-primary">'. Module::t('core', 'Save') .'</button>', 
 ]);
 ?>
 <div class="comment-index">
@@ -101,7 +102,7 @@ echo Modal::widget([
 						if(!$model->last || $model->user_id == \Yii::$app->user->id)
 						    return '';
                         return Html::a(
-                            '<i class="fa fa-reply" title="'. Module::t('core', 'Reply') .'"></i>', 
+                            '<span class="glyphicon glyphicon-share-alt" title="'. Module::t('core', 'Reply') .'"></span>',                         
                             $url, [
                                 'class' => 'reply',
                                 'data-toggle' => 'modal',
@@ -111,7 +112,7 @@ echo Modal::widget([
                     },
                     'update' => function ($url, $model) {
                         return Html::a(
-                            '<i class="fa fa-pencil" title="'. Module::t('core', 'Update') .'"></i>', 
+                            \Yii::$app->params['icons']['pencil'],
                             $url, [
                                 'class' => 'update',
                                 'data-toggle' => 'modal',

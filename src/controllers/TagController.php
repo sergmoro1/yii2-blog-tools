@@ -2,10 +2,9 @@
 namespace sergmoro1\blog\controllers;
 
 use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use sergmoro1\blog\Module;
 
+use sergmoro1\modal\controllers\ModalController;
 use common\models\Post;
 use sergmoro1\blog\models\Tag;
 use sergmoro1\blog\models\TagSearch;
@@ -15,18 +14,6 @@ class TagController extends ModalController
     public $_tag; // old tag
     public function newModel() { return new Tag(); }
     public function newSearch() { return new TagSearch(); }
-
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Updates an existing model.
@@ -80,21 +67,5 @@ class TagController extends ModalController
         $model->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Tag::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException(Module::t('core', 'The requested model does not exist.'));
-        }
     }
 }
