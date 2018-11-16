@@ -99,8 +99,8 @@ echo Modal::widget([
                 'options' => ['style' => 'width:8%;'],
                 'buttons' => [
                     'reply' => function ($url, $model) {
-						if(!$model->last || $model->user_id == \Yii::$app->user->id)
-						    return '';
+                        if(!$model->last || $model->user_id == \Yii::$app->user->id)
+                            return '';
                         return Html::a(
                             '<span class="glyphicon glyphicon-share-alt" title="'. Module::t('core', 'Reply') .'"></span>',                         
                             $url, [

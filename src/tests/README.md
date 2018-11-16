@@ -55,9 +55,9 @@ return [
         /*
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
-			'enablePrettyUrl' => true,
-			'showScriptName' => false,
-			'enableStrictParsing' => false,
-		],
-		*/
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+        ],
+        */
 </pre>

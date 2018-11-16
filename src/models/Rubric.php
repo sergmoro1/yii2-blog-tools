@@ -70,12 +70,12 @@ class Rubric extends ActiveRecord
      */
     public function uniqueExceptItself($attribute, $params)
     {
-		$_attribute = '_' . $attribute;
-		$value = $this->$attribute;
-		$_value = $this->$_attribute;
+        $_attribute = '_' . $attribute;
+        $value = $this->$attribute;
+        $_value = $this->$_attribute;
         if($value <> $_value) {
-			$found = false;
-			if(Rubric::find()->select([$attribute])->where([$attribute => $value])->count() > 0) {
+            $found = false;
+            if(Rubric::find()->select([$attribute])->where([$attribute => $value])->count() > 0) {
                 $this->addError($attribute, Module::t('core', '{attribute} "{value}" has already been taken.', [
                     'attribute' => ucfirst($attribute), 'value' => $value,
                 ]));

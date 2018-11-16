@@ -21,12 +21,12 @@ class AuthorTest extends \Codeception\Test\Unit
     }
     
     public function testCreate() {
-		foreach ($this->tester->grabFixture('authors') as $author) {
-			$model = new Author($author);
-			$this->tester->expect($model->save());
-		}
-		$this->tester->seeInDatabase('author', ['name' => 'Sergey Morozov']);
-		$model = new Author();
-		$this->tester->assertCount(2, $model->getAll());
-	}
+        foreach ($this->tester->grabFixture('authors') as $author) {
+            $model = new Author($author);
+            $this->tester->expect($model->save());
+        }
+        $this->tester->seeInDatabase('author', ['name' => 'Sergey Morozov']);
+        $model = new Author();
+        $this->tester->assertCount(2, $model->getAll());
+    }
 }

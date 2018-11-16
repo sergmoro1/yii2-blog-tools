@@ -33,9 +33,9 @@ class TagController extends ModalController
             // replace all tags in all posts
             \Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, '{$this->_tag}', '{$model->name}') WHERE tags LIKE '%{$this->_tag}%'")
                 ->execute();
-			return YII_DEBUG 
+            return YII_DEBUG 
                 ? $this->redirect(['index'])
-			    : $this->redirect(\Yii::$app->request->referrer);
+                : $this->redirect(\Yii::$app->request->referrer);
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

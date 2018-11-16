@@ -14,7 +14,7 @@ class CreateUserForm extends BasePage
 
     public function init()
     {
-		$this->route = Url::to(['/user/user/update', 'id' => 2]);
+        $this->route = Url::to(['/user/user/update', 'id' => 2]);
     }
     
     /**

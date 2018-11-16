@@ -25,8 +25,8 @@ class ParamsSyntaxChecker
         if(substr($code, -1) != ';') {
             $this->error = ['line' => (substr_count($code, "\n") + 1), 'prev' => ']', 'token' => ';', 'must' => true];
             return false;
-		}
-		// exclude last token
+        }
+        // exclude last token
         $code = substr($code, 0, -1);
         // get all tokens
         $tokens = token_get_all($code);
@@ -47,7 +47,7 @@ class ParamsSyntaxChecker
                 else
                     return false; 
             } else {
-				// line will be defined in any case, so no needed to define it here 
+                // line will be defined in any case, so no needed to define it here 
                 $this->error['prev'] = $prev;
                 $this->error['token'] = $token;
                 if(in_array($token, self::$valid_symbols) && $this->validSequence($prev, $token))

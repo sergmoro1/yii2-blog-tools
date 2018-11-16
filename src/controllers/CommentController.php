@@ -40,14 +40,14 @@ class CommentController extends ModalController
         $model->last = 1; // only the last comment in the thread can be replied
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-			// the comment to which we reply must be approved
-			if ($comment->status == Comment::STATUS_PENDING) {
-				$comment->status = Comment::STATUS_APPROVED;
-				$comment->save(false);
-			}
-			return YII_DEBUG 
+            // the comment to which we reply must be approved
+            if ($comment->status == Comment::STATUS_PENDING) {
+                $comment->status = Comment::STATUS_APPROVED;
+                $comment->save(false);
+            }
+            return YII_DEBUG 
                 ? $this->redirect(['index'])
-			    : $this->redirect(\Yii::$app->request->referrer);
+                : $this->redirect(\Yii::$app->request->referrer);
         } else {
             return $this->renderAjax('reply', [
                 'model' => $model,

@@ -25,16 +25,16 @@ use sergmoro1\blog\Module;
 
     <?php echo $form->errorSummary($model); ?>
 
-	<div class="form-group">
-		<label class="control-label col-sm-4">
-			<?= Module::t('core', 'Author') ?>
-		</label>
-		<div class="col-sm-6">
-			<div class="well well-sm">
-				<?= $model->author->name ?>
-			</div>
-		</div>
-	</div>
+    <div class="form-group">
+        <label class="control-label col-sm-4">
+            <?= Module::t('core', 'Author') ?>
+        </label>
+        <div class="col-sm-6">
+            <div class="well well-sm">
+                <?= $model->author->name ?>
+            </div>
+        </div>
+    </div>
 
     <?= $form->field($model, 'content')
         ->textArea([

@@ -13,8 +13,8 @@ class Menu extends Widget
     public $markActive = true; // current choice mark as an active
 
     private function getUrl() {
-		if(!$this->markActive)
-		    return '';
+        if(!$this->markActive)
+            return '';
         $mid = \Yii::$app->controller->module->id == \Yii::$app->id ? '' : \Yii::$app->controller->module->id;
         $cid = \Yii::$app->controller->id;
         $aid = \Yii::$app->controller->action->id;

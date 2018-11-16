@@ -5,12 +5,12 @@ use yii\db\Migration;
 
 class m160208_122838_lookup_fill extends Migration
 {
-	const TABLE = '{{%lookup}}';
-	const PROPERTY = '{{%property}}';
-	const PID = 3; // property ID
+    const TABLE = '{{%lookup}}';
+    const PROPERTY = '{{%property}}';
+    const PID = 3; // property ID
     public function up()
     {
-		$i = self::PID;
+        $i = self::PID;
         $this->insert(self::PROPERTY, ['id' =>  $i, 'name' => 'PostStatus']);
         $this->insert(self::TABLE, ['name' => 'Черновик', 'code' => 1, 'property_id' => $i, 'position' => 1]);
         $this->insert(self::TABLE, ['name' => 'Опубликовано', 'code' => 2, 'property_id' => $i, 'position' => 2]);
@@ -29,7 +29,7 @@ class m160208_122838_lookup_fill extends Migration
 
     public function down()
     {
-		$i = self::PID;
+        $i = self::PID;
         $this->delete(self::TABLE, 'property_id=' . $i);
         $this->delete(self::TABLE, 'property_id=' . ($i + 1)));
         $this->delete(self::TABLE, 'code=1 AND prooerty_id=' . ($i + 2));

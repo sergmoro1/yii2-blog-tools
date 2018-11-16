@@ -92,16 +92,16 @@ class Comment extends ActiveRecord
     }
     
     public function canBeAnswered() {
-		$countInThread = Comment::find()
-		    ->where(['thread' => $this->thread, 'user_id' => \Yii::$app->user->id])
-		    ->count();
-		return !\Yii::$app->user->isGuest &&
-		    $this->last && // this is a last comment in a thread
-		    \Yii::$app->user->identity->group == User::GROUP_COMMENTATOR && // you are a commentator
-		    $this->user_id != \Yii::$app->user->id && // last comment not yours
-		    $countInThread > 0; // you begin this thread
+        $countInThread = Comment::find()
+            ->where(['thread' => $this->thread, 'user_id' => \Yii::$app->user->id])
+            ->count();
+        return !\Yii::$app->user->isGuest &&
+            $this->last && // this is a last comment in a thread
+            \Yii::$app->user->identity->group == User::GROUP_COMMENTATOR && // you are a commentator
+            $this->user_id != \Yii::$app->user->id && // last comment not yours
+            $countInThread > 0; // you begin this thread
             
-	}
+    }
     
     /**
      * @param Post the post that this comment belongs to. If null, the method

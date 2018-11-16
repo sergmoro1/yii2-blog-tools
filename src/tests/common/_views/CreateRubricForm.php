@@ -17,13 +17,13 @@ class CreateRubricForm extends BasePage
      */
     public function fill($parent_node, $position, $show, $name, $slug)
     {
-		if($parent_node)
-			$this->actor->fillField('input[name="Rubric[parent_node]"]', $parent_node);
-		$this->actor->fillField('input[name="Rubric[position]"]', $position);
-		if($show)
-			$this->actor->fillField('input[name="Rubric[show]"]', $show);
-		$this->actor->fillField('input[name="Rubric[name]"]', $name);
-		$this->actor->fillField('input[name="Rubric[slug]"]', $slug);
+        if($parent_node)
+            $this->actor->fillField('input[name="Rubric[parent_node]"]', $parent_node);
+        $this->actor->fillField('input[name="Rubric[position]"]', $position);
+        if($show)
+            $this->actor->fillField('input[name="Rubric[show]"]', $show);
+        $this->actor->fillField('input[name="Rubric[name]"]', $name);
+        $this->actor->fillField('input[name="Rubric[slug]"]', $slug);
         $this->actor->click('#submit-btn');
     }
 }

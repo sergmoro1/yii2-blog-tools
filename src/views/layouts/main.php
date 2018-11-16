@@ -49,17 +49,17 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
             </div>
 
             <!-- DropDown Menu -->
-			<ul class="nav navbar-right top-nav">
-				<?= Menu::widget([
-					'items' => \Yii::$app->params['dropdown'],
-					'view' => 'dropdown',
-					'markActive' => false, 
-					'replace' => [
-						'search' => ['{uid}'], 
-						'replace' => [Yii::$app->user->id],
-					],
-				]) ?>
-			</ul>
+            <ul class="nav navbar-right top-nav">
+                <?= Menu::widget([
+                    'items' => \Yii::$app->params['dropdown'],
+                    'view' => 'dropdown',
+                    'markActive' => false, 
+                    'replace' => [
+                        'search' => ['{uid}'], 
+                        'replace' => [Yii::$app->user->id],
+                    ],
+                ]) ?>
+            </ul>
             
             <!-- Sidebar Menu Items - these collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">

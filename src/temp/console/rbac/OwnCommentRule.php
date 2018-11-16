@@ -20,7 +20,7 @@ class OwnCommentRule extends Rule
      */
     public function execute($user_id, $item, $params)
     {
-		// admin can reply for all comments 
+        // admin can reply for all comments 
         if(!isset($params['comment']) || Yii::$app->user->identity->group == User::GROUP_ADMIN)
             return true;
         return $params['comment']->model == 1    
