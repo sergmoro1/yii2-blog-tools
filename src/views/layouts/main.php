@@ -48,54 +48,39 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                 </a>
             </div>
 
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-                <li><?= Html::a(Yii::t('app', 'frontend'), ['/blog/site/frontend']) ?></li>
-                <?php if(Yii::$app->user->isGuest): ?>
-                <li><?= Html::a(Yii::t('app', 'Login'), ['/user/site/login']) ?></li>
-                <?php else: ?>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <?php if($image = Yii::$app->user->identity->getImage('thumb')): ?>
-                            <img class="img-circle avatar" src="<?= $image ?>">
-                        <?php else: ?>
-                            <span class="glyphicon glyphicon-user"></span>
-                        <?php endif; ?>
-                        <?= Yii::$app->user->identity->name ?>
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <?php if(Yii::$app->user->can('gear')): ?>
-                            <li><?= Html::a('<span class="glyphicon glyphicon-cog"></span> ' . Yii::t('app', 'Gear'), ['/blog/site/gear']) ?></li>
-                        <?php else: ?>
-                            <li><?= Html::a('<span class="glyphicon glyphicon-user"></span> ' . Yii::t('app', 'Profile'), ['/user/user/update', 'id' => Yii::$app->user->id]) ?><li>
-                        <?php endif; ?>
-                        <li class="divider"></li>
-                        <li>
-                            <li><?= Html::a('<span class="glyphicon glyphicon-off"></span> ' . Yii::t('app', 'Logout'), ['/user/site/logout'], ['data-method' => 'post']) ?></li>
-                        </li>
-                    </ul>
-                </li>
-                <?php endif; ?>
-            </ul>
-
+            <!-- DropDown Menu -->
+			<ul class="nav navbar-right top-nav">
+				<?= Menu::widget([
+					'items' => \Yii::$app->params['dropdown'],
+					'view' => 'dropdown',
+					'markActive' => false, 
+					'replace' => [
+						'search' => ['{uid}'], 
+						'replace' => [Yii::$app->user->id],
+					],
+				]) ?>
+			</ul>
+            
             <!-- Sidebar Menu Items - these collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-                <?php if(Yii::$app->user->isGuest || Yii::$app->user->identity->group == User::GROUP_COMMENTATOR): ?>
                 <ul class="nav navbar-nav side-nav">
+                <?php if(Yii::$app->user->isGuest || Yii::$app->user->identity->group == User::GROUP_COMMENTATOR): ?>
 
                     <li class='vertical'>
                         <h2><?= \Yii::$app->name ?></h2>
                         <p><?= \Yii::$app->params['slogan'] ?></p>
                     </li>
-                </ul>
-
+ 
                 <?php else: ?>
 
-                    <?= Menu::widget(['items' => \Yii::$app->params['sidebar']]) ?>
+                    <?= Menu::widget([
+                        'view' => 'sidebar', 
+                        'items' => \Yii::$app->params['sidebar'],
+                    ]) ?>
 
-                <?php endif; ?>
+               <?php endif; ?>
+                </ul>
 
 
             </div>

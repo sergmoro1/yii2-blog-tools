@@ -6,11 +6,15 @@ use yii\helpers\Html;
 
 class Menu extends Widget
 {
-    public $items;
     public $view = 'menu';
+    public $items;
     public $ulClass = null;
+    public $replace = []; // replace [search => replace] in Url
+    public $markActive = true; // current choice mark as an active
 
     private function getUrl() {
+		if(!$this->markActive)
+		    return '';
         $mid = \Yii::$app->controller->module->id == \Yii::$app->id ? '' : \Yii::$app->controller->module->id;
         $cid = \Yii::$app->controller->id;
         $aid = \Yii::$app->controller->action->id;
@@ -35,6 +39,7 @@ class Menu extends Widget
             'items' => $this->items,
             'url' => $this->getUrl(),
             'ulClass' => $this->ulClass,
+            'replace' => $this->replace,
         ]);
     }
 }
