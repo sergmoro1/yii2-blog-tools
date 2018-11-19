@@ -31,7 +31,7 @@ class m160208_122838_lookup_fill extends Migration
     {
         $i = self::PID;
         $this->delete(self::TABLE, 'property_id=' . $i);
-        $this->delete(self::TABLE, 'property_id=' . ($i + 1)));
+        $this->delete(self::TABLE, 'property_id=' . ($i + 1));
         $this->delete(self::TABLE, 'code=1 AND prooerty_id=' . ($i + 2));
         $this->delete(self::PROPERTY, 'id=' . $i);
         $this->delete(self::PROPERTY, 'id=' . ($i + 1));
