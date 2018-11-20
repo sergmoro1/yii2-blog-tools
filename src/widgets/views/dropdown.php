@@ -27,10 +27,8 @@ use yii\helpers\Html;
                 <?php if(substr($name, 0, 7) == 'divider') { echo '<li class="divider"></li>'; continue; } ?>
                 <li>
                     <?php $options = isset($item['options']) ? $item['options']: []; ?>
-                    <?= Html::a(
-                        '<span class="'. $item['icon'] .'"></span> '. Yii::t('app', $item['caption']), 
-                        ['/' . str_replace($replace['search'], $replace['replace'], $item['url'])], 
-                        $options); ?>
+                    <?php $url = in_array($item['url'], array_keys($replace)) ? $replace[$item['url']] : [$item['url']]; ?>
+                    <?= Html::a('<span class="'. $item['icon'] .'"></span> '. Yii::t('app', $item['caption']), $url, $options); ?>
                 </li>
             <?php endforeach; ?>
         </ul>

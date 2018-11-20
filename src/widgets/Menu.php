@@ -9,7 +9,7 @@ class Menu extends Widget
     public $view = 'menu';
     public $items;
     public $ulClass = null;
-    public $replace = []; // replace [search => replace] in Url
+    public $replace = []; // replace [url => url with params]
     public $markActive = true; // current choice mark as an active
 
     private function getUrl() {

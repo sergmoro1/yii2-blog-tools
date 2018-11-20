@@ -55,8 +55,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                     'view' => 'dropdown',
                     'markActive' => false, 
                     'replace' => [
-                        'search' => ['{uid}'], 
-                        'replace' => [Yii::$app->user->id],
+                        '/user/user/update' => ['/user/user/update', 'id' => Yii::$app->user->id],
                     ],
                 ]) ?>
             </ul>
