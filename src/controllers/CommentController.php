@@ -8,7 +8,7 @@ use yii\web\ForbiddenHttpException;
 use sergmoro1\blog\Module;
 use sergmoro1\modal\controllers\ModalController;
 use common\models\User;
-use sergmoro1\blog\models\Comment;
+use common\models\Comment;
 use sergmoro1\blog\models\CommentSearch;
 
 /**

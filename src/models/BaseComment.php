@@ -1,15 +1,18 @@
 <?php
 namespace sergmoro1\blog\models;
 
+use \Yii;
 use yii\helpers\Html;
 use yii\db\ActiveRecord;
 use sergmoro1\rudate\RuDate;
+use sergmoro1\lookup\models\Lookup;
 use sergmoro1\blog\Module;
 
 use common\models\Post;
 use common\models\User;
+use common\models\Comment;
 
-class Comment extends ActiveRecord
+class BaseComment extends ActiveRecord
 {
     /**
      * The followings are the available columns in table 'tbl_comment':
@@ -24,9 +27,17 @@ class Comment extends ActiveRecord
      * @var integer $created_at
      */
 
+    const EVENT_JUST_ADDED = 'just_added_new_comment';
+
     const STATUS_PENDING = 1;
     const STATUS_APPROVED = 2;
     const STATUS_ARCHIVED = 3;
+
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_JUST_ADDED, [$this, 'notifyResponsible']);
+    }
 
     /**
      * @return string the associated database table name
@@ -91,32 +102,26 @@ class Comment extends ActiveRecord
         static::save(['status' => Comment::STATUS_APPROVED]);
     }
     
+    /**
+     * Comment can be answered if User is not a guest and
+     * this is the last comment in a thread and
+     * User is a commentator and
+     * last comment not belongs to User
+     * User begun the thread.
+     * @return boolean
+     */
     public function canBeAnswered() {
         $countInThread = Comment::find()
-            ->where(['thread' => $this->thread, 'user_id' => \Yii::$app->user->id])
+            ->where(['thread' => $this->thread, 'user_id' => Yii::$app->user->id])
             ->count();
-        return !\Yii::$app->user->isGuest &&
+        return !Yii::$app->user->isGuest &&
             $this->last && // this is a last comment in a thread
-            \Yii::$app->user->identity->group == User::GROUP_COMMENTATOR && // you are a commentator
-            $this->user_id != \Yii::$app->user->id && // last comment not yours
+            Yii::$app->user->identity->group == User::GROUP_COMMENTATOR && // you are a commentator
+            $this->user_id != Yii::$app->user->id && // last comment not yours
             $countInThread > 0; // you begin this thread
             
     }
     
-    /**
-     * @param Post the post that this comment belongs to. If null, the method
-     * will query for the post.
-     * @return string the permalink URL for this comment
-     */
-    public function getUrl($model = null)
-    {
-        if($model === null)
-            $model = $this->model == Post::COMMENT_FOR 
-                ? $this->post
-                : false;
-        return $model ? $model->url . '#c' . $this->id : '';
-    }
-
     public function getPartContent($limit = 500)
     {
         $out = '';
@@ -134,7 +139,7 @@ class Comment extends ActiveRecord
     }
 
     /**
-     * @return string the hyperlink display for the current comment's author
+     * @return object the current comment's author (user)
      */
     public function getAuthor()
     {
@@ -214,7 +219,7 @@ class Comment extends ActiveRecord
             if($insert)
             {
                 // all comments in the thread can't be replied except the last, so change previous last to 0
-                \Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=0 WHERE thread='{$this->thread}' AND last=1")->execute();
+                Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=0 WHERE thread='{$this->thread}' AND last=1")->execute();
                 $this->created_at = time();
             }
             return true;
@@ -237,5 +242,23 @@ class Comment extends ActiveRecord
                 ->all();
         } else
             return null;
+    }
+
+    /**
+     * Send email for responsible person. 
+     */
+    public function notifyResponsible($event)
+    {
+        // first email address should be admin@domain.com because from other email address mail can't be sent
+        $from = [Yii::$app->params['email']['admin'] => 'not-reply'];
+        // add real sender
+        $from[$this->author->email] = $this->author->name;
+        $to = Yii::$app->params['email']['contact'];
+        return Yii::$app->mailer->compose()
+            ->setTo($to)
+            ->setFrom($from)
+            ->setSubject(Module::t('core', 'New comment for') . ' - ' . Lookup::item('CommentFor', $this->model))
+            ->setTextBody($this->content)
+            ->send();
     }
 }

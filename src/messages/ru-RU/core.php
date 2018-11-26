@@ -44,6 +44,7 @@ return [
     'Moderator' => 'Модератор',
     'Modified at' => 'Изменено',
     'Name' => 'Имя',
+    'New comment for' => 'Новый комментарий для',
     'Only ajax request suitable.' => 'Нужен только ajax запрос.',
     'Parent' => 'Родитель',
     'Parent node' => 'Родительский узел',

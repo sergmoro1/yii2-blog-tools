@@ -69,7 +69,7 @@ class PostController extends Controller
     public function actionMore($slug, $offset)
     {
         if(\Yii::$app->getRequest()->isAjax) {
-            $model = $this->loadModel(0, $slug);
+            $model = $this->findModel(0, $slug);
             if($comments = $model->getComments($offset))
                 return $this->renderAjax('_comments', [
                     'post' => $model,

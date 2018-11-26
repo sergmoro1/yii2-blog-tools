@@ -6,7 +6,7 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use sergmoro1\blog\Module;
 
-use sergmoro1\blog\models\Comment;
+use common\models\Comment;
 
 class RecentComments extends Widget
 {

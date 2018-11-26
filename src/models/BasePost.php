@@ -34,6 +34,8 @@ use common\models\User;
 
 class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 {
+    use CanComment;
+    
     const STATUS_DRAFT = 1;
     const STATUS_PUBLISHED = 2;
     const STATUS_ARCHIVED = 3;
@@ -124,37 +126,6 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
         return implode($glue, $a);
     }
 
-    public function getComments($offset = 0)
-    {
-        $rows = \Yii::$app->db
-            ->createCommand('SELECT DISTINCT thread '.
-                'FROM comment '.
-                'WHERE parent_id=:parent_id AND model=:model AND status=:status '.
-                'ORDER BY thread DESC '.
-                'LIMIT '. \Yii::$app->params['recordsPerPage'] .' OFFSET '. $offset)
-            ->bindValues([
-                ':parent_id' => $this->id,
-                ':model' => self::COMMENT_FOR , 
-                ':status' => Comment::STATUS_APPROVED,
-            ])
-            ->queryAll();
-        $a = []; foreach($rows as $row) $a[] = $row['thread'];
-        return Comment::find()
-            ->where('parent_id=:parent_id AND model=:model AND status=:status', [
-                ':parent_id' => $this->id,
-                ':model' => self::COMMENT_FOR , 
-                ':status' => Comment::STATUS_APPROVED,
-            ])
-            ->andWhere(['in', 'thread', $a])
-            ->orderBy('thread DESC, created_at ASC')
-            ->all();
-    }
-
-    public function getCommentCount()
-    {
-        return count(Comment::findAll(['parent_id' => $this->id, 'model' => self::COMMENT_FOR,  'status' => Comment::STATUS_APPROVED]));
-    }
-    
     public function getRubric()
     {
         return Rubric::findOne($this->rubric);
@@ -395,28 +366,6 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             ->orderBy('created_at DESC')
             ->limit($limit)
             ->all();
-    }
-
-    /**
-     * Adds a new comment to this post.
-     * This method will set status and post_id of the comment accordingly.
-     * @param Comment the comment to be added
-     * @return boolean whether the comment is saved successfully
-     */
-    public function addComment($comment)
-    {
-        if(\Yii::$app->params['commentNeedApproval'])
-            $comment->status = Comment::STATUS_PENDING;
-        else
-            $comment->status = Comment::STATUS_APPROVED;
-        $comment->model = self::COMMENT_FOR;
-        $comment->parent_id = $this->id;
-        if($comment->thread == '-')
-            $comment->thread = time() . uniqid();
-        else
-            \Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=0 WHERE thread='{$comment->thread}' AND last=1")->execute();
-        $comment->last = 1;
-        return $comment->save();
     }
 
     /**

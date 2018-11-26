@@ -6,6 +6,7 @@ use yii\data\ActiveDataProvider;
 
 use common\models\User;
 use common\models\Post;
+use common\models\Comment;
 
 class CommentSearch extends Comment
 {
