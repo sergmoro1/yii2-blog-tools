@@ -1,6 +1,6 @@
 <?php
 
-/* @var $this \yii\web\View */
+/* @var $this yii\web\View */
 /* @var $content string */
 
 use yii\helpers\Html;
@@ -15,9 +15,9 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
 
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= \Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
+    <meta charset="<?= \Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="<?= Url::to('@web/favicon.ico') ?>" type="image/x-icon">
     
@@ -44,7 +44,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/blog/site/index']) ?>">
-                    <?= Yii::$app->name ?>
+                    <?= \Yii::$app->name ?>
                 </a>
             </div>
 
@@ -55,7 +55,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                     'view' => 'dropdown',
                     'markActive' => false, 
                     'replace' => [
-                        '/user/user/update' => ['/user/user/update', 'id' => Yii::$app->user->id],
+                        '/user/user/update' => ['/user/user/update', 'id' => \Yii::$app->user->id],
                     ],
                 ]) ?>
             </ul>
@@ -64,7 +64,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
             <div class="collapse navbar-collapse navbar-ex1-collapse">
 
                 <ul class="nav navbar-nav side-nav">
-                <?php if(Yii::$app->user->isGuest || Yii::$app->user->identity->group == User::GROUP_COMMENTATOR): ?>
+                <?php if(\Yii::$app->user->isGuest || \Yii::$app->user->identity->group == User::GROUP_COMMENTATOR): ?>
 
                     <li class='vertical'>
                         <h2><?= \Yii::$app->name ?></h2>

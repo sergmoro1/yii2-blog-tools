@@ -9,6 +9,6 @@ use yii\test\ActiveFixture;
  */
 class CommentFixture extends ActiveFixture
 {
-    public $modelClass = 'sergmoro1\blog\models\Comment';
+    public $modelClass = 'common\models\Comment';
     public $depends = ['sergmoro1\blog\tests\common\fixtures\PostFixture'];
 }

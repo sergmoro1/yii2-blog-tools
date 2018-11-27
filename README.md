@@ -159,3 +159,35 @@ Enter <code>http://your-app/backend/web</code> and <code>Login</code>.
 Name: Admin
 
 Password: 123456
+
+<h3>Tests</h3>
+
+Base path <code>your-app/vendor/sergmoro1/yii2-blog-tools/src/tests</code> or <code>./tests</code> further.
+
+1. Create DataBase <code>yii2_advanced_tests</code>.
+2. Change <code>dbname</code> parameter in <code>common/config/main-local.php</code> to <code>yii2_advanced_tests</code>.
+3. Run all migrations.
+<pre>
+$ php yii migrate
+// and then all mentioned above
+</pre>
+4. In a file <code>common/config/main.php</code> comment all connected with <code>LangSwitcher</code>.
+5. In a files <code>./tests/</code>
+<ul>
+  <li>acceptance.suite.yml</li>
+  <li>functional.suite.yml</li>
+  <li>unit.suite.yml</li>
+</ul>
+change parameter <code>dbname</code> to <code>yii2_advanced_tests</code> and define <code>password</code> if exists.
+6. In a file <code>./tests/common/config.php</code> 
+define the same <code>dbname</code> and <code>mailer</code>
+<ul>
+  <li>useFileTransport = true</li>
+  <li>viewPath="@vendor/sergmoro1/yii2-user/src/mail"</li>
+</ul>
+7. Go to <code>./tests</code> and run tests
+<pre>
+$ codecept run acceptance --steps
+$ codecept run functional --steps
+$ codecept run unit --steps
+</pre>

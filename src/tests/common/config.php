@@ -18,6 +18,7 @@ return [
         ],
         'mailer' => [
             'useFileTransport' => true,
+            'viewPath' => '@vendor/sergmoro1/yii2-user/src/mail',
         ],
         'urlManager' => [
             'showScriptName' => true,
