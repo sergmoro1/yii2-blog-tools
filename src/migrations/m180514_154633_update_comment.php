@@ -2,7 +2,7 @@
 
 use yii\db\Schema;
 use yii\db\Migration;
-use sergmoro1\blog\models\Comment;
+use sergmoro1\blog\models\BaseComment as Comment;
 use sergmoro1\user\models\BaseUser as User;
 
 class m180514_154633_update_comment extends Migration

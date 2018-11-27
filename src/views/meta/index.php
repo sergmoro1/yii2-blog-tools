@@ -10,7 +10,7 @@ $this->title = Yii::t('metaTag', 'Meta Tags');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div>
+<div class="table-responsive">
 
     <p>
         <?= Html::a(Yii::t('metaTag', 'Create Meta Tag'), ['create'], ['class' => 'btn btn-success']) ?>

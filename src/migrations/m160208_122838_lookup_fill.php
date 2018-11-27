@@ -19,12 +19,12 @@ class m160208_122838_lookup_fill extends Migration
         $this->insert(self::LOOKUP, ['name' => 'Опубликовано', 'code' => 2, 'property_id' => self::POST_STATUS, 'position' => 2]);
         $this->insert(self::LOOKUP, ['name' => 'Архив', 'code' => 3, 'property_id' => self::POST_STATUS, 'position' => 3]);
 
-        $this->insert(self::PROPERTY, ['id' => $i, 'name' => 'CommentStatus']);
+        $this->insert(self::PROPERTY, ['id' => self::COMMENT_STATUS, 'name' => 'CommentStatus']);
         $this->insert(self::LOOKUP, ['name' => 'Ожидание', 'code' => 1, 'property_id' => self::COMMENT_STATUS, 'position' => 1]);
         $this->insert(self::LOOKUP, ['name' => 'Подтверждено', 'code' => 2, 'property_id' => self::COMMENT_STATUS, 'position' => 2]);
         $this->insert(self::LOOKUP, ['name' => 'Архив', 'code' => 3, 'property_id' => self::COMMENT_STATUS, 'position' => 3]);
 
-        $this->insert(self::PROPERTY, ['id' => $i, 'name' => 'CommentFor']);
+        $this->insert(self::PROPERTY, ['id' => self::COMMENT_FOR, 'name' => 'CommentFor']);
         $this->insert(self::LOOKUP, ['name' => 'Статьи', 'code' => 1, 'property_id' => self::COMMENT_FOR, 'position' => 1]);
     }
 

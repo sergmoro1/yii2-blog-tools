@@ -25,7 +25,7 @@ echo Modal::widget([
         '<button type="button" class="btn btn-primary">'. Module::t('core', 'Save') .'</button>', 
 ]);
 ?>
-<div class="comment-index">
+<div class='comment-index table-responsive'>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
