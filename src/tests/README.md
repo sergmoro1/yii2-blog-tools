@@ -1,7 +1,7 @@
 <h1>How to start tests</h1>
 
-codecept run
-codecept run acceptance
+codecept run<br>
+codecept run acceptance<br>
 codecept run acceptance CommentCept --steps --debug
 
 <h2>Configs, switch off Pretty Ur</h2>
