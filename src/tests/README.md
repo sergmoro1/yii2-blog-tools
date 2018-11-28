@@ -4,6 +4,9 @@ codecept run<br>
 codecept run acceptance<br>
 codecept run acceptance CommentCept --steps --debug
 
+<h1>Settings before start</h1>
+Before you start the tests, you must create a database, run the migrations, and make changes to the configuration files.
+
 <h2>Configs, switch off Pretty Url</h2>
 
 Set <code>enablePrettyUrl</code> to <code>false</code> or comment it in a file <code>backend/config/main.php</code>.
@@ -50,12 +53,12 @@ tests/acceptance.suite.yml<br>
 tests/functional.suite.yml<br>
 tests/unit.suite.yml
 
-Change <code>webRoot</code> of the application in <code>tests/acceptance.suite.yml</code>. Something like
+Change <code>webRoot</code> of the application in <code>tests/acceptance.suite.yml</code>. Something like this
 
 <pre>
-    config:
-        PhpBrowser:
-            url: http://localhost/your-app
+  config:
+    PhpBrowser:
+      url: http://localhost/your-app
 </pre>
 
 <h2>Namespace</h2>
