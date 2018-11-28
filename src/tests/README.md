@@ -4,7 +4,7 @@ codecept run<br>
 codecept run acceptance<br>
 codecept run acceptance CommentCept --steps --debug
 
-<h2>Configs, switch off Pretty Ur</h2>
+<h2>Configs, switch off Pretty Url</h2>
 
 Set <code>enablePrettyUrl</code> to <code>false</code> or comment it in a file <code>backend/config/main.php</code>.
 <pre>
@@ -29,7 +29,7 @@ php yii migrate
 //  all others as mentioned in vendor/sergmoro1/yii2=blog-tools/README.md
 </pre>
 
-Change database name in <code>./common/config/main-local.php</code> to
+Change database name in <code>./common/config/main-local.php</code> to <code>yii2_advanced_tests</code>.
 
 <pre>
 return [
@@ -46,16 +46,16 @@ return [
 
 Change, if needed, a <code>password</code> in: 
 
-tests/acceptance.suite.yml
-tests/functional.suite.yml
+tests/acceptance.suite.yml<br>
+tests/functional.suite.yml<br>
 tests/unit.suite.yml
 
-Change backend <code>url</code> in <code>tests/acceptance.suite.yml</code>. In my case it will be <code>http://sm1/vorst</code>
+Change <code>webRoot</code> of the application in <code>tests/acceptance.suite.yml</code>. Something like
 
 <pre>
     config:
         PhpBrowser:
-            url: http://localhost
+            url: http://localhost/your-app
 </pre>
 
 <h2>Namespace</h2>
