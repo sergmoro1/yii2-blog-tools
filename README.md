@@ -78,20 +78,17 @@ return [
       'itemFile' => __DIR__ . '/../../console/rbac/items.php',
       'ruleFile' => __DIR__ . '/../../console/rbac/rules.php',
     ],
-    'mailer' => [
-      'class' => 'yii\swiftmailer\Mailer',
-      'useFileTransport' => false,
-      'viewPath' => '@vendor/sergmoro1/yii2-user/src/mail',
-      /* Definition of Yandex post office for your domain (example).
-      'transport' => [
-        'class' => 'Swift_SmtpTransport',
-        'host' => 'smtp.yandex.ru',
-        'username' => 'admin@your-site.ru',
-        'password' => 'your-password',
-        'port' => '465',
-        'encryption' => 'ssl',
-      ],
-      */
+    'user' => [
+      'class' => 'yii\web\User',
+      'identityClass' => 'common\models\User',
+      'enableAutoLogin' => true,
+      'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+    ],
+    'urlManager' => [
+      'class' => 'yii\web\UrlManager',
+      'enablePrettyUrl' => true,
+      'showScriptName' => false,
+      'enableStrictParsing' => false,
     ],
     'errorHandler' => [
       'errorAction' => '/blog/site/error',
@@ -120,6 +117,21 @@ return [
     ],
     'user' => [
       'class' => 'yii\web\User',
+    ],
+    'mailer' => [
+      'class' => 'yii\swiftmailer\Mailer',
+      'useFileTransport' => false,
+      'viewPath' => '@vendor/sergmoro1/yii2-user/src/mail',
+      /* Definition of Yandex post office for your domain (example).
+      'transport' => [
+        'class' => 'Swift_SmtpTransport',
+        'host' => 'smtp.yandex.ru',
+        'username' => 'admin@your-site.ru',
+        'password' => 'your-password',
+        'port' => '465',
+        'encryption' => 'ssl',
+      ],
+      */
     ],
     'i18n' => [
       'translations' => [
@@ -152,7 +164,9 @@ return [
 ];
 </pre>
 
-<h3>Start</h3>
+Don't forget add <code>.htaccess</code> file to <code>backend/web</code> and <code>frontend/web</code>.
+
+<h2>Start</h2>
 
 Enter <code>http://your-app/backend/web</code> and <code>Login</code>.
 

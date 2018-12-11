@@ -1,7 +1,7 @@
 <?php
 $sidebar = array_merge(
     require(__DIR__ . '/../../vendor/sergmoro1/yii2-blog-tools/src/config/sidebar.php'),
-    require(__DIR__ . '/../../vendor/sergmoro1/yii2-user/src/config/sidebar.php'),
+    require(__DIR__ . '/../../vendor/sergmoro1/yii2-user/src/config/sidebar.php')
     //require(__DIR__ . '/../../vendor/sergmoro1/yii2-lookup/src/config/sidebar.php')
 );
 
