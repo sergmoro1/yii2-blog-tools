@@ -14,10 +14,11 @@ $this->title = Module::t('core', 'Posts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<p>
+	<?= Html::a(\Yii::$app->params['icons']['plus'] . ' ' . Module::t('core', 'Add'), ['create'], ['class' => 'btn btn-success']) ?>
+</p>
+
 <div class='post-index table-responsive'>
-    <p>
-        <?= Html::a(\Yii::$app->params['icons']['plus'] . ' ' . Module::t('core', 'Add'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -90,9 +90,12 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
 
             <div class="container-fluid">
                 
-                <h3><?= $this->title ?></h3>
-                
                 <?= Alert::widget() ?>
+
+                <?php if(isset($this->params['breadcrumbs'])): ?>
+                    <?= Breadcrumbs::widget(['homeLink' => false, 'links' => $this->params['breadcrumbs']]) ?>
+                <?php endif; ?>
+
                 <?= $content ?>
 
             </div> <!-- /.container-fluid -->

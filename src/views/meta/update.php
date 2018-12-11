@@ -5,12 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \notgosu\yii2\modules\metaTag\models\MetaTag */
 
-$this->title = Yii::t('metaTag', 'Update {modelClass}: ', [
-    'modelClass' => 'Meta Tag',
-]) . ' ' . $model->name;
+$this->title = Yii::t('metaTag', 'Update');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('metaTag', 'Meta Tags'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('metaTag', 'Update');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="panel-body">
     <?= $this->render('_form', [

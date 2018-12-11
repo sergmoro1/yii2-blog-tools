@@ -6,15 +6,14 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
-use sergmoro1\blog\Module;
 
+use sergmoro1\blog\Module;
 use sergmoro1\lookup\models\Lookup;
 
 $this->registerJs('var popUp = {"id": "rubric", "actions": ["update"]};', yii\web\View::POS_HEAD);
 sergmoro1\modal\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Rubrics');
-$this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['post/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Modal::widget([

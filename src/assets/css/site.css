@@ -113,5 +113,12 @@ a.desc:after {
     padding: 0px;
 }
 pre.small {
-  font-size: 0.7em;
+    font-size: 0.7em;
+}
+ul.breadcrumb {
+    padding: 0px 0px;
+    margin: 10px 0px 15px;
+    list-style: none;
+    background-color: #fff;
+    font-size: 1.3em;
 }

@@ -13,7 +13,7 @@ $this->registerJs('var popUp = {"id": "comment", "actions": ["reply", "update"]}
 sergmoro1\modal\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Comments');
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 
 echo Modal::widget([
     'id' => 'comment-win',

@@ -7,6 +7,7 @@ use yii\helpers\Html;
 class Menu extends Widget
 {
     public $view = 'menu';
+    public $tag = 'span';
     public $items;
     public $ulClass = null;
     public $replace = []; // replace [url => url with params]
@@ -36,6 +37,7 @@ class Menu extends Widget
     public function run()
     {
         echo $this->render($this->view, [
+            'tag' => $this->tag,
             'items' => $this->items,
             'url' => $this->getUrl(),
             'ulClass' => $this->ulClass,

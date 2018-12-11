@@ -12,6 +12,7 @@ $this->registerJs('var popUp = {"id": "tag", "actions": ["update"]};', yii\web\V
 sergmoro1\modal\assets\PopUpAsset::register($this);
 
 $this->title = Module::t('core', 'Tags');
+$this->params['breadcrumbs'][] = $this->title;;
 
 echo Modal::widget([
     'id' => 'tag-win',
