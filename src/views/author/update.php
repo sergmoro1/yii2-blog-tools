@@ -8,7 +8,7 @@ use sergmoro1\blog\Module;
 
 $this->title = Module::t('core', 'Update');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Authors'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = $model->name;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
