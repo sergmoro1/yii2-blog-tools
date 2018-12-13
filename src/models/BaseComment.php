@@ -78,6 +78,26 @@ class BaseComment extends ActiveRecord
     }
 
     /**
+     * Get Url for the model. By default model is a Post.
+     * @param model that this comment belongs to.
+     * @return string the permalink URL for this comment
+     */
+    public function getUrl($model = null)
+    {
+        if($model === null) {
+            $m = $this->commentFor[$this->model];
+            $model = $this->$m;
+        }
+        return $model ? $model->url . '#c' . $this->id : '';
+    }
+
+    public function getTitleLink()
+    {
+		$m = $this->commentFor[$this->model];
+		return $this->$m->getTitleLink();
+    }
+
+    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()

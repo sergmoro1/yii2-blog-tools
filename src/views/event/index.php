@@ -30,7 +30,7 @@ echo Modal::widget([
 <div class="event-index">
 
 <div class='row'>
-<div class='col-sm-8'>
+<div class='col-sm-12'>
 
 	<p>
 		<?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Module::t('core', 'Add'), ['create'], [
@@ -101,10 +101,6 @@ echo Modal::widget([
     ]); ?>
     </div>
     
-</div>
-
-<div class='col-sm-4'>
-    <?= $this->render('help') ?>
 </div>
 
 </div> <!-- ./row -->
