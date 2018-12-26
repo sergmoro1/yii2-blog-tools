@@ -16,6 +16,9 @@ class TagCloud extends Widget
     public $coeff = 1.5;
     public $linkClass = '';
     public $view = 'tagCloud';
+    public $prefix = '';
+    public $glue = '-';
+    public $mb_case = MB_CASE_TITLE;
 
     private $items;
     
@@ -32,11 +35,11 @@ class TagCloud extends Widget
                 $a = $this->useWeight ? ['style' => "font-size: {$weight}pt"] : [];
                 if($this->linkClass)
                     $a['class'] = $this->linkClass;
-                $this->items[] = Html::a(
-                    mb_convert_case(Html::encode($tag), MB_CASE_TITLE, 'UTF-8'), 
+                $this->items[] = Html::a($this->prefix.
+                    mb_convert_case(Html::encode($tag), $this->mb_case, 'UTF-8'), 
                     (\Yii::$app->components['urlManager']['enablePrettyUrl']
-                        ? ['post/tag/' . WebSlug::getWebname($tag)] 
-                        : ['post/index', 'tag' => WebSlug::getWebname($tag)]
+                        ? ['post/tag/' . WebSlug::getWebname($tag, $this->glue)] 
+                        : ['post/index', 'tag' => WebSlug::getWebname($tag, $this->glue)]
                     ), $a
                 );
             }

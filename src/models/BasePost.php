@@ -31,6 +31,7 @@ use sergmoro1\rudate\RuDate;
 use sergmoro1\blog\components\RuSlug;
 
 use common\models\User;
+use common\models\Comment;
 
 class BasePost extends ActiveRecord implements SitemapInterface, Linkable
 {

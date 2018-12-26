@@ -10,6 +10,6 @@ use sergmoro1\blog\models\BaseComment;
 
 class Comment extends BaseComment
 {
-	private $commentFor = [1 => 'post'];
+	protected $commentFor = [1 => 'post'];
 }
         

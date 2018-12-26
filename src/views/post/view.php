@@ -14,7 +14,7 @@ $this->title = Module::t('core', 'View');
 $this->params['breadcrumbs'][] = ['label' => Module::t('core', 'Posts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->getTitle();
 ?>
-<div class="post-view">
+<div class='post-view'>
 
     <p>
         <?= Html::a(Module::t('core', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -27,14 +27,38 @@ $this->params['breadcrumbs'][] = $model->getTitle();
         ]) ?>
     </p>
 
+    <div class='post-image row'>
+        <div class='col-sm-6'>
+            
+        <?php if($model->files && count($model->files) > 1): ?>
+        
+            <?= Carousel::widget([
+                'items' => $model->prepareSlider(), 
+                'options' => ['data-interval' => ''],
+                'controls' => [
+                    '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>',
+                    '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>',
+                ]
+            ]) ?>
+        
+        <?php elseif($model->files && count($model->files) == 1): ?>
+
+            <img src='<?= $model->getImage() ?>' width='100%' />
+
+        <?php endif; ?>
+
+        </div>
+    </div>
+
     <div class='post-preview'>
+
         <?php echo $this->render('_view_head', [
             'model' => $model, 
             'read_more' => false, 
             'backend' => true,
         ]); ?>
 
-        <div class="excerpt">
+        <div class='excerpt'>
             <?= $model->excerpt ?>
         </div>
 

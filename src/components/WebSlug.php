@@ -8,13 +8,11 @@ namespace sergmoro1\blog\components;
 
 class WebSlug
 {
-    static $glue = '-';
-
-    public static function getWebname($name) {
-        return str_replace(' ', self::$glue, $name);
+    public static function getWebname($name, $glue = '-') {
+        return str_replace(' ', $glue, $name);
     }
 
-    public static function getRealname($web) {
-        return str_replace(self::$glue, ' ', $web);
+    public static function getRealname($web, $glue = '-') {
+        return str_replace($glue, ' ', $web);
     }
 }
