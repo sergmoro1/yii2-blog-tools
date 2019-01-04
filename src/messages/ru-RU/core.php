@@ -72,7 +72,7 @@ return [
     'Show' => 'Показывать',
     'Slides' => 'Слайды',
     'Slug' => 'Слаг',
-    'Slug may consists a-z, numbers and minus only.' => 'Сдаг может содержать символы a-z, числа и знак минус.',
+    'Slug may consists a-z, numbers and minus only.' => 'Слаг может содержать символы a-z, числа и знак минус.',
     'Status' => 'Статус',
     'Sub Title' => 'ПодЗаголовок',
     'Submit' => 'Отправить',

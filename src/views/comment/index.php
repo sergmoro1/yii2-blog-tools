@@ -47,7 +47,7 @@ echo Modal::widget([
                 'header' => Module::t('core', 'Title'),
                 'format' => 'html',
                 'value' => function($data) {
-                    return $data->post->getTitleLink();
+                    return $data->getTitleLink();
                 }
             ],
             [

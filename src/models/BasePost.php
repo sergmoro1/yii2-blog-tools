@@ -76,13 +76,13 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             [['title', 'excerpt', 'content', 'status'], 'required'],
             [['previous', 'rubric'], 'integer'],
             ['previous', 'default', 'value' => 0],
-            ['previous', 'already_selected', 'message' => \Yii::t('app', 'This article is already selected as the previous one.')],
+            ['previous', 'already_selected', 'message' => Module::t('core', 'This article is already selected as the previous one.')],
             ['status', 'in', 'range'=>[self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_ARCHIVED]],
             ['status', 'default', 'value' => 1],
             [['slug', 'title', 'subtitle'], 'string', 'max'=>128],
             ['slug', 'unique'],
-            ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => \Yii::t('app', 'Slug may consists a-z, numbers and minus only.')],
-            ['tags', 'match', 'pattern' => '/^[а-яА-Я\w\s,]+$/u', 'message' => \Yii::t('app', 'Tags may consists alphabets, numbers and space only.')],
+            ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Module::t('core', 'Slug may consists a-z, numbers and minus only.')],
+            ['tags', 'match', 'pattern' => '/^[а-яА-Я\w\s,]+$/u', 'message' => Module::t('core', 'Tags may consists alphabets, numbers and space only.')],
             ['tags', 'normalizeTags'],
             ['created_at_date', 'date', 'format' => 'dd.MM.yyyy', 'timestampAttribute' => 'created_at'],
             [['resume', 'created_at', 'updated_at', 'authors'], 'safe'],
@@ -138,6 +138,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     public function attributeLabels()
     {
         return [
+            'slug' => Module::t('core', 'Slug'),
             'user_id' => Module::t('core', 'Moderator'),
             'previous' => Module::t('core', 'Previous post'),
             'title' => Module::t('core', 'Title'),
@@ -251,8 +252,10 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     public function getTagLinks()
     {
         $links = [];
-        foreach(Tag::string2array($this->tags) as $tag)
-            $links[] = Html::a(Html::encode($tag), ['post/tag/' . str_replace(' ', '_', $tag)]);
+        foreach(Tag::string2array($this->tags) as $tag) {
+            if(($model = Tag::findOne(['name' => $tag])) && $model->show)
+                $links[] = Html::a(Html::encode($tag), ['post/tag/' . str_replace(' ', '_', $tag)]);
+        }
         return $links;
     }
 
