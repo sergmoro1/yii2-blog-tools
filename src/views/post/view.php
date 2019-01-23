@@ -5,6 +5,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\bootstrap\Carousel;
 use sergmoro1\blog\Module;
 
 /* @var $this yii\web\View */

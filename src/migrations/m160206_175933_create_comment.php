@@ -23,7 +23,7 @@ class m160206_175933_create_comment extends Migration
             'content' => $this->text(),
             'status' => $this->integer()->defaultValue(1),
             'thread' => $this->string(32)->defaultValue(time() + rand(1000, 9999)),
-            'reply' => $this->boolean()->defaultValue(0),
+            'reply' => $this->boolean()->defaultValue(1),
 
             'created_at' => $this->integer(),
         ], $tableOptions);

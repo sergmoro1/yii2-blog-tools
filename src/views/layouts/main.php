@@ -52,7 +52,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
             <ul class="nav navbar-right top-nav">
                 <?= Menu::widget([
                     'items' => \Yii::$app->params['dropdown'],
-                    'view' => 'dropdown',
+                    'viewFile' => 'dropdown',
                     'markActive' => false, 
                     'replace' => [
                         '/user/user/update' => ['/user/user/update', 'id' => \Yii::$app->user->id],
@@ -74,7 +74,7 @@ sergmoro1\blog\assets\SBAdminAsset::register($this);
                 <?php else: ?>
 
                     <?= Menu::widget([
-                        'view' => 'sidebar', 
+                        'viewFile' => 'sidebar', 
                         'items' => \Yii::$app->params['sidebar'],
                     ]) ?>
 

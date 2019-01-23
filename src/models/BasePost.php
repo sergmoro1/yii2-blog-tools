@@ -29,6 +29,7 @@ use mrssoft\sitemap\SitemapInterface;
 use sergmoro1\blog\Module;
 use sergmoro1\rudate\RuDate;
 use sergmoro1\blog\components\RuSlug;
+use sergmoro1\blog\components\WebSlug;
 
 use common\models\User;
 use common\models\Comment;
@@ -357,10 +358,10 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
             }
         }
         // posts with tag
-        if($tag && ($tag = str_replace('_', ' ', $tag)))
+        if($tag && ($tag = WebSlug::getRealname($tag)))
             $query->andWhere(['like', 'tags', $tag]); // tags LIKE "%$tag%"
         // posts from only recent posts rubrics
-        if(!$slug && !$tag) {
+        if(!$slug && !$tag && \Yii::$app->params['recent-posts']) {
             $a = [];
             foreach(\Yii::$app->params['recent-posts'] as $slug)
                 $a[] = Rubric::findOne(['slug' => $slug])->id;

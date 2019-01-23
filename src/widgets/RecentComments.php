@@ -10,12 +10,14 @@ use common\models\Comment;
 
 class RecentComments extends Widget
 {
-    public $view = 'recentComments';
+    public $viewFile = 'recentComments';
     public $title;
 
     public function init()
     {
-        $this->title = Module::t('core', 'Comments');
+        $this->title = $this->title
+            ? $this->title
+            : Module::t('core', 'Recent Comments');
         parent::init();
     }
 
@@ -26,7 +28,7 @@ class RecentComments extends Widget
 
         public function run()
     {
-        echo $this->render($this->view, [
+        echo $this->render($this->viewFile, [
             'title' => $this->title,
             'comments' => $this->getRecentComments(),
         ]);

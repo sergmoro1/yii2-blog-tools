@@ -11,11 +11,11 @@ use common\models\Post;
 
 class TagCloud extends Widget
 {
-    public $title = 'Tags';
+    public $viewFile = 'tagCloud';
+    public $title;
     public $useWeight = false;
     public $coeff = 1.5;
     public $linkClass = '';
-    public $view = 'tagCloud';
     public $prefix = '';
     public $glue = '-';
     public $mb_case = MB_CASE_TITLE;
@@ -24,7 +24,9 @@ class TagCloud extends Widget
     
     public function init()
     {
-        $this->title = Module::t('core', $this->title);
+        $this->title = $this->title
+            ? $this->title
+            : Module::t('core', 'Tags');
         if(Post::getPublishedPostCount() > 0 && ($tags = Tag::findTagWeights(\Yii::$app->params['tagCloudCount'])))
         {
             $this->items = [];
@@ -48,7 +50,7 @@ class TagCloud extends Widget
     }
     public function run()
     {
-        return $this->render($this->view, [
+        return $this->render($this->viewFile, [
             'title' => $this->title,
             'items' => $this->items,
         ]);

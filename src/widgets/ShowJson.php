@@ -13,14 +13,14 @@ use common\models\Post;
 class ShowJson extends Widget
 {
     public $basePath = '@app/widgets/views/';
-    public $view = false;
+    public $viewFile = false;
     public $slug;
     public $addons = null;
     
     public function init()
     {
-        if(!$this->view)
-            $this->view = str_replace('-', '_', $this->slug);
+        if(!$this->viewFile)
+            $this->viewFile = str_replace('-', '_', $this->slug);
         parent::init();
     }
     
@@ -31,7 +31,7 @@ class ShowJson extends Widget
         {
             $json = json_decode(strip_tags(str_replace(' "=""', '', $post->excerpt)));
             if(json_last_error() == JSON_ERROR_NONE)
-                echo $this->render($this->basePath . $this->view, [
+                echo $this->render($this->basePath . $this->viewFile, [
                     'post' => $post,
                     'json' => $json,
                     'addons' => $this->addons,

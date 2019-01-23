@@ -68,6 +68,7 @@ class BaseComment extends ActiveRecord
             ['status', 'default', 'value' => self::STATUS_PENDING],
             [['model', 'parent_id', 'user_id'], 'integer'],
             ['last', 'boolean'],
+            ['last', 'default', 'value' => true],
             ['content', 'string', 'max' => 1024],
         ];
     }

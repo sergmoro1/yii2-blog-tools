@@ -23,7 +23,7 @@ trait CanComment {
                 'FROM comment '.
                 'WHERE parent_id=:parent_id AND model=:model AND status=:status '.
                 'ORDER BY thread DESC '.
-                'LIMIT '. Yii::$app->params['recordsPerPage'] .' OFFSET '. $offset)
+                'LIMIT '. Yii::$app->params['commentsPerPage'] .' OFFSET '. $offset)
             ->bindValues([
                 ':parent_id' => $this->id,
                 ':model' => self::COMMENT_FOR , 

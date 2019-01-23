@@ -6,6 +6,7 @@ use yii\data\ActiveDataProvider;
 
 use common\models\Post;
 use common\models\User;
+use sergmoro1\blog\components\WebSlug;
 
 class PostSearch extends Post
 {
@@ -46,7 +47,7 @@ class PostSearch extends Post
         // load the search form data and validate
         if (!($this->load($params) && $this->validate())) {
             if(isset($_GET['tag'])) {
-                $this->tags = $_GET['tag'];
+                $this->tags = WebSlug::getRealname($_GET['tag']);
             } else
                 return $dataProvider;
         }

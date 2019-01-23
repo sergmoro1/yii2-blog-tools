@@ -10,13 +10,15 @@ use sergmoro1\blog\models\Rubric;
 
 class RubricTree extends Widget
 {
+    public $viewFile = 'rubricTree';
     public $show_post_count = false;
-    public $view = 'rubricTree';
-    public $title = 'Rubrics';
+    public $title;
 
     public function init()
     {
-        $this->title = Module::t('core', $this->title);
+        $this->title = $this->title
+            ? $this->title
+            : Module::t('core', 'Rubrics');
         parent::init();
     }
 
@@ -31,7 +33,7 @@ class RubricTree extends Widget
 
     public function run()
     {
-        echo $this->render($this->view, [
+        echo $this->render($this->viewFile, [
             'show_post_count' => $this->show_post_count,
             'title' => $this->title,
             'rubrics' => $this->getRubrics(),

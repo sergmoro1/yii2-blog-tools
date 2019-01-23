@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 class Menu extends Widget
 {
-    public $view = 'menu';
+    public $viewFile = 'menu';
     public $tag = 'span';
     public $items;
     public $ulClass = null;
@@ -36,7 +36,7 @@ class Menu extends Widget
     
     public function run()
     {
-        echo $this->render($this->view, [
+        echo $this->render($this->viewFile, [
             'tag' => $this->tag,
             'items' => $this->items,
             'url' => $this->getUrl(),
