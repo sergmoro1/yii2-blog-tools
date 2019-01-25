@@ -1,6 +1,7 @@
 <?php
 /**
- * 
+ * Comments list working example.
+ * Use it for making your own.
  */
 
 use yii\helpers\Html;
@@ -27,11 +28,7 @@ $first = true;
     <!-- Comment -->
     <li class="comment">
         <span class="indention"><?= $indention ?></span>
-        <?php if($image = $comment->author->getImage('thumb')): ?> 
-            <img class="avatar-medium img-top" src="<?=  $image ?>">
-        <?php else: ?>
-            <i class="fas fa-user-circle fa-2x img-top"></i>
-        <?php endif; ?>
+        <?= $comment->author->getAvatar('avatar-medium img-top', '<i class="fas fa-user-circle fa-2x img-top"></i>') ?>
         <span class="content"><?= $comment->content ?>
             <span class="avatar-name"><?= str_replace(' ', '', $comment->author->name) ?></span>
         </span>

@@ -6,8 +6,8 @@
  * You can reply to comments. 
  * You can only reply to the last comment in the thread.
  * 
- * The first app.comment.limit comments are loaded.
- * Then the next app.comment.limit comments can be loaded.
+ * The first appCanComments.comment.limit comments are loaded.
+ * Then the next appCanComments.comment.limit comments can be loaded.
  * 
  * Something in a views/index.php
  * 
@@ -21,7 +21,7 @@
  *       'message' => \Yii::t('app', 'Please, fill in field "{field}".', ['field' => $model->getAttributeLabel($attribute)]),
  *   ],
  * ];
- * $this->registerJS('var app=' . json_encode($app), \yii\web\View::POS_READY);
+ * $this->registerJS('var appCanComments=' . json_encode($app), \yii\web\View::POS_READY);
  *
  * Approximate DOM structure.
  * 
@@ -56,7 +56,7 @@
  * </div>
  */
 
-var app = app || {buttons:{}};
+var appCanComments = appCanComments || {buttons:{}};
 
 /*
  * Place comment content that need to be answered
@@ -65,6 +65,7 @@ var app = app || {buttons:{}};
  */
  $(function () {
 
+    var app = appCanComments;
     app.buttons.reply = function () {
         var that = $(this);
         // change the thread
@@ -85,7 +86,7 @@ var app = app || {buttons:{}};
 
     /* 
      * Load more comments and place it after loaded before.
-     * @param app.comment.limit
+     * @param appCanComments.comment.limit
      */
     app.buttons.loadMore = function() {
         var that = $(this);
@@ -121,5 +122,5 @@ var app = app || {buttons:{}};
         return false;
     };
     $('#comments .load-more-btn').on('click', app.buttons.loadMore);
-
+    appCanComments = app;
 });
