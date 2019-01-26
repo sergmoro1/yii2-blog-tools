@@ -1,33 +1,13 @@
-<?php
-use sergmoro1\blog\Module;
-?>
-
 <ul class="list-inline sociallikes"><small><?= $call ?></small>
+    <?php foreach($socialLikes as $name => $social): ?>
     <li>
-        <a onclick="popUp=window.open('http://vk.com/share.php?url=<?= $url ?>&amp;title=<?= $title ?><?= $image ? "&amp;image=$image" : "" ?>','sharer','scrollbars=yes,width=800,height=400');popUp.focus();return false;" href="javascript:;"
-            title="<?= Module::t('core', 'Share link on') ?> Vk">
+        <a onclick="popUp=window.open('<?= $social['resource'] ?>','sharer','scrollbars=yes,width=800,height=400');popUp.focus();return false;" href="javascript:;"
+            title="<?= $tagTitle ?> <?= $name ?>">
             <span class="fa-stack fa-sm">
                 <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fab fa-vk fa-stack-1x fa-inverse"></i>
+                <i class="<?= $social['icon'] ?> fa-stack-1x fa-inverse"></i>
             </span>
         </a>
     </li>
-    <li>
-        <a onclick="popUp=window.open('http://www.odnoklassniki.ru/dk?st.cmd=addShare&st.s=1&st._surl=<?= $url ?>','sharer','scrollbars=yes,width=800,height=400');popUp.focus();return false;" href="javascript:;"
-            title="<?= Module::t('core', 'Share link on') ?> Odnoklassniki">
-            <span class="fa-stack fa-sm">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fab fa-odnoklassniki fa-stack-1x fa-inverse"></i>
-            </span>
-        </a>
-    </li>
-    <li>
-        <a href="javascript:;" onclick="popUp=window.open('https://plus.google.com/share?url=<?= $url ?>','sharer','scrollbars=yes,width=800,height=400');popUp.focus();return false;"
-            title="<?= Module::t('core', 'Share link on') ?> Google+">
-            <span class="fa-stack fa-sm">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fab fa-google-plus-g fa-stack-1x fa-inverse"></i>
-            </span>
-        </a>
-    </li>
+    <?php endforeach; ?>
 </ul>
