@@ -52,7 +52,10 @@ use sergmoro1\blog\Module;
 			<h3><?= Module::t('core', 'Your answer') ?></h3>
 		</div>
 
-		<?= $this->render('@frontend/views/comment/_form', ['model' => $comment]); ?>
+		<?= $this->render('@frontend/views/comment/_form', [
+            'parent' => common\models\Comment::parentModelName($comment->model),
+            'model' => $comment,
+        ]); ?>
         <?php endif; ?>
 	</div>
 	</a>

@@ -94,7 +94,7 @@ class BaseComment extends ActiveRecord
 
     public function getTitleLink()
     {
-		$m = $this->commentFor[$this->model];
+		$m = $this->parentModelName($this->model);
 		return $this->$m->getTitleLink();
     }
 

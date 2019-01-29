@@ -67,6 +67,7 @@ trait CanComment {
         // set model and parent_id (parent model ID)
         $comment->model = self::COMMENT_FOR;
         $comment->parent_id = $this->id;
+        $comment->user_id = \Yii::$app->user->id;
         if($comment->thread == '-')
             // set new thread
             $comment->thread = time() . uniqid();
