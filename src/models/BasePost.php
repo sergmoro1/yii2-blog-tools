@@ -30,11 +30,12 @@ use sergmoro1\blog\Module;
 use sergmoro1\rudate\RuDate;
 use sergmoro1\blog\components\RuSlug;
 use sergmoro1\blog\components\WebSlug;
+use sergmoro1\blog\interfaces\RssInterface;
 
 use common\models\User;
 use common\models\Comment;
 
-class BasePost extends ActiveRecord implements SitemapInterface, Linkable
+class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssInterface
 {
     use CanComment;
     
@@ -201,6 +202,14 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable
     public function getTitle()
     {
         return preg_replace('/[\[\]]/', '', $this->title);
+    }
+
+    /**
+     * @return excerpt
+     */
+    public function getExcerpt()
+    {
+        return str_replace(["\n", "\r"], '', strip_tags($model->excerpt));
     }
 
     /**

@@ -143,7 +143,11 @@ class SiteController extends Controller
 
     private function toFrontend()
     {
-        return str_replace('frontend.', '' , str_replace('back', 'front', (Url::base()
+        $frontend = isset(\Yii::$app->params['frontend']) 
+            ? \Yii::$app->params['frontend']
+            : 'frontend.';
+            
+        return str_replace($frontend, '' , str_replace('back', 'front', (Url::base()
             ? Url::base()
             : \Yii::$app->request->hostInfo
         )));
