@@ -16,7 +16,7 @@ use yii\data\ActiveDataProvider;
         <lastBuildDate><?=date(DATE_RSS, time())?></lastBuildDate>
         <copyright><![CDATA[<?=\Yii::$app->name?>. Все права защищены ]]></copyright>
         <language><![CDATA[<?=\Yii::$app->language?>]]></language>
-        <managingEditor><![CDATA[<?=\Yii::$app->params['email']['editor']?>]]></managingEditor>
+        <managingEditor><![CDATA[<?=\Yii::$app->params['email']['to']['editor']?>]]></managingEditor>
         <ttl><?=$channel['ttl']?></ttl>
         <?=ListView::widget([
             'dataProvider' => $dataProvider,

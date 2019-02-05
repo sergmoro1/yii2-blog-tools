@@ -271,10 +271,12 @@ class BaseComment extends ActiveRecord
     public function notifyResponsible($event)
     {
         // first email address should be admin@domain.com because from other email address mail can't be sent
-        $from = [Yii::$app->params['email']['admin'] => 'not-reply'];
+        $from = [Yii::$app->params['email']['from'] => 'not-reply'];
         // add real sender
         $from[$this->author->email] = $this->author->name;
-        $to = Yii::$app->params['email']['contact'];
+        // receiver
+        $receiver = Yii::$app->params['email']['receiver']['comment'];
+        $to = Yii::$app->params['email']['to'][$receiver];
         return Yii::$app->mailer->compose()
             ->setTo($to)
             ->setFrom($from)
