@@ -30,7 +30,7 @@ use sergmoro1\blog\Module;
 use sergmoro1\rudate\RuDate;
 use sergmoro1\blog\components\RuSlug;
 use sergmoro1\blog\components\WebSlug;
-use sergmoro1\blog\interfaces\RssInterface;
+use sergmoro1\feed\interfaces\RssInterface;
 
 use common\models\User;
 use common\models\Comment;

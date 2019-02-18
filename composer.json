@@ -30,7 +30,8 @@
         "sergmoro1/yii2-modal-crud" : "dev-master",
         "sergmoro1/yii2-ru-date" : "dev-master",
         "sergmoro1/yii2-byone-uploader" : "dev-master",
-        "sergmoro1/yii2-user" : "dev-master"
+        "sergmoro1/yii2-user" : "dev-master",
+        "sergmoro1/yii2-feed": "*"
     },
     "autoload": {
         "psr-4": {
