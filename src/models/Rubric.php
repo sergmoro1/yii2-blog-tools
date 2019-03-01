@@ -56,7 +56,8 @@ class Rubric extends ActiveRecord
     public function rules()
     {
         return [
-            [['parent_node', 'name', 'slug'], 'required'],
+            ['parent_node', 'required', 'on' => 'create'],
+            [['name', 'slug'], 'required'],
             [['name', 'slug'], 'string', 'max'=>255],
             ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Module::t('core', 'Slug may consists a-z, numbers and minus only.')],
             [['position', 'show'], 'integer'],
