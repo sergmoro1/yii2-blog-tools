@@ -60,7 +60,7 @@ class Rubric extends ActiveRecord
             [['name', 'slug'], 'required'],
             [['name', 'slug'], 'string', 'max'=>255],
             ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Module::t('core', 'Slug may consists a-z, numbers and minus only.')],
-            [['position', 'show'], 'integer'],
+            [['parent_node', 'position', 'show'], 'integer'],
             [['position', 'slug'], 'uniqueExceptItself'],
             ['show', 'default', 'value' => 1],
         ];

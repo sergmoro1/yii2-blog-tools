@@ -87,13 +87,16 @@ class Event extends ActiveRecord
 
 	public function getEventsPosts()
 	{
-		if(!($rubric = Rubric::item('events')))
-		    return [];
-		return Post::find()
-    		->select(['title', 'id'])
-			->where(['status' => Post::STATUS_PUBLISHED, 'rubric' => $rubric->id])
-			->indexBy('id')
-			->column();
+        $a = [];
+		if($rubric = Rubric::item('events')) {
+            foreach (Post::find()
+                ->select(['title', 'id'])
+                ->where(['status' => Post::STATUS_PUBLISHED, 'rubric' => $rubric->id])
+                ->all() as $post) {
+                $a[$post->id] = $post->getTitle();
+            }
+        }
+        return $a;
 	}
 
 	public static function getTitle($title)

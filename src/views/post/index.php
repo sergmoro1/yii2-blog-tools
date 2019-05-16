@@ -27,13 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'attribute' => 'id',
-                'options' => ['style' => 'width:80px;'],
+                'format' => 'html',
+                'value' => function($data) {
+                    return $data->id . ' <br><small>' . $data->slug . '</small>';
+                }
             ],
             [
                 'attribute' => 'title',
                 'format' => 'html',
                 'value' => function($data) {
-                    return $data->getTitleLink() . ' <small>' . $data->subtitle . '</small>';
+                    return $data->getTitleLink() . ' <small>' . $data->splitByLanguage('subtitle') . '</small>';
                 }
             ],
             'tags:ntext',
