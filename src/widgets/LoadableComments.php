@@ -1,4 +1,12 @@
 <?php
+/**
+ * Loadable comments widget.
+ * 
+ * Both views - views/loadableComments and views/_comments can be used as is
+ * but can be rediclared if needed.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
+ */
 namespace sergmoro1\blog\widgets;
 
 use yii\base\Widget;

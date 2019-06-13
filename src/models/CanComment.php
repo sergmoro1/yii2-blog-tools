@@ -1,19 +1,22 @@
 <?php
 /**
- * CanComment Behavior.
+ * CanComment trait.
  *
- * For models for which users can leave comments.
+ * For model for which users can leave comments.
+ * 
+ * @author Seregey Morozov <sergey@vorst.ru>
  *    
  */
 namespace sergmoro1\blog\models;
 
-use \Yii;
+use Yii;
 use common\models\Comment;
 
 trait CanComment {
     /**
      * Get LIMITed comments with OFFSET for selected model.
-     * @return objects of comments
+     * @param integer $offset
+     * @return array of comments
      */
     public function getComments($offset = 0)
     {
@@ -41,21 +44,21 @@ trait CanComment {
     }
 
     /**
-     * Get count of comments for selected model.
+     * Get count of comments for model.
      * @return integer
      */
     public function getCommentCount()
     {
-        return count(Comment::findAll([
+        return Comment::find()->where([
             'parent_id' => $this->id,
-            'model' => self::COMMENT_FOR,
-            'status' => Comment::STATUS_APPROVED
-        ]));
+            'model'     => self::COMMENT_FOR,
+            'status'    => Comment::STATUS_APPROVED,
+        ])->count();
     }
 
     /**
      * Adds a new comment for the model.
-     * @param Comment the comment to be added
+     * @param  object of comment to be added
      * @return boolean whether the comment is saved successfully
      */
     public function addComment($comment)
@@ -65,9 +68,9 @@ trait CanComment {
         else
             $comment->status = Comment::STATUS_APPROVED;
         // set model and parent_id (parent model ID)
-        $comment->model = self::COMMENT_FOR;
+        $comment->model     = self::COMMENT_FOR;
         $comment->parent_id = $this->id;
-        $comment->user_id = \Yii::$app->user->id;
+        $comment->user_id   = Yii::$app->user->id;
         if($comment->thread == '-')
             // set new thread
             $comment->thread = time() . uniqid();

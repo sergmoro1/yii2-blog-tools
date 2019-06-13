@@ -1,4 +1,12 @@
 <?php
+/**
+ * Comments block working example.
+ * Use it for making your own.
+ * 
+ * Comments count, comments list, more comments button and new comment form.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
+ */
 use yii\helpers\Url;
 use yii\helpers\Html;
 use sergmoro1\blog\Module;
@@ -27,7 +35,7 @@ use sergmoro1\blog\Module;
 	</div>
 	<?php endif; ?>
     
-    <!-- Place More Button if more comments exist -->
+    <!-- Place "More comments" button if more comments exist -->
 	<?php if($commentCount > \Yii::$app->params['commentsPerPage']): ?>
 	<p class="text-right">
 		<a href="javascript:;" class="pure-button load-more-btn" onclick=""

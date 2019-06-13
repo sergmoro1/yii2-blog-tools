@@ -25,18 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'layout' => "{items}\n{summary}\n{pager}",
         'columns' => [
-            [
-                'attribute' => 'id',
-                'format' => 'html',
-                'value' => function($data) {
-                    return $data->id . ' <br><small>' . $data->slug . '</small>';
-                }
-            ],
+            'id',
+            'slug',
             [
                 'attribute' => 'title',
                 'format' => 'html',
                 'value' => function($data) {
-                    return $data->getTitleLink() . ' <small>' . $data->splitByLanguage('subtitle') . '</small>';
+                    return $data->getTitleLink() . ' <small>' . $data->getSubtitle() . '</small>';
                 }
             ],
             'tags:ntext',
@@ -44,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'rubric',
                 'filter' => Rubric::items(),
                 'value' => function($data) {
-                    return Rubric::findOne($data->rubric)->name;
+                    return $data->getRubric()->name;
                 }
             ],
             [
@@ -64,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'user_id',
                 'value' => function($data) {
-                    return $data->user->name;
+                    return $data->user->username;
                 }
             ],
 

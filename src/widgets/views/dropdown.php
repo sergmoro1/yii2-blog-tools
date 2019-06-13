@@ -17,7 +17,7 @@ use yii\helpers\Html;
             <?php else: ?>
                 <span class="glyphicon glyphicon-user"></span>
             <?php endif; ?>
-            <?= \Yii::$app->user->identity->name ?>
+            <?= \Yii::$app->user->identity->username ?>
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">

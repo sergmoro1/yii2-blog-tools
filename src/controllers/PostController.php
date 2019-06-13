@@ -2,6 +2,7 @@
 
 namespace sergmoro1\blog\controllers;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -37,11 +38,11 @@ class PostController extends Controller
      */
     public function actionIndex()
     {
-        if (!\Yii::$app->user->can('index'))
+        if (!Yii::$app->user->can('index'))
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $searchModel = new PostSearch();
-        $dataProvider = $searchModel->search(\Yii::$app->request->get());
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -58,7 +59,7 @@ class PostController extends Controller
     public function actionView($id = 0, $slug= '')
     {
         $model = $this->findModel($id, $slug);
-        if (\Yii::$app->user->can('viewPost', ['post' => $model])) {
+        if (Yii::$app->user->can('viewPost', ['post' => $model])) {
             return $this->render('view', [
                 'model' => $model,
             ]);
@@ -66,9 +67,15 @@ class PostController extends Controller
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
     }
 
+    /**
+     * Get next commets for the post.
+     * @param string $slug
+     * @param integer $offset
+     * @return string
+     */
     public function actionMore($slug, $offset)
     {
-        if(\Yii::$app->getRequest()->isAjax) {
+        if(Yii::$app->getRequest()->isAjax) {
             $model = $this->findModel(0, $slug);
             if($comments = $model->getComments($offset))
                 return $this->renderAjax('_comments', [
@@ -89,7 +96,7 @@ class PostController extends Controller
     public function actionCreate()
     {
 
-        if (\Yii::$app->user->can('createPost')) {
+        if (Yii::$app->user->can('createPost')) {
             $model = new Post();
             $model->created_at_date = date('d.m.Y', time());
 

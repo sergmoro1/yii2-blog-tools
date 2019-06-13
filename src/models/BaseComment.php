@@ -1,4 +1,24 @@
 <?php
+/**
+ * BaseComment class.
+ *
+ * If model should be commented then it must to use CanComment trait.
+ * Make four steps to use it.
+ * 
+ * 1. Define a CommentFor const in a model that can be commented. That const should be unique in your web app.
+ * 2. Define getter in common/models/Comment.php, except Post that has already been defined here (can be seen below).
+ * 3. Add CommentFor const definition in common/models/Comment.php.
+ * 
+ * private static $commentFor = [1 => 'post', 2 => 'new_model_name'];
+ *
+ * 4. Define model name and code in migration for Lookup
+ * 
+ * const COMMENT_FOR = 5; // property code, like post status, user status, user role and so
+ * $this->insert('{(%lookup}}', ['name' => 'Your new model', 'code' => 2, 'property_id' => self::COMMENT_FOR, 'position' => 2]);
+ * 
+ * @author Seregey Morozov <sergey@vorst.ru>
+ *    
+ */
 namespace sergmoro1\blog\models;
 
 use \Yii;
@@ -15,14 +35,14 @@ use common\models\Comment;
 class BaseComment extends ActiveRecord
 {
     /**
-     * The followings are the available columns in table 'tbl_comment':
+     * The followings are the available columns in table 'comment':
      * @var integer $id
      * @var integer $model
      * @var integer $parent_id
      * @var integer $user_id
-     * @var string $content
+     * @var string  $content
      * @var integer $status
-     * @var string $thread
+     * @var string  $thread
      * @var boolean $last
      * @var integer $created_at
      */
@@ -73,25 +93,37 @@ class BaseComment extends ActiveRecord
         ];
     }
 
+    /**
+     * Post getter. Post is a model by default for what the comment for. 
+     * For other models the same getter should be defined in common/models/Comment.php.
+     * 
+     * @return object
+     */
     public function getPost()
     {
         return $this->hasOne(Post::className(), ['id' => 'parent_id']);
     }
 
     /**
-     * Get Url for the model. By default model is a Post.
+     * Get Url for the model to this comment for.
+     * 
      * @param model that this comment belongs to.
      * @return string the permalink URL for this comment
      */
     public function getUrl($model = null)
     {
         if($model === null) {
-            $m = $this->commentFor[$this->model];
+            $m = $this->parentModelName($this->model);
             $model = $this->$m;
         }
         return $model ? $model->url . '#c' . $this->id : '';
     }
 
+    /**
+     * Get link with title of the model to this comment for.
+     * 
+     * @return string
+     */
     public function getTitleLink()
     {
 		$m = $this->parentModelName($this->model);
@@ -104,14 +136,13 @@ class BaseComment extends ActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'Id',
-            'model' => Module::t('core', 'Model'),
-            'parent_id' => Module::t('core', 'Parent'),
-            'user_id' => Module::t('core', 'Name'),
-            'thread' => Module::t('core', 'Thread'),
-            'status' => Module::t('core', 'Status'),
-            'content' => Module::t('core', 'Content'),
-            'created_at' => Module::t('core', 'Created'),
+            'model'         => Module::t('core', 'Model'),
+            'parent_id'     => Module::t('core', 'Parent'),
+            'user_id'       => Module::t('core', 'Name'),
+            'thread'        => Module::t('core', 'Thread'),
+            'status'        => Module::t('core', 'Status'),
+            'content'       => Module::t('core', 'Content'),
+            'created_at'    => Module::t('core', 'Created'),
         );
     }
 
@@ -129,6 +160,7 @@ class BaseComment extends ActiveRecord
      * User is a commentator and
      * last comment not belongs to User
      * User begun the thread.
+     * 
      * @return boolean
      */
     public function canBeAnswered() {
@@ -143,6 +175,13 @@ class BaseComment extends ActiveRecord
             
     }
     
+    /**
+     * Comment can be long and it not suits to output in a list of comments.
+     * So, comment can be cutted down.
+     * 
+     * @param integer char count to cut down
+     * @return string
+     */
     public function getPartContent($limit = 500)
     {
         $out = '';
@@ -203,21 +242,9 @@ class BaseComment extends ActiveRecord
     }
 
     /**
-     * @param integer $user_id
-     * @return array of IDs all user's posts
+     * Get date as a phrase.
+     * @return string.
      */
-    public function getUserPosts($user_id)
-    {
-        $a = [];
-        foreach(Post::find()
-            ->select(['id'])
-            ->where(['user_id' => $user_id])
-            ->all() as $post)
-            
-            $a[] = $post->id;
-        return $a;
-    }
-
     public function getDate()
     {
         $now = time();
@@ -249,6 +276,12 @@ class BaseComment extends ActiveRecord
             return false;
     }
     
+    /**
+     * Get all comments for Post with slug "testimonial".
+     * 
+     * @param integer max limmits of comments.
+     * @return objects of comments.
+     */
     public static function getTestimonials($limit = 5)
     {
         if($post = Post::findOne(['slug' => 'testimonial']))
@@ -267,10 +300,12 @@ class BaseComment extends ActiveRecord
 
     /**
      * Send email for responsible person. 
+     * 
+     * @param  integer event
+     * @return boolean
      */
     public function notifyResponsible($event)
     {
-        // first email address should be admin@domain.com because from other email address mail can't be sent
         $from = [Yii::$app->params['email']['from'] => 'not-reply'];
         // add real sender
         $from[$this->author->email] = $this->author->name;
@@ -280,7 +315,10 @@ class BaseComment extends ActiveRecord
         return Yii::$app->mailer->compose()
             ->setTo($to)
             ->setFrom($from)
-            ->setSubject(Module::t('core', 'New comment for') . ' - ' . Lookup::item('CommentFor', $this->model))
+            ->setSubject(
+                $this->author->name . ' <' . $this->author->email . '>, ' .
+                Module::t('core', 'new comment for') . ' - ' . Lookup::item('CommentFor', $this->model) . '.' 
+            )
             ->setTextBody($this->content)
             ->send();
     }

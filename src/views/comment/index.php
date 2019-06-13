@@ -53,7 +53,7 @@ echo Modal::widget([
             [
                 'attribute' => 'user_id',
                 'value' => function($data) {
-                    return $data->author->name;
+                    return $data->author->username;
                 }
             ],
             [

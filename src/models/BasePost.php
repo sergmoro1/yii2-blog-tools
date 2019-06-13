@@ -1,6 +1,6 @@
 <?php
 /**
- * Post model.
+ * BasePost model.
  *
  * @var integer $id
  * @var string $slug
@@ -19,12 +19,14 @@
  */
 namespace sergmoro1\blog\models;
 
-use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\web\Link;
 use yii\web\Linkable;
+
 use mrssoft\sitemap\SitemapInterface;
 use sergmoro1\blog\Module;
 use sergmoro1\rudate\RuDate;
@@ -62,6 +64,9 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     public function behaviors()
     {
         return [
+            [
+                'class' => TimestampBehavior::className(),
+            ],
             'RuDate' => ['class' => RuDate::className()],
             'RuSlug' => ['class' => RuSlug::className()],
          ];
@@ -79,7 +84,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
             [['previous', 'rubric'], 'integer'],
             ['previous', 'default', 'value' => 0],
             ['previous', 'already_selected', 'message' => Module::t('core', 'This article is already selected as the previous one.')],
-            ['status', 'in', 'range'=>[self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_ARCHIVED]],
+            ['status', 'in', 'range' => [self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_ARCHIVED]],
             ['status', 'default', 'value' => 1],
             [['slug', 'title', 'subtitle'], 'string', 'max'=>128],
             ['slug', 'unique'],
@@ -92,69 +97,26 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     }
 
     /**
-     * Normalizes the user-entered tags.
-     */
-    public function already_selected($attribute, $params)
-    {
-        if($this->$attribute && $this->find()->where($attribute . '=' . $this->$attribute . 
-            ($this->id ? ' and id <> ' . $this->id : '')
-        )->one())
-            $this->addError($attribute, $params['message']);
-    }
-
-    /**
-     * Normalizes the user-entered tags.
-     */
-    public function normalizeTags($attribute,$params)
-    {
-        $this->tags = Tag::array2string(array_unique(Tag::string2array($this->tags)));
-    }
-
-
-    public function getUser()
-    {
-        return User::findOne($this->user_id);
-    }
-
-    public function getAuthors()
-    {
-        return PostAuthor::find()->where(['post_id' => $this->id])->all();
-    }
-
-    public function getListAuthors($glue = ', ')
-    {
-        $a = [];
-        foreach($this->getAuthors() as $link)
-            $a[] = $link->author->name;
-        return implode($glue, $a);
-    }
-
-    public function getRubric()
-    {
-        return Rubric::findOne($this->rubric);
-    }
-
-    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
     {
         return [
-            'slug' => Module::t('core', 'Slug'),
-            'user_id' => Module::t('core', 'Moderator'),
-            'previous' => Module::t('core', 'Previous post'),
-            'title' => Module::t('core', 'Title'),
-            'subtitle' => Module::t('core', 'Sub Title'),
-            'excerpt' => Module::t('core', 'Excerpt'),
-            'content' => Module::t('core', 'Content'),
-            'resume' => Module::t('core', 'Resume'),
-            'tags' => Module::t('core', 'Tags'),
-            'rubric' => Module::t('core', 'Rubric'),
-            'status' => Module::t('core', 'Status'),
-            'authors' => Module::t('core', 'Authors'),
-            'created_at' => Module::t('core', 'Created at'),
-            'created_at_date' => Module::t('core', 'Created at'),
-            'updated_at' => Module::t('core', 'Modified at'),
+            'slug'              => Module::t('core', 'Slug'),
+            'user_id'           => Module::t('core', 'Moderator'),
+            'previous'          => Module::t('core', 'Previous post'),
+            'title'             => Module::t('core', 'Title'),
+            'subtitle'          => Module::t('core', 'Sub Title'),
+            'excerpt'           => Module::t('core', 'Excerpt'),
+            'content'           => Module::t('core', 'Content'),
+            'resume'            => Module::t('core', 'Resume'),
+            'tags'              => Module::t('core', 'Tags'),
+            'rubric'            => Module::t('core', 'Rubric'),
+            'status'            => Module::t('core', 'Status'),
+            'authors'           => Module::t('core', 'Authors'),
+            'created_at'        => Module::t('core', 'Created at'),
+            'created_at_date'   => Module::t('core', 'Created at'),
+            'updated_at'        => Module::t('core', 'Modified at'),
         ];
     }
 
@@ -183,9 +145,15 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         ]);
     }
 
-    public function isPublished()
+    /**
+     * Normalizes the user-entered tags.
+     */
+    public function already_selected($attribute, $params)
     {
-        return $this->status === self::STATUS_PUBLISHED;
+        if($this->$attribute && $this->find()->where($attribute . '=' . $this->$attribute . 
+            ($this->id ? ' and id <> ' . $this->id : '')
+        )->one())
+            $this->addError($attribute, $params['message']);
     }
 
     /**
@@ -197,11 +165,55 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     }
 
     /**
+     * Normalizes the user-entered tags.
+     */
+    public function normalizeTags($attribute,$params)
+    {
+        $this->tags = Tag::array2string(array_unique(Tag::string2array($this->tags)));
+    }
+
+    public function getUser()
+    {
+        return User::findOne($this->user_id);
+    }
+
+    public function getAuthors()
+    {
+        return PostAuthor::find()->where(['post_id' => $this->id])->all();
+    }
+
+    public function getListAuthors($glue = ', ')
+    {
+        $a = [];
+        foreach($this->getAuthors() as $link)
+            $a[] = $link->author->name;
+        return implode($glue, $a);
+    }
+
+    public function getRubric()
+    {
+        return Rubric::findOne($this->rubric);
+    }
+
+    public function isPublished()
+    {
+        return $this->status === self::STATUS_PUBLISHED;
+    }
+
+    /**
      * @return string clear title
      */
     public function getTitle()
     {
         return preg_replace('/[\[\]]/', '', $this->title);
+    }
+
+    /**
+     * @return string clear subtitle
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
     }
 
     /**
@@ -401,12 +413,11 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     {
         if(parent::beforeSave($insert))
         {
-            $this->updated_at = time();
             $this->translit();
             $this->clearGarbage(['excerpt', 'content', 'resume']);
             if($this->isNewRecord)
             {
-                $this->user_id = \Yii::$app->user->id;
+                $this->user_id = Yii::$app->user->id;
             }
             return true;
         }

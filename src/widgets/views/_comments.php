@@ -2,6 +2,12 @@
 /**
  * Comments list working example.
  * Use it for making your own.
+ * 
+ * Comment indention depends on thread and count of replies.
+ * When thread is changed then indention cleared.
+ * Class="indention" has color as a backgorund and can't be seen.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
  */
 
 use yii\helpers\Html;
@@ -30,7 +36,7 @@ $first = true;
         <span class="indention"><?= $indention ?></span>
         <?= $comment->author->getAvatar('avatar-medium img-top', '<i class="fas fa-user-circle fa-2x img-top"></i>') ?>
         <span class="content"><?= $comment->content ?>
-            <span class="avatar-name"><?= str_replace(' ', '', $comment->author->name) ?></span>
+            <span class="avatar-name"><?= str_replace(' ', '', $comment->author->username) ?></span>
         </span>
         
         <!-- Reply button if comment can be answered -->

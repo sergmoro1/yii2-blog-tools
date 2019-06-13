@@ -1,4 +1,10 @@
 <?php
+/**
+ * CommentSearch class.
+ *
+ * @author Seregey Morozov <sergey@vorst.ru>
+ *    
+ */
 namespace sergmoro1\blog\models;
 
 use yii\base\Model;
@@ -15,7 +21,7 @@ class CommentSearch extends Comment
         // only fields in rules() are searchable
         return [
             [['id', 'model', 'status'], 'integer'],
-            [['author', 'content'], 'safe'],
+            [['content'], 'safe'],
         ];
     }
 
@@ -27,10 +33,11 @@ class CommentSearch extends Comment
 
     public function search($params)
     {
-        $query = Comment::find();
+        $query = Comment::find()
+            ->orderBy(['thread' => SORT_DESC, 'created_at' => SORT_ASC]);
         if(\Yii::$app->user->identity->group == User::GROUP_AUTHOR)
         {
-            // only comments for User's posts (or other models)
+            // only comments for User's posts
             $userPosts = [];
             foreach(Post::find()
                 ->select(['id'])
@@ -46,12 +53,7 @@ class CommentSearch extends Comment
             'pagination' => [
                 'pageSize' => \Yii::$app->params['recordsPerPage'],
             ],
-            'sort' => [
-                'defaultOrder' => [
-                    'thread' => SORT_DESC, 
-                    'created_at' => SORT_ASC,
-                ]
-            ],
+            'sort' => false,
         ]);
 
         // load the search form data and validate
@@ -64,7 +66,7 @@ class CommentSearch extends Comment
         
         // adjust the query by adding the filters
         $query->andFilterWhere(['id' => $this->id])
-            ->andFilterWhere(['like', 'author', $this->author])
+            ->andFilterWhere(['model' => $this->model])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['status' => $this->status]);
 

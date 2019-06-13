@@ -38,7 +38,6 @@ class PostSearch extends Post
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'status' => SORT_ASC, 
                     'created_at' => SORT_DESC,
                 ]
             ],

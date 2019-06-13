@@ -4,6 +4,7 @@
  */
 namespace sergmoro1\blog\controllers;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -36,7 +37,7 @@ class RubricController extends Controller
      */
     public function actionIndex()
     {
-        if (!\Yii::$app->user->can('index'))
+        if (!Yii::$app->user->can('index'))
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $query = Rubric::find()->where('id>1');
@@ -48,7 +49,7 @@ class RubricController extends Controller
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'position' => SORT_ASC, 
+                    'lft' => SORT_ASC, 
                 ]
             ],
         ]);
@@ -58,16 +59,14 @@ class RubricController extends Controller
         ]);
     }
 
-    public function actionValidate($_position = null, $_slug = null)
+    public function actionValidate()
     {
         $model = new Rubric();
-        $model->_position = $_position;
-        $model->_slug = $_slug;
-        $request = \Yii::$app->getRequest();
+        $request = Yii::$app->getRequest();
 
         // Ajax validation including form open in a modal window
         if ($request->isAjax && $model->load($request->post())) {
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
     }
@@ -79,16 +78,17 @@ class RubricController extends Controller
      */
     public function actionCreate()
     {
-        if (!\Yii::$app->user->can('create'))
+        if (!Yii::$app->user->can('create'))
             return $this->alert(Module::t('core', 'Access denied.'));
 
         $model = new Rubric();
-        $request = \Yii::$app->getRequest();
-        $loaded = $model->load($request->post());
+        $model->node_id = Rubric::ROOT;
+        $model->type = Rubric::NODE_PARENT;
         
-        // prependTo() call validate() and save()
-        if ($loaded && $model->prependTo($this->findModel($model->parent_node))) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $this->move($model)) {
+            return YII_DEBUG 
+                ? $this->redirect(['index'])
+                : $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -104,37 +104,52 @@ class RubricController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (!\Yii::$app->user->can('update'))
+        if (!Yii::$app->user->can('update'))
             return $this->alert(Module::t('core', 'Access denied.'));
 
         $model = $this->findModel($id);
 
-        // $parent_node is empty, so it must be set
-        if($one = $model->parents(1)->one())
+        if($parent = $model->parents(1)->one())
         {
-            $model->parent_node = $one->id;
-            // new code
-            $loaded = $model->load(\Yii::$app->request->post());
+            $model->node_id = $parent->id;
+            $model->type = Rubric::NODE_PARENT;
             
-            // The General case
-            if ($loaded && $model->save()) {
-                return YII_DEBUG 
-                    ? $this->redirect(['index'])
-                    : $this->redirect(\Yii::$app->request->referrer);
+            if ($model->load(Yii::$app->request->post())) {
+                if (($model->node_id != $parent->id) && $this->move($model)) {
+                    return YII_DEBUG 
+                        ? $this->redirect(['index'])
+                        : $this->redirect(Yii::$app->request->referrer);
+                }
             } else {
                 return $this->renderAjax('update', [
                     'model' => $model,
                 ]);
             }
         } else {
-            \Yii::$app->session->setFlash(
+            Yii::$app->session->setFlash(
                 'warning',
-                \Yii::t('core', 'Node has not parent.')
+                Yii::t('core', 'Node has not parent.')
             );
             return $this->redirect(['index']);
         }
     }
-
+    
+    /**
+     * Validate and save the model to the selected location in a rubric tree.
+     * appendTo(), insertAfter() call validate() and save().
+     * @param mixid $model
+     * @return boolean
+     */
+    public function move($model) 
+    {
+        $node = $this->findModel($model->node_id);
+        if ($model->type == Rubric::NODE_PARENT) {
+            return $model->appendTo($node);
+        } elseif ($model->type == Rubric::NODE_NEIGHBOR) {
+            return $model->insertAfter($node);
+        }
+    }
+    
     /**
      * Deletes an existing Rubric model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -143,13 +158,13 @@ class RubricController extends Controller
      */
     public function actionDelete($id)
     {
-        if (!\Yii::$app->user->can('delete'))
+        if (!Yii::$app->user->can('delete'))
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         if($id == 1)
-            \Yii::$app->session->setFlash(
+            Yii::$app->session->setFlash(
                 'warning',
-                \Yii::t('core', 'Node can not be deleted.')
+                Yii::t('core', 'Node can not be deleted.')
             );
         else {
             $node = $this->findModel($id);

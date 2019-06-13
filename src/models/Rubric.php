@@ -1,9 +1,18 @@
 <?php
+/**
+ * Runric model class (Nested Set).
+ *
+ * @author Seregey Morozov <sergey@vorst.ru>
+ *    
+ */
 namespace sergmoro1\blog\models;
 
+use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+
 use creocoder\nestedsets\NestedSetsBehavior;
 use sergmoro1\blog\components\RuSlug;
 use sergmoro1\blog\Module;
@@ -15,18 +24,23 @@ class Rubric extends ActiveRecord
     /**
      * The followings are the available columns in table 'tbl_rubric':
      * @var integer $id
-     * @var integer $lft, $rgt
+     * @var integer $lft
+     * @var integer $rgt
      * @var integer $level
-     * @var string $name
-     * @var string $slug
-     * @var integer $position
-     * @var integer $visible
+     * @var string  $name
+     * @var string  $slug
+     * @var integer $show
      */
-    public $_position; // old position
-    public $_slug; // old slug
+    public $_slug;             // old slug
+
+    public $post_count;        // posts count for the rubric
     
-    public $parent_node; // the parent node for just added
-    public $post_count; // posts count in a rubric
+    public $node_id;           // ID of node related to curent
+    public $type;              // related node type - parent, neighbor
+    
+    const ROOT           = 1;
+    const NODE_PARENT    = 1;
+    const NODE_NEIGHBOR  = 2;
     
     /**
      * @return string the associated database table name
@@ -39,6 +53,9 @@ class Rubric extends ActiveRecord
     public function behaviors()
     {
         return [
+            [
+                'class' => TimestampBehavior::className(),
+            ],
             'tree' => [
                 'class' => NestedSetsBehavior::className(),
                 'depthAttribute' => 'level',
@@ -56,76 +73,82 @@ class Rubric extends ActiveRecord
     public function rules()
     {
         return [
-            ['parent_node', 'required', 'on' => 'create'],
-            [['name', 'slug'], 'required'],
+            [['node_id', 'name', 'slug'], 'required'],
             [['name', 'slug'], 'string', 'max'=>255],
             ['slug', 'match', 'pattern' => '/^[0-9a-z-]+$/u', 'message' => Module::t('core', 'Slug may consists a-z, numbers and minus only.')],
-            [['parent_node', 'position', 'show'], 'integer'],
-            [['position', 'slug'], 'uniqueExceptItself'],
+            ['slug', 'sergmoro1\blog\components\UniqueExceptItself'],
+            [['node_id', 'show'], 'integer'],
             ['show', 'default', 'value' => 1],
+            ['type', 'in', 'range' => [self::NODE_PARENT, self::NODE_NEIGHBOR]],
+            ['_slug', 'safe'],
         ];
     }
 
-    /**
-     * Checks unique except of the value of the attribute.
-     */
-    public function uniqueExceptItself($attribute, $params)
-    {
-        $_attribute = '_' . $attribute;
-        $value = $this->$attribute;
-        $_value = $this->$_attribute;
-        if($value <> $_value) {
-            $found = false;
-            if(Rubric::find()->select([$attribute])->where([$attribute => $value])->count() > 0) {
-                $this->addError($attribute, Module::t('core', '{attribute} "{value}" has already been taken.', [
-                    'attribute' => ucfirst($attribute), 'value' => $value,
-                ]));
-            }
-        }
-    }
-    
     /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
     {
         return array(
-            'name' => Module::t('core', 'Name'),
-            'slug' => Module::t('core', 'Slug'),
-            'parent_node' => Module::t('core', 'Parent node'),
-            'post_count' => Module::t('core', 'Posts'),
-            'position' =>  Module::t('core', 'Position'),
-            'visible' =>  Module::t('core', 'Visible'),
-            'show' =>  Module::t('core', 'Show'),
+            'name'              => Module::t('core', 'Name'),
+            'slug'              => Module::t('core', 'Slug'),
+            'node_id'           => Module::t('core', 'Node'),
+            'type'              => Module::t('core', 'Type of use'),
+            'post_count'        => Module::t('core', 'Posts'),
+            'show'              => Module::t('core', 'Show'),
         );
+    }
+
+    /**
+     * Get node type list.
+     * @return array
+     */
+    public static function getTypeList() {
+        return [
+            self::NODE_PARENT     => Module::t('core', 'parent'),
+            self::NODE_NEIGHBOR   => Module::t('core', 'neighbor'),
+        ];
     }
 
     public function getUrl()
     {
-        return \Yii::$app->components['urlManager']['enablePrettyUrl']
+        return Yii::$app->components['urlManager']['enablePrettyUrl']
             ? Url::to(['post/rubric/' . $this->slug])
             : Url::to(['post/index', 'rubric' => $this->slug]);
     }
 
+    /**
+     * Array of rubric names with slugs.
+     * @param string | null root title
+     * @return array
+     */
     public static function items($rootTitle = null)
     {
         if(!$rootTitle) 
             $rootTitle = Module::t('core', 'Root');
         $a = [];
         $a[1] = $rootTitle;
-        foreach(Rubric::find()->where('id>1')->orderBy('lft ASC')->all() as $node)
-            $a[$node->id] = $node->getPrettyName(true) . ' - ' . $node->slug;
+        foreach(self::find()
+            ->where('id>1')
+            ->orderBy('lft ASC')->all() as $node
+        )
+            $a[$node->id] = $node->getPrettyName(true);
         return $a;
     }
     
+    /**
+     * Get Rubric by slug.
+     * @param string $slug
+     * @return object | false
+     */
     public static function item($slug)
     {
         return $slug ? Rubric::findOne(['slug' => $slug]) : false;
     }
 
     /**
-     * Retrieves the list of posts based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the needed posts.
+     * Retrieves the list of rubrics based on the current search/filter conditions.
+     * @return ActiveDataProvider the data provider
      */
     public function search()
     {
@@ -141,17 +164,25 @@ class Rubric extends ActiveRecord
         ]);
     }
     
-    public function getPrettyName($dropdown = false)
+    /**
+     * Get rubric name with indentation.
+     * @param boolean view of indentation - plain or wrapped. 
+     * @return ActiveDataProvider the data provider.
+     */
+    public function getPrettyName($plain = false)
     {
-        return $dropdown 
-            ? str_repeat('-', ($this->level - 2) * 3) . ' ' . $this->name
-            : '<span class="branch">' . str_repeat('-', ($this->level - 2) * 3) . '</span> ' . $this->name;
+        $indentation = str_repeat('-', ($this->level - 2) * 3);
+        return $plain
+            ? $indentation . ' ' . $this->name
+            : '<span class="branch">' . $indentation . '</span>' . ' ' . $this->name;
     }
 
+    /**
+     * Sets internal variables and count posts in current rubric.
+     */
     public function afterFind()
     {
         parent::afterFind();
-        $this->_position = $this->position;
         $this->_slug = $this->slug;
         $this->post_count = Post::find()
             ->where(['rubric' => $this->id, 'status' => Post::STATUS_PUBLISHED])
@@ -164,17 +195,7 @@ class Rubric extends ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if(parent::beforeSave($insert))
-        {
-            $this->updated_at = time();
-            $this->translit();
-            if($this->isNewRecord)
-            {
-                $this->created_at = $this->updated_at;
-            }
-            return true;
-        }
-        else
-            return false;
+        $this->translit();
+        return parent::beforeSave($insert);
     }
 }

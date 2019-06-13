@@ -5,6 +5,7 @@ namespace sergmoro1\blog\controllers;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 
+use Yii;
 use sergmoro1\blog\Module;
 use sergmoro1\modal\controllers\ModalController;
 use common\models\User;
@@ -12,7 +13,9 @@ use common\models\Comment;
 use sergmoro1\blog\models\CommentSearch;
 
 /**
- * PostController implements the CRUD actions for Post model.
+ * CommentController implements the CRUD actions for Comment model.
+ * 
+ * @author Seregey Morozov <sergey@vorst.ru>
  */
 class CommentController extends ModalController
 {
@@ -21,25 +24,31 @@ class CommentController extends ModalController
 
     /**
      * Reply on a comment.
-     * If creation is successful, the browser will be redirected to the 'index' page.
+     * If replay is successful, the browser will be redirected to the page from witch was request.
+     * @param integer $id
      * @return mixed
      */
     public function actionReply($id)
     {
         $comment = $this->findModel($id);
-        if (!\Yii::$app->user->can('replyStranger', ['comment' => $comment]))
-            return $this->alert(\Yii::t('app', 'Access denied.'));
+        if (!Yii::$app->user->can('replyStranger', ['comment' => $comment]))
+            return $this->alert(Yii::t('app', 'Access denied.'));
         
         // fill in a new Comment
         $model = $this->newModel();
         $model->model = $comment->model;
+        // this is reply to an existing comment
         $model->parent_id = $comment->parent_id;
+        // and it is the same thread
         $model->thread = $comment->thread;
-        $model->user_id = \Yii::$app->user->id; // comment of a current user
-        $model->status = Comment::STATUS_APPROVED; // comment approved by default
-        $model->last = 1; // only the last comment in the thread can be replied
+        // comment of a current user
+        $model->user_id = Yii::$app->user->id;
+        // comment approved by default
+        $model->status = Comment::STATUS_APPROVED;
+        // only the last comment in the thread can be replied
+        $model->last = 1;
 
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             // the comment to which we reply must be approved
             if ($comment->status == Comment::STATUS_PENDING) {
                 $comment->status = Comment::STATUS_APPROVED;
@@ -47,7 +56,7 @@ class CommentController extends ModalController
             }
             return YII_DEBUG 
                 ? $this->redirect(['index'])
-                : $this->redirect(\Yii::$app->request->referrer);
+                : $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->renderAjax('reply', [
                 'model' => $model,
@@ -58,20 +67,22 @@ class CommentController extends ModalController
 
     /**
      * Deletes an existing model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * If deletion is successful, the browser will be redirected to the page from witch was request.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        if (!\Yii::$app->user->can('delete'))
+        if (!Yii::$app->user->can('delete'))
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $model = $this->findModel($id);
         $model->delete();
         // mark last comment in a thread
-        \Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=1 WHERE thread='{$model->thread}' ORDER BY created_at DESC LIMIT 1")->execute();
+        Yii::$app->db->createCommand("UPDATE {{%comment}} SET last=1 WHERE thread='{$model->thread}' ORDER BY created_at DESC LIMIT 1")->execute();
 
-        return $this->redirect(['index']);
+        return YII_DEBUG 
+            ? $this->redirect(['index'])
+            : $this->redirect(\Yii::$app->request->referrer);
     }
 }

@@ -15,7 +15,7 @@ use yii\helpers\Url;
     'id' => 'rubric-form',
     'layout' => 'horizontal',
     'enableAjaxValidation' => true,
-    'validationUrl' => Url::toRoute(['rubric/validate', '_position' => $model->position, '_slug' => $model->slug]),        
+    'validationUrl' => Url::toRoute(['rubric/validate']),        
     'fieldConfig' => [
         'horizontalCssClasses' => [
             'label' => 'col-sm-4',
@@ -25,12 +25,11 @@ use yii\helpers\Url;
     ],
 ]); ?>
 
-    <?= $form->field($model, 'parent_node')->dropdownList($model->items(), [
+    <?= $form->field($model, 'node_id')->dropdownList($model->items(), [
         'prompt' => \Yii::t('app', 'Select'),
-        'disabled' => !$model->isNewRecord,
     ]) ?>
 
-    <?= $form->field($model, 'position')->textInput() ?>
+    <?= $form->field($model, 'type')->inline(true)->radioList($model->getTypeList()) ?>
 
     <?= $form->field($model, 'show')->dropDownList([0 => 'нет', 1 => 'да'], [
         'prompt' => \Yii::t('app', 'Select'),
@@ -39,6 +38,7 @@ use yii\helpers\Url;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <?= Html::activeHiddenInput($model, '_slug'); ?>
 
     <?= Html::submitButton('Submit', ['id' => 'submit-btn', 'style' => 'display: none;']) ?>
 
