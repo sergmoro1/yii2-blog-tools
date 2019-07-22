@@ -5,7 +5,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use sergmoro1\uploader\widgets\Byone;
+use sergmoro1\uploader\widgets\Uploader;
 use sergmoro1\blog\Module;
 
 ?>
@@ -13,7 +13,7 @@ use sergmoro1\blog\Module;
 <?php $form = ActiveForm::begin(); ?>
 <div class='row'>
     <div class="col-lg-8">
-        <?= Byone::widget([
+        <?= Uploader::widget([
             'model' => $model,
             'appendixView' => '/author/appendix',
             'cropAllowed' => true,

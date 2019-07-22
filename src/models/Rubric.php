@@ -1,10 +1,5 @@
 <?php
-/**
- * Runric model class (Nested Set).
- *
- * @author Seregey Morozov <sergey@vorst.ru>
- *    
- */
+
 namespace sergmoro1\blog\models;
 
 use Yii;
@@ -14,11 +9,17 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 use creocoder\nestedsets\NestedSetsBehavior;
-use sergmoro1\blog\components\RuSlug;
+use sergmoro1\rukit\behaviors\TransliteratorBehavior;
 use sergmoro1\blog\Module;
 
 use common\models\Post;
 
+/**
+ * Runric model class (Nested Set).
+ *
+ * @author Seregey Morozov <sergey@vorst.ru>
+ *    
+ */
 class Rubric extends ActiveRecord
 {
     /**
@@ -60,9 +61,9 @@ class Rubric extends ActiveRecord
                 'class' => NestedSetsBehavior::className(),
                 'depthAttribute' => 'level',
             ],
-            'RuSlug' => [
-                'class' => RuSlug::className(),
-                'attribute' => 'name',
+            [
+                'class' => TransliteratorBehavior::className(),
+                'from' => 'name',
             ],
         ];
     }
@@ -93,7 +94,7 @@ class Rubric extends ActiveRecord
             'name'              => Module::t('core', 'Name'),
             'slug'              => Module::t('core', 'Slug'),
             'node_id'           => Module::t('core', 'Node'),
-            'type'              => Module::t('core', 'Type of use'),
+            'type'              => Module::t('core', 'Type of node use'),
             'post_count'        => Module::t('core', 'Posts'),
             'show'              => Module::t('core', 'Show'),
         );
@@ -185,7 +186,7 @@ class Rubric extends ActiveRecord
         parent::afterFind();
         $this->_slug = $this->slug;
         $this->post_count = Post::find()
-            ->where(['rubric' => $this->id, 'status' => Post::STATUS_PUBLISHED])
+            ->where(['rubric_id' => $this->id, 'status' => Post::STATUS_PUBLISHED])
             ->count();
     }
 

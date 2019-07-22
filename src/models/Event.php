@@ -7,19 +7,24 @@ use yii\helpers\Html;
 use sergmoro1\blog\Module;
 use common\models\Post;
 
+/**
+ * Event links with a Post, where described an event.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
+ */
 class Event extends ActiveRecord
 {
 	/**
 	 * The followings are the available columns in table 'tbl_rubric':
 	 * @var integer $id
 	 * @var integer $post_id
+	 * @var string  $responsible
 	 * @var integer $begin
 	 * @var integer $end
 	 * @var integer $created_at
 	 * @var integer $updated_at
 	 */
 	
-	private static $icons = ['*' => 'bell-o'];
 	public $begin_date;
 	public $end_date;
 	
@@ -52,12 +57,12 @@ class Event extends ActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'post_id' => Module::t('core', 'Post'),
-			'responsible' => Module::t('core', 'Responsible'),
-			'begin' => Module::t('core', 'Begin'),
-			'end' => Module::t('core', 'End'),
-			'begin_date' => Module::t('core', 'Begin'),
-			'end_date' => Module::t('core', 'End'),
+			'post_id'       => Module::t('core', 'Post'),
+			'responsible'   => Module::t('core', 'Responsible'),
+			'begin'         => Module::t('core', 'Begin'),
+			'end'           => Module::t('core', 'End'),
+			'begin_date'    => Module::t('core', 'Begin'),
+			'end_date'      => Module::t('core', 'End'),
 		);
 	}
 
@@ -80,18 +85,26 @@ class Event extends ActiveRecord
 		]);
 	}
 	
+    /**
+     * @return \yii\db\ActiveRecord post linked with the event.
+     */
 	public function getPost()
 	{
 		return Post::findOne(['id' => $this->post_id]);
 	}
 
+    /**
+     * Get posts titles list.
+     * 
+     * @return array published posts titles
+     */
 	public function getEventsPosts()
 	{
         $a = [];
 		if($rubric = Rubric::item('events')) {
             foreach (Post::find()
                 ->select(['title', 'id'])
-                ->where(['status' => Post::STATUS_PUBLISHED, 'rubric' => $rubric->id])
+                ->where(['status' => Post::STATUS_PUBLISHED, 'rubric_id' => $rubric->id])
                 ->all() as $post) {
                 $a[$post->id] = $post->getTitle();
             }
@@ -99,12 +112,12 @@ class Event extends ActiveRecord
         return $a;
 	}
 
-	public static function getTitle($title)
-	{
-		$a = explode('/', $title);
-		return count($a) > 1 ? trim($a[1]) : $title;
-	}
-
+    /**
+     * Get all published events.
+     * 
+     * @param integer $limit
+     * @return array \yii\db\ActiveRecord
+     */
 	public function getAll($limit = 3)
 	{
 		return Event::find()

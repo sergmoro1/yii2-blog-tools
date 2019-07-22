@@ -1,22 +1,24 @@
 <?php
-/**
- * Params code syntax checker.
- * Only for files with a structure as a params.php (array).
- */
 
 namespace sergmoro1\blog\components;
 
+/**
+ * Array frontend/config/params.php syntax checker.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
+ */
 class ParamsSyntaxChecker
 {
     public $error;
-
+    
+    // available syntax symbols
     private static $valid_tokens = ['T_OPEN_TAG', 'T_CLOSE_TAG', 'T_RETURN', 'T_ARRAY', 'T_CONSTANT_ENCAPSED_STRING', 'T_LNUMBER', 'T_DNUMBER', 
         'T_COMMENT', 'T_DOUBLE_ARROW', 'T_WHITESPACE', 'T_STRING'];
     private static $valid_symbols = ['[', ']', '(', ')', ','];
 
     /**
      * Syntax check of a string.
-     * @param string code
+     * @param string $code
      * @return boolean checking result
      */
     public function check($code) {
@@ -94,6 +96,7 @@ class ParamsSyntaxChecker
     
     /**
      * Valid sequence check.
+     * 
      * @param string $prev token
      * @param string $current token
      * @return boolean checking result

@@ -6,8 +6,9 @@
 /* @var $exception Exception */
 
 use yii\helpers\Html;
+use sergmoro1\blog\Module;
 
-$this->title = false;
+$this->title = Module::t('core', 'Error');
 ?>
 <div class="site-error">
 

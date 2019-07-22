@@ -3,10 +3,10 @@ use yii\db\Migration;
 
 class m170228_160540_create_event extends Migration
 {
-	const POST = '{{%post}}';
-	const EVENT = '{{%event}}';
+	private const TABLE_POST = '{{%post}}';
+	private const TABLE_EVENT = '{{%event}}';
 	
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
@@ -14,24 +14,25 @@ class m170228_160540_create_event extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable(self::EVENT, [
-            'id' => $this->primaryKey(),
-            'post_id' => $this->integer()->notNull(),
-            'responsible' => $this->string(128),
-            'begin' => $this->integer()->notNull(),
-            'end' => $this->integer()->notNull(),
+        $this->createTable(static::TABLE_EVENT, [
+            'id'            => $this->primaryKey(),
+            'post_id'       => $this->integer()->notNull(),
+            'responsible'   => $this->string(128),
+            'begin'         => $this->integer()->notNull(),
+            'end'           => $this->integer()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('post_id', self::EVENT, 'post_id');
-        $this->addForeignKey ('FK_event_post', self::EVENT, 'post_id', self::POST, 'id', 'CASCADE');
+        $this->createIndex('idx-post_id', static::TABLE_EVENT, 'post_id');
+        $this->addForeignKey ('fk-event-post', static::TABLE_EVENT, 'post_id', static::TABLE_POST, 'id', 'CASCADE');
 
+		$this->addCommentOnColumn(static::TABLE_EVENT, 'post_id',       'Post that describes the event');
+		$this->addCommentOnColumn(static::TABLE_EVENT, 'responsible',   'Responsible person');
+		$this->addCommentOnColumn(static::TABLE_EVENT, 'begin',         'Begin date');
+		$this->addCommentOnColumn(static::TABLE_EVENT, 'end',           'End date');
     }
 
-    public function down()
+    public function safeDown()
     {
-		$this->dropForeignKey('FK_event_post', self::EVENT);
-		$this->dropIndex('post_id', self::EVENT);
-
         $this->dropTable(self::EVENT);
     }
 }

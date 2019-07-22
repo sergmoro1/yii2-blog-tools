@@ -1,16 +1,24 @@
 <?php
-/**
- * The followings are the available columns in table 'author':
- * @var integer $id
- * @var string $name
- */
+
 namespace sergmoro1\blog\models;
 
 use yii\db\ActiveRecord;
 
+/**
+ * Table of links between posts and their authors.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
+ */
 
 class PostAuthor extends ActiveRecord
 {
+    /**
+     * The followings are the available columns in table 'post_author':
+     * @var integer $id
+     * @var integer $post_id
+     * @var integer $author_id
+     */
+
     /**
      * @return string the associated database table name
      */
@@ -37,6 +45,8 @@ class PostAuthor extends ActiveRecord
     }
 
     /**
+     * Update authors list.
+     * 
      * @param integer $post_id
      * @param array $old Authors ids
      * @param array $new Authors ids

@@ -1,11 +1,14 @@
 <?php
 $sidebar = array_merge(
     require(__DIR__ . '/../../vendor/sergmoro1/yii2-blog-tools/src/config/sidebar.php'),
+    require(__DIR__ . '/../../vendor/sergmoro1/yii2-comment/src/config/sidebar.php')
     require(__DIR__ . '/../../vendor/sergmoro1/yii2-user/src/config/sidebar.php')
-    //require(__DIR__ . '/../../vendor/sergmoro1/yii2-lookup/src/config/sidebar.php')
 );
 
-$icons = require(__DIR__ . '/../../vendor/sergmoro1/yii2-blog-tools/src/config/icons.php');
+$icons = array_merge(
+    require(__DIR__ . '/../../vendor/sergmoro1/yii2-blog-tools/src/config/icons.php'),
+    require(__DIR__ . '/../../vendor/sergmoro1/yii2-comment/src/config/icons.php')
+);
 
 $dropdown = require(__DIR__ . '/../../vendor/sergmoro1/yii2-blog-tools/src/config/dropdown.php');
 

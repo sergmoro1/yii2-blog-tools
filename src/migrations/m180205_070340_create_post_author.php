@@ -3,14 +3,15 @@
 use yii\db\Migration;
 
 /**
- * Class m180205_070340_create_postauthor
+ * Class m180205_070340_create_post_author
  */
 class m180205_070340_create_post_author extends Migration
 {
-    public $table = '{{%post_author}}';
+    private const TABLE_POST         = '{{%post}';
+    private const TABLE_AUTHOR       = '{{%author}';
+    private const TABLE_POST_AUTHOR  = '{{%post_author}}';
     
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
@@ -18,21 +19,21 @@ class m180205_070340_create_post_author extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable($this->table, [
-            'id' => $this->primaryKey(),
-            'post_id' => $this->integer()->notNull(),
+        $this->createTable(static::TABLE_POST_AUTHOR, [
+            'id'        => $this->primaryKey(),
+            'post_id'   => $this->integer()->notNull(),
             'author_id' => $this->integer()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('post_id', $this->table, 'post_id');
-        $this->createIndex('author_id', $this->table, 'author_id');
+        $this->createIndex('idx-post_id', static::TABLE_POST_AUTHOR, 'post_id');
+        $this->createIndex('idx-author_id', static::TABLE_POST_AUTHOR, 'author_id');
 
-        $this->addForeignKey ('FK_post_authot_post', '{{%post_author}}', 'post_id', '{{%post}}', 'id', 'CASCADE');
-        $this->addForeignKey ('FK_post_authot_author', '{{%post_author}}', 'author_id', '{{%author}}', 'id', 'CASCADE');
+        $this->addForeignKey ('fk-post_authot-post', static::TABLE_POST_AUTHOR, 'post_id', static::TABLE_POST, 'id', 'CASCADE');
+        $this->addForeignKey ('fk-post_authot-author', static::TABLE_POST_AUTHOR, 'author_id', static::TABLE_AUTHOR, 'id', 'CASCADE');
     }
 
-    public function down()
+    public function safeDown()
     {
-        $this->dropTable($this->table);
+        $this->dropTable(static::TABLE_POST_AUTHOR);
     }
 }

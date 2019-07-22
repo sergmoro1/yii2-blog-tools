@@ -7,15 +7,15 @@
 namespace common\models;
 
 use sergmoro1\user\models\BaseUser;
-use sergmoro1\uploader\FilePath;
+use sergmoro1\uploader\behaviours\HaveFileBehavior;
 use sergmoro1\uploader\models\OneFile;
 
 class User extends BaseUser
 {
     public $sizes = [
         'original' => ['width' => 1600, 'height' => 900, 'catalog' => 'original'],
-        'main' => ['width' => 400, 'height' => 400, 'catalog' => ''],
-        'thumb' => ['width' => 90, 'height' => 90, 'catalog' => 'thumb'],
+        'main' =>     ['width' => 400,  'height' => 400, 'catalog' => ''],
+        'thumb' =>    ['width' => 90,   'height' => 90,  'catalog' => 'thumb'],
     ];
 
     /**
@@ -25,8 +25,8 @@ class User extends BaseUser
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
-            'FilePath' => [
-                'class' => FilePath::className(),
+            [
+                'class' => HaveFileBehavior::className(),
                 'file_path' => '/files/user/',
             ],
         ]);

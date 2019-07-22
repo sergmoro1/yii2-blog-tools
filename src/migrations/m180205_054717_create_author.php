@@ -7,12 +7,12 @@ use yii\db\Migration;
  */
 class m180205_054717_create_author extends Migration
 {
-    public $table = '{{%author}}';
+    private const TABLE_AUTHOR = '{{%author}}';
     
     /**
      * @inheritdoc
      */
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
@@ -20,19 +20,22 @@ class m180205_054717_create_author extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable($this->table, [
+        $this->createTable(static::TABLE_AUTHOR, [
             'id' => $this->primaryKey(),
             'name' => $this->string(128)->notNull(),
             
             'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
+
+		$this->addCommentOnColumn(static::TABLE_AUTHOR, 'name', 'Author name');
     }
 
     /**
      * @inheritdoc
      */
-    public function down()
+    public function safeDown()
     {
-        $this->dropTable($this->table);
+        $this->dropTable(static::TABLE_AUTHOR);
     }
 }

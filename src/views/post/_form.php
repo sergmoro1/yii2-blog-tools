@@ -8,13 +8,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use vova07\imperavi\Widget;
-use sergmoro1\uploader\widgets\Byone;
-use sergmoro1\blog\Module;
 
+use sergmoro1\blog\Module;
 use sergmoro1\blog\models\Author;
 use sergmoro1\blog\models\Rubric;
-use sergmoro1\lookup\models\Lookup;
 use sergmoro1\blog\assets\Select2Asset;
+use sergmoro1\lookup\models\Lookup;
+use sergmoro1\uploader\widgets\Uploader;
 
 Select2Asset::register($this);
 
@@ -37,11 +37,12 @@ $this->registerJS($script);
             ]) ?>
         </div>
 
-        <?= Byone::widget([
-            'model' => $model,
-            'draggable' => true,
-            'appendixView' => '/post/appendix.php',
-            'cropAllowed' => true,
+        <?= Uploader::widget([
+            'model'         => $model,
+            'draggable'     => true,
+            'appendixView'  => '/post/appendix.php',
+            'cropAllowed'   => true,
+            'limit'         => 2,
         ]) ?>
         <br>
         
@@ -58,7 +59,7 @@ $this->registerJS($script);
             ->textInput(['maxlength' => true])
         ?>
 
-        <?= $form->field($model, 'previous')->dropdownList($model->CanBePrevious(), [
+        <?= $form->field($model, 'previous_id')->dropdownList($model->CanBePrevious(), [
             'prompt' => Module::t('core', 'Select'),
         ]); ?>
 
@@ -126,7 +127,7 @@ $this->registerJS($script);
 
         <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'rubric')->dropdownList(
+        <?= $form->field($model, 'rubric_id')->dropdownList(
             Rubric::items(Module::t('core', 'Root'))
         ); ?>
 

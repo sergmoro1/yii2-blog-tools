@@ -47,25 +47,20 @@ echo Modal::widget([
         'filterModel' => $searchModel,
         'layout' => "{items}\n{summary}\n{pager}",
         'columns' => [
-            [
-				'attribute' => 'id',
-				'options' => ['style' => 'width:4%;'],
-			],
+            'id',
 			[
 				'header' => 'Заголовок',
 				'format' => 'html',
 				'value' => function($data) {
-					return $data->post->getTitle(true) . ' <small>(' . $data->post->subtitle . ')</small>';
+					return $data->post->getTitleLink();
 				},
-				'options' => ['style' => 'width:20%;'],
 			],
 			[
 				'header' => 'Краткое описание',
 				'format' => 'html',
 				'value' => function($data) {
-					return $data->post->excerpt;
+					return $data->post->getExcerpt();
 				},
-				'options' => ['style' => 'width:40%;'],
 			],
 			'responsible',
             [

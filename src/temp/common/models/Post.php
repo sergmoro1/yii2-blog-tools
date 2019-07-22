@@ -7,12 +7,16 @@
 namespace common\models;
 
 use sergmoro1\blog\models\BasePost;
+use sergmoro1\blog\models\CanComment;
 use sergmoro1\uploader\FilePath;
 use sergmoro1\uploader\models\OneFile;
 use notgosu\yii2\modules\metaTag\components\MetaTagBehavior;
 
 class Post extends BasePost
 {
+    use CanComment;
+    const COMMENT_FOR = 1;
+
     public $sizes = [
         'original' => ['width' => 2400, 'height' => 1600, 'catalog' => 'original'],
         'main' => ['width' => 900, 'height' => 600, 'catalog' => ''],

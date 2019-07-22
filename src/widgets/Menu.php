@@ -1,6 +1,7 @@
 <?php
 namespace sergmoro1\blog\widgets;
 
+use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 
@@ -16,9 +17,9 @@ class Menu extends Widget
     private function getUrl() {
         if(!$this->markActive)
             return '';
-        $mid = \Yii::$app->controller->module->id == \Yii::$app->id ? '' : \Yii::$app->controller->module->id;
-        $cid = \Yii::$app->controller->id;
-        $aid = \Yii::$app->controller->action->id;
+        $mid = Yii::$app->controller->module->id == Yii::$app->id ? '' : Yii::$app->controller->module->id;
+        $cid = Yii::$app->controller->id;
+        $aid = Yii::$app->controller->action->id;
         $id = isset($_GET['slug']) ? $_GET['slug'] : (isset($_GET['id']) ? $_GET['id'] : '');
         $rubric = isset($_GET['rubric']) ? $_GET['rubric'] : '';
         $tag = isset($_GET['tag']) ? $_GET['tag'] : '';

@@ -1,24 +1,8 @@
 <?php
-/**
- * BasePost model.
- *
- * @var integer $id
- * @var string $slug
- * @var integer $author_id
- * @var integer $previous
- * @var string $title
- * @var string $subtitle
- * @var string $excerpt
- * @var string $content
- * @var string $resume
- * @var string $tags
- * @var integer $rubric
- * @var integer $status
- * @var integer $created_at
- * @var integer $updated_at
- */
+
 namespace sergmoro1\blog\models;
 
+use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
@@ -29,23 +13,42 @@ use yii\web\Linkable;
 
 use mrssoft\sitemap\SitemapInterface;
 use sergmoro1\blog\Module;
-use sergmoro1\rudate\RuDate;
-use sergmoro1\blog\components\RuSlug;
+use sergmoro1\rukit\behaviors\FullDateBehavior;
+use sergmoro1\rukit\behaviors\TransliteratorBehavior;
 use sergmoro1\blog\components\WebSlug;
 use sergmoro1\feed\interfaces\RssInterface;
 
 use common\models\User;
 use common\models\Comment;
 
+/**
+ * BasePost model class.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
+ */
 class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssInterface
 {
-    use CanComment;
-    
+    /**
+     * The followings are the available columns in table 'post':
+     * @var integer $id
+     * @var string  $slug
+     * @var integer $user_id
+     * @var integer $previous_id
+     * @var string  $title
+     * @var string  $subtitle
+     * @var string  $excerpt
+     * @var string  $content
+     * @var string  $resume
+     * @var string  $tags
+     * @var integer $rubric_id
+     * @var integer $status
+     * @var integer $created_at
+     * @var integer $updated_at
+     */
+
     const STATUS_DRAFT = 1;
     const STATUS_PUBLISHED = 2;
     const STATUS_ARCHIVED = 3;
-
-    const COMMENT_FOR = 1;
 
     public $created_at_date;
     public $authors = [];
@@ -61,14 +64,15 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         return '{{%post}}';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
-            [
-                'class' => TimestampBehavior::className(),
-            ],
-            'RuDate' => ['class' => RuDate::className()],
-            'RuSlug' => ['class' => RuSlug::className()],
+            ['class' => TimestampBehavior::className()],
+            ['class' => FullDateBehavior::className()],
+            ['class' => TransliteratorBehavior::className()],
          ];
     }
 
@@ -81,10 +85,10 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         // will receive user inputs.
         return [
             [['title', 'excerpt', 'content', 'status'], 'required'],
-            [['previous', 'rubric'], 'integer'],
-            ['previous', 'default', 'value' => 0],
-            ['previous', 'already_selected', 'message' => Module::t('core', 'This article is already selected as the previous one.')],
-            ['status', 'in', 'range' => [self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_ARCHIVED]],
+            [['previous_id', 'rubric_id'], 'integer'],
+            ['previous_id', 'default', 'value' => 0],
+            ['previous_id', 'already_selected', 'message' => Module::t('core', 'This post is already selected as the previous one.')],
+            ['status', 'in', 'range' => self::getStatuses()],
             ['status', 'default', 'value' => 1],
             [['slug', 'title', 'subtitle'], 'string', 'max'=>128],
             ['slug', 'unique'],
@@ -104,19 +108,31 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         return [
             'slug'              => Module::t('core', 'Slug'),
             'user_id'           => Module::t('core', 'Moderator'),
-            'previous'          => Module::t('core', 'Previous post'),
+            'previous_id'       => Module::t('core', 'Previous post'),
             'title'             => Module::t('core', 'Title'),
             'subtitle'          => Module::t('core', 'Sub Title'),
             'excerpt'           => Module::t('core', 'Excerpt'),
             'content'           => Module::t('core', 'Content'),
             'resume'            => Module::t('core', 'Resume'),
             'tags'              => Module::t('core', 'Tags'),
-            'rubric'            => Module::t('core', 'Rubric'),
+            'rubric_id'         => Module::t('core', 'Rubric'),
             'status'            => Module::t('core', 'Status'),
             'authors'           => Module::t('core', 'Authors'),
             'created_at'        => Module::t('core', 'Created at'),
             'created_at_date'   => Module::t('core', 'Created at'),
             'updated_at'        => Module::t('core', 'Modified at'),
+        ];
+    }
+
+    /**
+     * Get statuses.
+     * @return array
+     */
+    public static function getStatuses() {
+        return [
+            self::STATUS_DRAFT,
+            self::STATUS_PUBLISHED,
+            self::STATUS_ARCHIVED, 
         ];
     }
 
@@ -146,11 +162,13 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     }
 
     /**
-     * Normalizes the user-entered tags.
+     * Is the attribute value was selected yet?
+     * @param string $attribute name
+     * $param array validator $params
      */
     public function already_selected($attribute, $params)
     {
-        if($this->$attribute && $this->find()->where($attribute . '=' . $this->$attribute . 
+        if($this->$attribute && self::find()->where($attribute . '=' . $this->$attribute . 
             ($this->id ? ' and id <> ' . $this->id : '')
         )->one())
             $this->addError($attribute, $params['message']);
@@ -172,16 +190,25 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         $this->tags = Tag::array2string(array_unique(Tag::string2array($this->tags)));
     }
 
+    /**
+     * @return \yii\db\ActiveRecord user who placed the post.
+     */
     public function getUser()
     {
         return User::findOne($this->user_id);
     }
 
+    /**
+     * @return array of \yii\db\ActiveRecord the post's authors.
+     */
     public function getAuthors()
     {
         return PostAuthor::find()->where(['post_id' => $this->id])->all();
     }
 
+    /**
+     * @return string the post's authors.
+     */
     public function getListAuthors($glue = ', ')
     {
         $a = [];
@@ -190,11 +217,17 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         return implode($glue, $a);
     }
 
+    /**
+     * @return \yii\db\ActiveRecord post's rubric.
+     */
     public function getRubric()
     {
-        return Rubric::findOne($this->rubric);
+        return Rubric::findOne($this->rubric_id);
     }
 
+    /**
+     * @return boolean is post published?
+     */
     public function isPublished()
     {
         return $this->status === self::STATUS_PUBLISHED;
@@ -217,7 +250,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     }
 
     /**
-     * @return excerpt
+     * @return clear excerpt
      */
     public function getExcerpt()
     {
@@ -264,7 +297,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         if(($right = mb_strpos($title, ']')) === false)
             $right = mb_strlen($title);
         return mb_substr($title, 0, $left) . 
-            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), $this->url, $options) . 
+            Html::a(mb_substr($title, ($left ? $left + 1 : 0), $right - $left - ($left ? 1 : 0)), ['post/view', 'slug' => $this->slug], $options) . 
             mb_substr($title, $right + 1, mb_strlen($title) - $right - ($right ? 1 : 0));
     }
 
@@ -283,7 +316,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
 
     /**
      * @param integer the maximum number of posts that should be returned
-     * @return list of last posts that can be choiced as previous
+     * @return array of last posts that can be choiced as previous
      */
     public function CanBePrevious($limit = 50)
     {
@@ -299,17 +332,18 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     }
 
     /**
+     * @param array link $options
      * @return title link list of previous posts
      */
     public function Previous($options = [])
     {
         $a = array();
-        $previous = $this->previous;
+        $previous = $this->previous_id;
         while($previous)
         {
             $post = $this->findOne($previous);
             $a[] = $post->getTitleLink($options);
-            $previous = $post->previous;
+            $previous = $post->previous_id;
         }
         if($a)
             return $a;
@@ -323,6 +357,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     }
 
     /**
+     * @param array link $options
      * @return title link list of next posts
      */
     public function Next($options = [])
@@ -330,7 +365,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         $a = [];
         $next = $this->id;
         while($post = static::find()
-            ->where('status=' . self::STATUS_PUBLISHED . ' and previous=' . $next)
+            ->where('status=' . self::STATUS_PUBLISHED . ' and previous_id=' . $next)
             ->one()
         )
         {
@@ -359,34 +394,36 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     }
 
     /**
-     * @param $limit - integer the maximum number of posts that should be returned
-     * @param $slug - string rubric slug
-     * @param $tag - string
+     * Get recent posts.
+     * 
+     * @param integer $limit - integer the maximum number of posts that should be returned
+     * @param string $rubric slug
+     * @param string $tag
      * @return array the most recently added posts
      */
-    public function getRecentPosts($limit = 3, $slug = false, $tag = false)
+    public function getRecentPosts($limit = 3, $rubric = false, $tag = false)
     {
         $query = \common\models\Post::find()
             ->where(['status' => self::STATUS_PUBLISHED]);
 
         // posts from selected rubric and all it's sub rubric
-        if($slug) {
-            if($selectedRubric = Rubric::findOne(['slug' => $slug])) {
+        if($rubric) {
+            if($selectedRubric = Rubric::findOne(['slug' => $rubric])) {
                 $a = []; $a[] = $selectedRubric->id;
                 foreach($selectedRubric->children()->all() as $child)
                     $a[] = $child->id;
-                $query->andWhere(['in', 'rubric', $a]); // rubric IN ($a)
+                $query->andWhere(['in', 'rubric_id', $a]); // rubric_id IN ($a)
             }
         }
         // posts with tag
         if($tag && ($tag = WebSlug::getRealname($tag)))
             $query->andWhere(['like', 'tags', $tag]); // tags LIKE "%$tag%"
         // posts from only recent posts rubrics
-        if(!$slug && !$tag && \Yii::$app->params['recent-posts']) {
+        if(!$rubric && !$tag && Yii::$app->params['recent-posts']) {
             $a = [];
-            foreach(\Yii::$app->params['recent-posts'] as $slug)
+            foreach(Yii::$app->params['recent-posts'] as $slug)
                 $a[] = Rubric::findOne(['slug' => $slug])->id;
-            $query->andWhere(['in', 'rubric', $a]); // rubric IN ($a)
+            $query->andWhere(['in', 'rubric_id', $a]); // rubric_id IN ($a)
         }
         return $query
             ->orderBy('created_at DESC')
@@ -441,7 +478,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     public function afterDelete()
     {
         parent::afterDelete();
-        Comment::deleteAll(['model' => self::COMMENT_FOR, 'parent_id' => $this->id]);
+        Event::deleteAll(['post_id' => $this->id]);
         Tag::updateFrequency($this->tags, '');
         PostAuthor::updateAuthors($this->id, $this->_oldAuthors, []);
     }

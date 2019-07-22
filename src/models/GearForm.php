@@ -5,7 +5,10 @@ use sergmoro1\blog\Module;
 use yii\base\Model;
 
 /**
- * Gear form
+ * Gear form to edit frontend\config\params.php as an array
+ * with syntax verification.
+ * 
+ * @author Sergey Morozov <sergey@vorst.ru>
  */
 class GearForm extends Model
 {

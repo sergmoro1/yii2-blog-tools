@@ -1,17 +1,22 @@
 <?php
-/**
- * The followings are the available columns in table 'tag':
- * @var integer $id
- * @var string $name
- * @var integer $frequency
- */
+
 namespace sergmoro1\blog\models;
 
 use yii\db\ActiveRecord;
 use sergmoro1\blog\Module;
 
+/**
+ * Tag dictionary.
+ */
 class Tag extends ActiveRecord
 {
+    /**
+     * The followings are the available columns in table 'tag':
+     * @var integer $id
+     * @var string $name
+     * @var integer $frequency
+     */
+
     /**
      * @return string the associated database table name
      */
@@ -96,16 +101,30 @@ class Tag extends ActiveRecord
         return $names;
     }
 
+    /**
+     * @param string tags separated by commas
+     * @return array $tags
+     */
     public static function string2array($tags)
     {
         return preg_split('/\s*,\s*/',trim($tags),-1,PREG_SPLIT_NO_EMPTY);
     }
 
+    /**
+     * @param array $tags
+     * @return string tags separated by commas
+     */
     public static function array2string($tags)
     {
         return implode(', ',$tags);
     }
 
+    /**
+     * Update tags frequencies.
+     * 
+     * @param string $oldTags
+     * @param string $newTag
+     */
     public function updateFrequency($oldTags, $newTags)
     {
         $oldTags = self::string2array($oldTags);
@@ -114,6 +133,11 @@ class Tag extends ActiveRecord
         Tag::removeTags(array_values(array_diff($oldTags, $newTags)));
     }
 
+    /**
+     * Add tag if it's not exists yet or increment frequency.
+     * 
+     * @param array $tags
+     */
     private function addTags($tags)
     {
         if($tag = Tag::find()
@@ -133,6 +157,11 @@ class Tag extends ActiveRecord
         }
     }
 
+    /**
+     * Decrement frequencies and delete all tags with 0 frequency.
+     * 
+     * @param array $tags
+     */
     private function removeTags($tags)
     {
         if(empty($tags))

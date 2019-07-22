@@ -25,13 +25,10 @@
         "notgosu/yii2-meta-tag-module": "dev-master",
         "mrssoft/yii2-sitemap": "dev-master",
         "hiqdev/yii2-asset-select2": "^4.0",
-        "yiisoft/yii2-authclient": "^2.1",
-        "sergmoro1/yii2-lookup" : "dev-master",
         "sergmoro1/yii2-modal-crud" : "dev-master",
-        "sergmoro1/yii2-ru-date" : "dev-master",
-        "sergmoro1/yii2-byone-uploader" : "dev-master",
+        "sergmoro1/yii2-ru-kit" : "^1.1",
         "sergmoro1/yii2-user" : "dev-master",
-        "sergmoro1/yii2-feed": "*"
+        "sergmoro1/yii2-feed": "dev-master"
     },
     "autoload": {
         "psr-4": {

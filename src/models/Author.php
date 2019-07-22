@@ -1,24 +1,34 @@
 <?php
-/**
- * The followings are the available columns in table 'author':
- * @var integer $id
- * @var string $name
- */
 namespace sergmoro1\blog\models;
 
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\behaviors\TimestampBehavior;
+
 use sergmoro1\blog\Module;
-use sergmoro1\uploader\FilePath;
+use sergmoro1\uploader\behaviors\HaveFileBehavior;
 use sergmoro1\uploader\models\OneFile;
 
+/**
+ * Posts authors.
+ * 
+ * @author Sergey Morozov <sergmoro1@ya.ru>
+ */
 
 class Author extends ActiveRecord
 {
+    /**
+     * The followings are the available columns in table 'author':
+     * @var integer $id
+     * @var string  $name
+     * @var integer $created_at
+     * @var integer $updated_at
+     */
+
     public $sizes = [
-        'original' => ['width' => 1200, 'height' => 900, 'catalog' => 'original'],
-        'main' => ['width' => 300, 'height' => 300, 'catalog' => '', 'crop' => true],
-        'thumb' => ['width' => 90, 'height' => 90, 'catalog' => 'thumb', 'crop' => true],
+        'original'  => ['width' => 900, 'height' => 900, 'catalog' => 'original'],
+        'main'      => ['width' => 300,  'height' => 300, 'catalog' => ''],
+        'thumb'     => ['width' => 90,   'height' => 90,  'catalog' => 'thumb'],
     ];
 
     /**
@@ -34,12 +44,13 @@ class Author extends ActiveRecord
      */
     public function behaviors()
     {
-        return array_merge(parent::behaviors(), [
-            'FilePath' => [
-                'class' => FilePath::className(),
+        return [
+            ['class' => TimestampBehavior::className()],
+            [
+                'class' => HaveFileBehavior::className(),
                 'file_path' => '/files/author/',
             ],
-        ]);
+         ];
     }
 
     public function getFiles()
@@ -64,7 +75,7 @@ class Author extends ActiveRecord
             ['name', 'required'],
             ['name', 'string', 'max' => 128],
             ['name', 'unique'],
-            ['created_at', 'safe'],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -75,7 +86,6 @@ class Author extends ActiveRecord
     {
         return array(
             'name' => Module::t('core', 'Name'),
-            'created_at' => Module::t('core', 'Created at'),
         );
     }
 
@@ -85,23 +95,5 @@ class Author extends ActiveRecord
     
     public function getAll() {
         return ArrayHelper::map(Author::find()->all(), 'id', 'name'); 
-    }
-    
-    /**
-     * This is invoked before the record is saved.
-     * @return boolean whether the record should be saved.
-     */
-    public function beforeSave($insert)
-    {
-        if(parent::beforeSave($insert))
-        {
-            if($this->isNewRecord)
-            {
-                $this->created_at = time();
-            }
-            return true;
-        }
-        else
-            return false;
     }
 }

@@ -19,10 +19,10 @@ $this->params['breadcrumbs'][] = $model->getTitle();
         <div class='col-sm-6'>
             <?= Html::a(Module::t('core', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 
-            <?php if(count($model->files) > 0): ?>
+            <?php if($model->fileCount): ?>
 
                 <?php Modal::begin([
-                    'header' => Module::t('core', 'View box'),
+                    'header' => Module::t('core', 'Pictures connected with the post'),
                     'toggleButton' => ['label' => Module::t('core', 'Pictures'), 'tag' => 'a', 'class' => 'btn btn-default'],
                 ]); ?>
 

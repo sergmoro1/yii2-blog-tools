@@ -32,13 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'attribute' => 'id',
-                'options' => ['style' => 'width:4%;'],
+                'options' => ['class' => 'id-col'],
             ],
             [
                 'header' => Module::t('core', 'Thumb'),
                 'format' => 'html',
                 'value' => function($data) {
-                    return Html::img($data->getImage('thumb'), ['class' => 'img-responsive']);
+                    return Html::img($data->getImage('thumb'), ['class' => 'img-responsive img-thumb']);
                 }
             ],
             'name',

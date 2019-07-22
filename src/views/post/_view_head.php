@@ -15,10 +15,10 @@ use common\models\Post;
 </h3>
 
 <div class='post-meta'>
-    <span class='glyphicon glyphicon-calendar'></span> <?= $model->getFullDate('created_at'); ?>
+    <span class='glyphicon glyphicon-calendar'></span> <?= $model->fullDate('created_at'); ?>
     <?php if($thumb = $model->getImage('thumb')): ?>
         <a href="<?= Url::to(['post/update', 'id' => $model->id]) ?>">
-            <img src="<?= $thumb ?>" alt="<?= $model->getDescription(); ?>">
+            <img src="<?= $thumb ?>" alt="<?= $model->getFileDescription(); ?>">
         </a>
     <?php endif; ?>
 </div>

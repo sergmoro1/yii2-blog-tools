@@ -3,11 +3,16 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
+/**
+ * @author Sergey Morozov <sergey@vorst.ru>
+ */
 class m160206_162112_create_post extends Migration
 {
-    public $table = '{{%post}}';
+    private const TABLE_POST = '{{%post}}';
+    private const TABLE_USER = '{{%user}}';
+    private const TABLE_USER = '{{%comment}}';
     
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
@@ -15,30 +20,42 @@ class m160206_162112_create_post extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable($this->table, [
-            'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
-            'slug' => $this->string(128)->notNull()->unique(),
-            'previous' => $this->integer()->defaultValue(0),
-            'title' => $this->string(128)->notNull(),
-            'subtitle' => $this->string(128),
-            'excerpt' => $this->text()->notNull(),
-            'content' => $this->text()->notNull(),
-            'resume' => $this->text(),
-            'tags' => $this->text(),
-            'rubric' => $this->integer()->defaultValue(1),
-            'status' => $this->integer()->defaultValue(1),
+        $this->createTable(static::TABLE_POST, [
+            'id'            => $this->primaryKey(),
+            'user_id'       => $this->integer()->notNull(),
+            'slug'          => $this->string(128)->notNull()->unique(),
+            'previous_id'   => $this->integer()->defaultValue(0),
+            'title'         => $this->string(128)->notNull(),
+            'subtitle'      => $this->string(128),
+            'excerpt'       => $this->text()->notNull(),
+            'content'       => $this->text()->notNull(),
+            'resume'        => $this->text(),
+            'tags'          => $this->text(),
+            'rubric_id'     => $this->integer()->defaultValue(1),
+            'status'        => $this->integer()->defaultValue(1),
 
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
+            'created_at'    => $this->integer(),
+            'updated_at'    => $this->integer(),
         ], $tableOptions);
 
-        $this->createIndex('rubric', $this->table, 'rubric');
-        $this->addForeignKey ('FK_post_user', $this->table, 'user_id', '{{%user}}', 'id', 'CASCADE');
+        $this->createIndex('idx-rubric_id', static::TABLE_POST, 'rubric_id');
+        $this->addForeignKey ('fk-post-user', static::TABLE_POST, 'user_id', static::TABLE_USER, 'id', 'CASCADE');
+
+		$this->addCommentOnColumn(static::TABLE_POST, 'user_id',        'ID of the user who added the post');
+		$this->addCommentOnColumn(static::TABLE_POST, 'slug',           'Symbolic ID');
+		$this->addCommentOnColumn(static::TABLE_POST, 'previous_id',    'ID of the previous post in the chain of posts or null');
+		$this->addCommentOnColumn(static::TABLE_POST, 'title',          'Title');
+		$this->addCommentOnColumn(static::TABLE_POST, 'subtitle',       'Addition to the title');
+		$this->addCommentOnColumn(static::TABLE_POST, 'excerpt',        'Short description');
+		$this->addCommentOnColumn(static::TABLE_POST, 'content',        'Content');
+		$this->addCommentOnColumn(static::TABLE_POST, 'resume',         'Final resume');
+		$this->addCommentOnColumn(static::TABLE_POST, 'tags',           'Tags separated by commas');
+		$this->addCommentOnColumn(static::TABLE_POST, 'rubric_id',      'Rubric ID');
+		$this->addCommentOnColumn(static::TABLE_POST, 'status',         'Status');
     }
 
-    public function down()
+    public function safeDown()
     {
-        $this->dropTable($this->table);
+        $this->dropTable(static::TABLE_POST);
     }
 }

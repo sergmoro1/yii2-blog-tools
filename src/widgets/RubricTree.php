@@ -26,7 +26,7 @@ class RubricTree extends Widget
     {
         $rubrics = Rubric::find()
             ->where('id > 1 AND rubric.show')
-            ->orderBy('position asc')
+            ->orderBy('lft asc')
             ->all();
         return $rubrics;
     }
