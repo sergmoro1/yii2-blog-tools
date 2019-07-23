@@ -37,7 +37,7 @@ Either run
 
 or add
 
-`"sergmoro1/yii2-blog-tools": "~2.0"`
+`"sergmoro1/yii2-blog-tools": "dev-master"`
 
 to the require section of your composer.json.
 
