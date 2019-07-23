@@ -1,175 +1,179 @@
-<h1>Yii2 module for blog, advanced template. Backend blog management, SBadmin panel.</h1>
+Yii2 module for blog, advanced template, backend blog management, SBadmin panel
+===============================================================================
 
-<h2>Advantages</h2>
+Ordinary management system for posts. Can be used as a base for any app.
 
-Posts, comments, rubrics, tags, users, authors. 
+Advantages
+----------
 
-Imperavi redactor. Files & Images uploading. Photos chain for carousel slider.
+* Posts, comments, rubrics, tags, users, authors;
+* Imperavi redactor, files & images uploading, photos chain for carousel slider;
+* Comments management, tags, nested set rubrics;
+* Avatars for users and authors, user registration with email confirmation or by network account;
+* RBAC.
 
-Comment management. Nested set rubric.
 
-Avatars for users and authors. User registration with email confirmation.
+Installation
+------------
 
-RBAC.
+After installation [Yii2 advanced template](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md).
 
-<h2>Installation</h2>
+1. Change project composer file
 
-After installation <a href='https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md'>Yii2 advanced template</a>.
+Package has dev-master version and depends on the same packages, so in app directory change `composer.json`.
 
-<h3>Change project composer file</h3>
-
-Package has dev-master version and depends on the same packages, so
-
-In app directory change <code>composer.json</code>:
-
-<pre>
+```
   "minimum-stability": "dev",
   "prefer-stable": true,
-</pre>
+```
 
-<h3>Install package</h3>
+2. Install package
 
-<pre>
-$ composer require --prefer-dist sergmoro1/yii2-blog-tools "dev-master"
-</pre>
+The preferred way to install this extension is through composer.
 
-<h3>Run migrations</h3>
+Either run
 
-<pre>
-$ php yii migrate --migrationPath=@vendor/notgosu/yii2-meta-tag-module/src/migrations
-$ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-byone-uploader/migrations
-$ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-lookup/src/migrations
-$ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-user/src/migrations
-$ php yii migrate --migrationPath=@vendor/sergmoro1/yii2-blog-tools/src/migrations
-</pre>
+`composer require --prefer-dist sergmoro1/yii2-blog-tools`
 
-<h3>Git init</h3>
+or add
 
-<pre>
-$ git init
-</pre>
+`"sergmoro1/yii2-blog-tools": "~2.0"`
 
-<h3>Copy predefined files to appropriate folders</h3>
+to the require section of your composer.json.
 
-In app directory:
+3. Git init
 
-<pre>
-$ cp ./vendor/sergmoro1/yii2-blog-tools/src/initblog ./
-$ php initblog
-$ chmod -R 777 ./frontend/web/files
-$ chmod 777 ./frontend/config/params.php
-</pre>
+`git init`
 
-<h3>Configs</h3>
+4. Init blog
 
-Set up in <code>backend/config/main.php</code>.
+Run migrations, copy predefined files to appropriate folders by bathch file `initblog`.
 
-<pre>
+To get it make a command in app directory.
+
+`cp ./vendor/sergmoro1/yii2-blog-tools/src/initblog ./`
+
+And run a batch file.
+
+`php initblog`
+
+To set the folder to store the uploaded files is writable.
+
+`chmod -R 777 ./frontend/web/files`
+
+
+Configuration
+-------------
+
+Set up in `backend/config/main.php`.
+
+```php
 return [
-  'defaultRoute' => '/blog/site/index',
-  'layoutPath' => '@vendor/sergmoro1/yii2-blog-tools/src/views/layouts',
-  'modules' => [
-    'uploader' => ['class' => 'sergmoro1\uploader\Module'],
-  ],
-  'components' => [
-    'authManager' => [
-      'class' => 'yii\rbac\PhpManager',
-      'defaultRoles' => ['commentator', 'author', 'admin'],
-      'itemFile' => __DIR__ . '/../../console/rbac/items.php',
-      'ruleFile' => __DIR__ . '/../../console/rbac/rules.php',
+    'defaultRoute' => '/blog/site/index',
+    'layoutPath' => '@vendor/sergmoro1/yii2-blog-tools/src/views/layouts',
+    'modules' => [
+        'uploader' => ['class' => 'sergmoro1\uploader\Module'],
     ],
-    'user' => [
-      'class' => 'yii\web\User',
-      'identityClass' => 'common\models\User',
-      'enableAutoLogin' => true,
-      'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+    'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+            'defaultRoles' => ['commentator', 'author', 'admin'],
+            'itemFile' => __DIR__ . '/../../console/rbac/items.php',
+            'ruleFile' => __DIR__ . '/../../console/rbac/rules.php',
+        ],
+        'user' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+        ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+        ],
+        'errorHandler' => [
+            'errorAction' => '/blog/site/error',
+        ],
     ],
-    'urlManager' => [
-      'class' => 'yii\web\UrlManager',
-      'enablePrettyUrl' => true,
-      'showScriptName' => false,
-      'enableStrictParsing' => false,
-    ],
-    'errorHandler' => [
-      'errorAction' => '/blog/site/error',
-    ],
-  ],
 ];
-</pre>
+```
 
-Set up in <code>common/config/main.php</code>.
-<pre>
+Set up in `common/config/main.php`.
+
+```php
 return [
-  ...
-  'language' => 'ru-RU', // 'en-US',
-  'bootstrap' => ['blog'],
-  'modules' => [
-    'lookup' => ['class' => 'sergmoro1\lookup\Module'],
-    'blog' => ['class' => 'sergmoro1\blog\Module'],
-    'user' => ['class' => 'sergmoro1\user\Module'],
-    'seo' => [
-      'class' => 'notgosu\yii2\modules\metaTag\Module',
-    ],
-  ],
-  'components' => [
-    'authManager' => [
-      'class' => 'yii\rbac\PhpManager',
-    ],
-    'user' => [
-      'class' => 'yii\web\User',
-    ],
-    'mailer' => [
-      'class' => 'yii\swiftmailer\Mailer',
-      'useFileTransport' => false,
-      'viewPath' => '@vendor/sergmoro1/yii2-user/src/mail',
-      /* Definition of Yandex post office for your domain (example).
-      'transport' => [
-        'class' => 'Swift_SmtpTransport',
-        'host' => 'smtp.yandex.ru',
-        'username' => 'admin@your-site.ru',
-        'password' => 'your-password',
-        'port' => '465',
-        'encryption' => 'ssl',
-      ],
-      */
-    ],
-    'i18n' => [
-      'translations' => [
-        'app*' => [
-          'class' => 'yii\i18n\PhpMessageSource',
-          'basePath' => '@app/../messages',
-          'sourceLanguage' => 'en-US',
-          'fileMap' => [
-            'app' => 'app.php',
-            'app/error' => 'error.php',
-          ],
+    'language' => 'ru-RU', // 'en-US',
+    'bootstrap' => ['blog'],
+    'modules' => [
+        'lookup' => ['class' => 'sergmoro1\lookup\Module'],
+        'blog' => ['class' => 'sergmoro1\blog\Module'],
+        'user' => ['class' => 'sergmoro1\user\Module'],
+        'seo' => [
+            'class' => 'notgosu\yii2\modules\metaTag\Module',
         ],
-        'metaTag' => [
-          'class' => 'yii\i18n\PhpMessageSource',
-        ],
-        // sergmoro1/user/models/LoginForm is used in frontend/controllers/SiteController, so
-        // it is not used within the Module then translation should be defined twice
-        // here and in a sergmoro1/user/Module::registerTranslations()
-        'sergmoro1/user/*' => [
-          'class' => 'yii\i18n\PhpMessageSource',
-          'sourceLanguage' => 'en-US',
-          'basePath' => '@vendor/sergmoro1/yii2-user/src/messages',
-          'fileMap' => [
-            'sergmoro1/user/core' => 'core.php',
-          ],
-        ],
-      ],
     ],
-  ],
+    'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+        ],
+        'user' => [
+            'class' => 'yii\web\User',
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'viewPath' => '@vendor/sergmoro1/yii2-user/src/mail',
+            /* Definition of Yandex post office for your domain (example).
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.yandex.ru',
+                'username' => 'admin@your-site.ru',
+                'password' => 'your-password',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
+            */
+        ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/../messages',
+                    'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+                'metaTag' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                ],
+                // sergmoro1/user/models/LoginForm is used in frontend/controllers/SiteController, so
+                // it is not used within the Module then translation should be defined twice
+                // here and in a sergmoro1/user/Module::registerTranslations()
+                'sergmoro1/user/*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'en-US',
+                    'basePath' => '@vendor/sergmoro1/yii2-user/src/messages',
+                    'fileMap' => [
+                        'sergmoro1/user/core' => 'core.php',
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];
-</pre>
+```
 
-Don't forget add <code>.htaccess</code> file to <code>backend/web</code> and <code>frontend/web</code>.
+Don't forget add `.htaccess` file to `backend/web` and `frontend/web`.
 
-<h2>Start</h2>
+Start
+-----
 
-Enter <code>http://your-app/backend/web</code> and <code>Login</code>.
+Enter `http://your-app/backend/web` and `Login`.
 
-Name: Admin
+**Name**: `Admin`
 
-Password: 123456
+**Password**: `123456`

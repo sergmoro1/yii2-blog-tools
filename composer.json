@@ -25,10 +25,8 @@
         "notgosu/yii2-meta-tag-module": "dev-master",
         "mrssoft/yii2-sitemap": "dev-master",
         "hiqdev/yii2-asset-select2": "^4.0",
-        "sergmoro1/yii2-modal-crud" : "dev-master",
-        "sergmoro1/yii2-ru-kit" : "^1.1",
-        "sergmoro1/yii2-user" : "dev-master",
-        "sergmoro1/yii2-feed": "dev-master"
+        "sergmoro1/yii2-comment" : "~1.0",
+        "sergmoro1/yii2-feed": "~1.0"
     },
     "autoload": {
         "psr-4": {
