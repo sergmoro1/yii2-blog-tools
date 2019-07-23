@@ -57,7 +57,7 @@ And run a batch file.
 
 `php initblog`
 
-To set the folder to store the uploaded files is writable.
+Set the folder as writable to store the uploaded files.
 
 `chmod -R 777 ./frontend/web/files`
 
