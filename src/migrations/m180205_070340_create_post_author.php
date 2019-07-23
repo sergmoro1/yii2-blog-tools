@@ -1,4 +1,5 @@
 <?php
+namespace sergmoro1\blog\migrations;
 
 use yii\db\Migration;
 
@@ -7,8 +8,8 @@ use yii\db\Migration;
  */
 class m180205_070340_create_post_author extends Migration
 {
-    private const TABLE_POST         = '{{%post}';
-    private const TABLE_AUTHOR       = '{{%author}';
+    private const TABLE_POST         = '{{%post}}';
+    private const TABLE_AUTHOR       = '{{%author}}';
     private const TABLE_POST_AUTHOR  = '{{%post_author}}';
     
     public function safeUp()
@@ -28,8 +29,8 @@ class m180205_070340_create_post_author extends Migration
         $this->createIndex('idx-post_id', static::TABLE_POST_AUTHOR, 'post_id');
         $this->createIndex('idx-author_id', static::TABLE_POST_AUTHOR, 'author_id');
 
-        $this->addForeignKey ('fk-post_authot-post', static::TABLE_POST_AUTHOR, 'post_id', static::TABLE_POST, 'id', 'CASCADE');
-        $this->addForeignKey ('fk-post_authot-author', static::TABLE_POST_AUTHOR, 'author_id', static::TABLE_AUTHOR, 'id', 'CASCADE');
+        $this->addForeignKey('fk-post_author-post', static::TABLE_POST_AUTHOR, 'post_id', static::TABLE_POST, 'id', 'CASCADE');
+        $this->addForeignKey('fk-post_author-author', static::TABLE_POST_AUTHOR, 'author_id', static::TABLE_AUTHOR, 'id', 'CASCADE');
     }
 
     public function safeDown()

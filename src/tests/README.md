@@ -1,76 +1,73 @@
-<h1>How to start tests</h1>
+Test manual
+===========
 
-codecept run<br>
-codecept run acceptance<br>
+How to start tests.
+
+```
+codecept run
+codecept run acceptance
 codecept run acceptance CommentCept --steps --debug
+```
 
-<h1>Settings before start</h1>
-Before you start the tests, you must create a database, run the migrations, and make changes to the configuration files.
+Before start
+------------
 
-<h2>Configs, switch off Pretty Url</h2>
+Before you start the tests, you must create a database and run migrations.
 
-Set <code>enablePrettyUrl</code> to <code>false</code> or comment it in a file <code>backend/config/main.php</code>.
-<pre>
-  'components' => [
-    'urlManager' => [
-      'class' => 'yii\web\UrlManager',
-      'enablePrettyUrl' => false,
-</pre>
+Create database `yii2_advanced_tests`.
+Change database name in `./common/config/main-local.php` to `yii2_advanced_tests`.
+Start migrations in a root direcory of the application as mentioned in `sergmoro1\blog\README.md`.
 
-In a file <code>common/config/main.php</code> comment <code>LangSwitcher</code> if this component is used.
-<pre>
-  'bootstrap' => [
-    //'LangSwitcher',
-    'blog',
-</pre>
+Configuration
+-------------
 
-<h2>Database</h2>
+Set `enablePrettyUrl` to `false` or comment it in a file `backend/config/main.php`.
 
-Create database <code>yii2_advanced_tests</code> and start migrations in a root direcory of the application.
-<pre>
-php yii migrate
-//  all others as mentioned in vendor/sergmoro1/yii2=blog-tools/README.md
-</pre>
+```php
+    'components' => [
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => false,
+```
 
-Change database name in <code>./common/config/main-local.php</code> to <code>yii2_advanced_tests</code>.
+In a file `common/config/main.php` comment `LangSwitcher` if this component is used.
 
-<pre>
-return [
-  'components' => [
-    'db' => [
-      'class' => 'yii\db\Connection',
-      'dsn' => 'mysql:host=127.0.0.1;dbname=yii2_advanced_tests,
-      'username' => 'root',
-      'password' => '', //set it if needed
-      'charset' => 'utf8',
-</pre>
+```php
+    'bootstrap' => [
+        //'LangSwitcher',
+        'blog',
+```
 
-<h2>yml</h2>
+yml
+---
 
-Change, if needed, a <code>password</code> in: 
+Change, if needed, a `password` in test config files. 
 
-tests/acceptance.suite.yml<br>
-tests/functional.suite.yml<br>
+```
+tests/acceptance.suite.yml
+tests/functional.suite.yml
 tests/unit.suite.yml
+```
 
-Change <code>webRoot</code> of the application in <code>tests/acceptance.suite.yml</code>. Something like this
+Change `webRoot` of the application in `tests/acceptance.suite.yml`.
 
-<pre>
+```
   config:
     PhpBrowser:
       url: http://localhost/your-app
-</pre>
+```
 
-<h2>Namespace</h2>
+Namespace
+---------
 
-After <code>*.suite.yml</code> have changed then automatically can be changed namespaces in a folder 
-<code>sergmoro1\blog\tests\_support\_generated</code>. Fix namespaces if needed.
-For example in <code>AcceptanceTesterActions.php</code> from
-<pre>
+After `*.suite.yml` have changed then automatically can be changed namespaces in a folder 
+`sergmoro1\blog\tests\_support\_generated`. Fix namespaces if needed.
+For example in `AcceptanceTesterActions.php`
+
+```
+// from
 namespace sergmoro1\blog\tests\_generated;
-</pre>
 
-to
-<pre>
+//to
 namespace sergmoro1\blog\tests\_support\_generated;
-</pre>
+```

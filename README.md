@@ -45,9 +45,34 @@ to the require section of your composer.json.
 
 `git init`
 
-4. Init blog
+4. Configuring  migrations
 
-Run migrations, copy predefined files to appropriate folders by bathch file `initblog`.
+Add information about migration folders with `namespace` to `console\config\main.php` before `components` section.
+
+```php
+    'controllerMap' => [
+        'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationNamespaces' => [
+                'sergmoro1\uploader\migrations',
+                'sergmoro1\lookup\migrations',
+                'sergmoro1\user\migrations',
+                'sergmoro1\blog\migrations',
+            ],
+        ],
+    ],
+```
+ 
+5. Run migrations
+
+```
+php yii migrate
+php yii migrate --migrationPath=@vendor/notgosu/yii2-meta-tag-module/src/migrations
+```
+
+6. Init blog
+
+Copy predefined files to appropriate folders by bathch file `initblog`.
 
 To get it make a command in app directory.
 

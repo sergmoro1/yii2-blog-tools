@@ -1,4 +1,6 @@
 <?php
+namespace sergmoro1\blog\migrations;
+
 use yii\db\Migration;
 
 class m170228_160540_create_event extends Migration
@@ -33,6 +35,6 @@ class m170228_160540_create_event extends Migration
 
     public function safeDown()
     {
-        $this->dropTable(self::EVENT);
+        $this->dropTable(self::TABLE_EVENT);
     }
 }

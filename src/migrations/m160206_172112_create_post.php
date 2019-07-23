@@ -1,4 +1,5 @@
 <?php
+namespace sergmoro1\blog\migrations;
 
 use yii\db\Schema;
 use yii\db\Migration;
@@ -6,11 +7,10 @@ use yii\db\Migration;
 /**
  * @author Sergey Morozov <sergey@vorst.ru>
  */
-class m160206_162112_create_post extends Migration
+class m160206_172112_create_post extends Migration
 {
     private const TABLE_POST = '{{%post}}';
     private const TABLE_USER = '{{%user}}';
-    private const TABLE_USER = '{{%comment}}';
     
     public function safeUp()
     {

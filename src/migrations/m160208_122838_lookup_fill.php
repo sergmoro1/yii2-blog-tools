@@ -1,4 +1,5 @@
 <?php
+namespace sergmoro1\blog\migrations;
 
 use yii\db\Schema;
 use yii\db\Migration;
@@ -26,7 +27,7 @@ class m160208_122838_lookup_fill extends Migration
     public function safeDown()
     {
         $this->delete(static::LOOKUP, 'property_id=' . self::POST_STATUS);
-        $this->delete(static::LOOKUP, 'code=1 AND prooerty_id=' . self::COMMENT_FOR);
+        $this->delete(static::LOOKUP, 'code=1 AND property_id=' . self::COMMENT_FOR);
         $this->delete(static::PROPERTY, 'id=' . self::POST_STATUS);
         $this->delete(static::PROPERTY, 'id=' . self::COMMENT_FOR);
     }
