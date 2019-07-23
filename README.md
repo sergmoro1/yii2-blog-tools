@@ -6,12 +6,12 @@ Ordinary management system for posts. Can be used as a base for any app.
 Advantages
 ----------
 
-* Posts, comments, rubrics, tags, users, authors;
-* Imperavi redactor, files & images uploading, photos chain for carousel slider;
-* Comments management, tags, nested set rubrics;
-* Avatars for users and authors, user registration with email confirmation or by network account;
+* Posts, nested set rubrics, tags, users, authors;
+* Comments management, update, reply;
+* Imperavi redactor;
+* Files & images uploading, photos chain for carousel slider;
+* User registration with email confirmation or by network account;
 * RBAC.
-
 
 Installation
 ------------
