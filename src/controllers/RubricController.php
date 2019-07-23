@@ -79,7 +79,7 @@ class RubricController extends Controller
     public function actionCreate()
     {
         if (!Yii::$app->user->can('create'))
-            return $this->alert(Module::t('core', 'Access denied.'));
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $model = new Rubric();
         $model->node_id = Rubric::ROOT;
@@ -105,7 +105,7 @@ class RubricController extends Controller
     public function actionUpdate($id)
     {
         if (!Yii::$app->user->can('update'))
-            return $this->alert(Module::t('core', 'Access denied.'));
+            throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $model = $this->findModel($id);
 
@@ -115,21 +115,23 @@ class RubricController extends Controller
             $model->type = Rubric::NODE_PARENT;
             
             if ($model->load(Yii::$app->request->post())) {
-                if (($model->node_id != $parent->id) && $this->move($model)) {
-                    return YII_DEBUG 
-                        ? $this->redirect(['index'])
-                        : $this->redirect(Yii::$app->request->referrer);
+                if (($model->node_id != $parent->id)) {
+                    $this->move($model);
+                } else {
+                    if(!$model->save()) {
+                        Yii::$app->session->setFlash('danger', Module::t('core', 'Rubric can not be saved.'));
+                    }
                 }
+                return YII_DEBUG 
+                    ? $this->redirect(['index'])
+                    : $this->redirect(Yii::$app->request->referrer);
             } else {
                 return $this->renderAjax('update', [
                     'model' => $model,
                 ]);
             }
         } else {
-            Yii::$app->session->setFlash(
-                'warning',
-                Yii::t('core', 'Node has not parent.')
-            );
+            Yii::$app->session->setFlash('warning', Module::t('core', 'Node has not parent.'));
             return $this->redirect(['index']);
         }
     }
@@ -162,10 +164,7 @@ class RubricController extends Controller
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         if($id == 1)
-            Yii::$app->session->setFlash(
-                'warning',
-                Yii::t('core', 'Node can not be deleted.')
-            );
+            Yii::$app->session->setFlash('warning', Module::t('core', 'Node can not be deleted.'));
         else {
             $node = $this->findModel($id);
             // find all node childrens
@@ -175,7 +174,7 @@ class RubricController extends Controller
             $ids = $id;
             foreach($childrens as $node)
                 $ids .= ',' . $node->id;
-            Post::updateAll(['rubric' => 1], 'rubric IN (' . $ids . ')');
+            Post::updateAll(['rubric_id' => 1], 'rubric_id IN (' . $ids . ')');
         }
 
         return $this->redirect(['index']);
