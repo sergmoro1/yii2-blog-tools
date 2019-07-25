@@ -58,6 +58,7 @@ Add information about migration folders with `namespace` to `console\config\main
                 'sergmoro1\lookup\migrations',
                 'sergmoro1\user\migrations',
                 'sergmoro1\blog\migrations',
+                'sergmoro1\comment\migrations',
             ],
         ],
     ],
@@ -72,7 +73,7 @@ php yii migrate --migrationPath=@vendor/notgosu/yii2-meta-tag-module/src/migrati
 
 6. Init blog
 
-Copy predefined files to appropriate folders by bathch file `initblog`.
+Copy predefined files to appropriate folders by batch file `initblog`.
 
 To get it make a command in app directory.
 
