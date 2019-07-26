@@ -1,1 +1,16 @@
+.vertical {
+    margin-top: 30px;
+    -webkit-writing-mode: vertical-rl; 
+    writing-mode: tb-rl;
+}
+.vertical h2 {
+    font-size: 8em;
+    margin: 0px;
+    padding: 0px;
+}
+.vertical p {
+    font-size: 3em;
+    margin: 0px;
+    padding: 0px;
+}
 

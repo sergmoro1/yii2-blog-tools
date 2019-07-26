@@ -16,7 +16,8 @@ Advantages
 Installation
 ------------
 
-After installation [Yii2 advanced template](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md).
+Fisrts install [Yii2 advanced template](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md).
+Make all that mentioned in a manual but **don't execute migration**.
 
 1. Change project composer file
 
@@ -47,7 +48,7 @@ to the require section of your composer.json.
 
 4. Configuring  migrations
 
-Add information about migration folders with `namespace` to `console\config\main.php` before `components` section.
+Add information about migration folders with `namespace` to `console\config\main.php` in `controllerMap` section.
 
 ```php
     'controllerMap' => [
@@ -131,14 +132,16 @@ Set up in `common/config/main.php`.
 ```php
 return [
     'language' => 'ru-RU', // 'en-US',
-    'bootstrap' => ['blog'],
+    'bootstrap' => [
+        'blog',
+        'comment',
+    ],
     'modules' => [
-        'lookup' => ['class' => 'sergmoro1\lookup\Module'],
-        'blog' => ['class' => 'sergmoro1\blog\Module'],
-        'user' => ['class' => 'sergmoro1\user\Module'],
-        'seo' => [
-            'class' => 'notgosu\yii2\modules\metaTag\Module',
-        ],
+		'lookup'        => ['class' => 'sergmoro1\lookup\Module'],
+		'blog'          => ['class' => 'sergmoro1\blog\Module'],
+		'comment'       => ['class' => 'sergmoro1\comment\Module'],
+		'user'          => ['class' => 'sergmoro1\user\Module'],
+        'seo'           => ['class' => 'notgosu\yii2\modules\metaTag\Module'],
     ],
     'components' => [
         'authManager' => [
