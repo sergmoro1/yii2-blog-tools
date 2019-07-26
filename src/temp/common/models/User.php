@@ -7,7 +7,7 @@
 namespace common\models;
 
 use sergmoro1\user\models\BaseUser;
-use sergmoro1\uploader\behaviours\HaveFileBehavior;
+use sergmoro1\uploader\behaviors\HaveFileBehavior;
 use sergmoro1\uploader\models\OneFile;
 
 class User extends BaseUser

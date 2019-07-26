@@ -8,7 +8,7 @@ namespace common\models;
 
 use sergmoro1\blog\models\BasePost;
 use sergmoro1\blog\models\CanComment;
-use sergmoro1\uploader\FilePath;
+use sergmoro1\uploader\behaviors\HaveFileBehavior;
 use sergmoro1\uploader\models\OneFile;
 use notgosu\yii2\modules\metaTag\components\MetaTagBehavior;
 
