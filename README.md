@@ -17,7 +17,7 @@ Installation
 ------------
 
 Fisrts install [Yii2 advanced template](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md).
-Make all that mentioned in a manual but **don't execute migration**.
+Make all that mentioned in a manual but executing migrations may be skipped.
 
 1. Change project composer file
 
