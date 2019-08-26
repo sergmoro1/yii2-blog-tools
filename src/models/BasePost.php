@@ -254,7 +254,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
      */
     public function getExcerpt()
     {
-        return str_replace(["\n", "\r"], '', strip_tags($model->excerpt));
+        return str_replace(["\n", "\r"], '', strip_tags($this->excerpt));
     }
 
     /**
