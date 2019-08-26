@@ -46,6 +46,7 @@ echo Modal::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'layout' => "{items}\n{summary}\n{pager}",
+        'options' => ['class' => false],
         'columns' => [
             'id',
 			[

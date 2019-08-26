@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'layout' => "{items}\n{summary}\n{pager}",
+        'options' => ['class' => false],
         'columns' => [
             'id',
             'slug',
