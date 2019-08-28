@@ -21,11 +21,11 @@
         "yiisoft/yii2": "*",
         "creocoder/yii2-nested-sets": "^0.9.0",
         "vova07/yii2-imperavi-widget" : "*",
-        "notgosu/yii2-meta-tag-module": "~1.0",
-        "mrssoft/yii2-sitemap": "~1.1",
+        "notgosu/yii2-meta-tag-module": "^1.0",
+        "mrssoft/yii2-sitemap": "^1.1",
         "hiqdev/yii2-asset-select2": "^4.0",
-        "sergmoro1/yii2-comment" : "~1.0",
-        "sergmoro1/yii2-feed": "~1.0"
+        "sergmoro1/yii2-comment" : "^1.0",
+        "sergmoro1/yii2-feed": "^1.0"
     },
     "autoload": {
         "psr-4": {
