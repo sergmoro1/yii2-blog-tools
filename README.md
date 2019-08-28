@@ -16,19 +16,7 @@ Advantages
 Installation
 ------------
 
-Fisrts install [Yii2 advanced template](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md).
-Make all that mentioned in a manual but executing migrations may be skipped.
-
-1. Change project composer file
-
-Package has dev-master version and depends on the same packages, so in app directory change `composer.json`.
-
-```
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-```
-
-2. Install package
+1. Install package
 
 The preferred way to install this extension is through composer.
 
@@ -38,15 +26,15 @@ Either run
 
 or add
 
-`"sergmoro1/yii2-blog-tools": "dev-master"`
+`"sergmoro1/yii2-blog-tools": "~1.1"`
 
 to the require section of your composer.json.
 
-3. Git init
+2. Git init
 
 `git init`
 
-4. Configuring  migrations
+3. Configuring  migrations
 
 Add information about migration folders with `namespace` to `console\config\main.php` in `controllerMap` section.
 
@@ -65,14 +53,14 @@ Add information about migration folders with `namespace` to `console\config\main
     ],
 ```
  
-5. Run migrations
+4. Run migrations
 
 ```
 php yii migrate
 php yii migrate --migrationPath=@vendor/notgosu/yii2-meta-tag-module/src/migrations
 ```
 
-6. Init blog
+5. Init blog
 
 Copy predefined files to appropriate folders by batch file `initblog`.
 
