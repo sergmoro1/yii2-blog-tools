@@ -1,6 +1,5 @@
 {
     "name": "sergmoro1/yii2-blog-tools",
-    "version": "1.0.0",
     "description": "Blog tools. Posts, Authors, Users, Tags, Rubrics, Comments backend SBAdmin-panel management.",
     "keywords": [
         "yii2",
