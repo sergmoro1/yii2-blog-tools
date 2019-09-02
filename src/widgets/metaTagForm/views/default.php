@@ -18,7 +18,7 @@ foreach ($model->metaTags as $i => $data) {
     $out[$data->language] .= Html::beginTag('div', ['class' => 'form-group']);
 
     switch ($data->metaTag->name) {
-        case \notgosu\yii2\modules\metaTag\models\MetaTag::META_ROBOTS:
+        case \sergmoro1\blog\models\MetaTag::META_ROBOTS:
             $out[$data->language] .= Html::activeCheckbox($model, 'metaTags[' . $i . '][content]',
                 ['class' => 'form-control', 'label' => 'robots no index, FOLLOW', 'labelOptions' => ['class' => 'form-inline']]);
             break;
