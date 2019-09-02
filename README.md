@@ -1,5 +1,5 @@
-Yii2 module for blog, advanced template, backend blog management, SBadmin panel
-===============================================================================
+Yii2 module for backend blog management, SBadmin panel, advanced template
+=========================================================================
 
 Ordinary management system for posts. Can be used as a base for any app.
 
@@ -26,7 +26,7 @@ Either run
 
 or add
 
-`"sergmoro1/yii2-blog-tools": "~1.1"`
+`"sergmoro1/yii2-blog-tools": "^1.1"`
 
 to the require section of your composer.json.
 
