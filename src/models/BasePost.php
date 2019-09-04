@@ -52,6 +52,9 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
 
     public $created_at_date;
     public $authors = [];
+
+    /* Tag glue for tags with more then one words */
+    private $glue = '-';
     
     private $_oldTags;
     private $_oldAuthors;
@@ -309,7 +312,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
         $links = [];
         foreach(Tag::string2array($this->tags) as $tag) {
             if(($model = Tag::findOne(['name' => $tag])) && $model->show)
-                $links[] = Html::a(Html::encode($tag), ['post/tag/' . str_replace(' ', '_', $tag)]);
+                $links[] = Html::a(Html::encode($tag), ['post/tag/' . str_replace(' ', $this->glue, $tag)]);
         }
         return $links;
     }

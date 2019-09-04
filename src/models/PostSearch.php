@@ -46,7 +46,7 @@ class PostSearch extends Post
         // load the search form data and validate
         if (!($this->load($params) && $this->validate())) {
             if(isset($_GET['tag'])) {
-                $this->tags = WebSlug::getRealname($_GET['tag']);
+                $this->tags = WebSlug::getRealname($_GET['tag'], $this->glue);
             } else
                 return $dataProvider;
         }
