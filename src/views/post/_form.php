@@ -42,7 +42,6 @@ $this->registerJS($script);
             'draggable'     => true,
             'appendixView'  => '/post/appendix.php',
             'cropAllowed'   => true,
-            'limit'         => 2,
         ]) ?>
         <br>
         
