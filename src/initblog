@@ -1,0 +1,55 @@
+#!/usr/bin/env php
+<?php
+// source folder
+$src = './vendor/sergmoro1/yii2-blog-tools/src/temp';
+
+echo 'Copy backend\config\params.php'.PHP_EOL;
+// backend/config
+copy($src . '/backend/config/params.php', './backend/config/params.php');
+
+echo 'Delete no needed files in backend\views'.PHP_EOL;
+// delete no needed files
+if(is_file('./backend/views/site/login.php'))
+    unlink('./backend/views/site/login.php');
+
+echo 'Copy common models'.PHP_EOL;
+// common/models
+copyFiles($src, '/common/models/');
+
+echo 'Copy RBAC'.PHP_EOL;
+// console/controllers
+copy($src . '/console/controllers/RbacController.php', './console/controllers/RbacController.php');
+// console/rbac
+if(!is_dir('./console/rbac'))
+    mkdir('./console/rbac');
+copyFiles($src, '/console/rbac/');
+
+echo 'Make folders for storage uploaded files'.PHP_EOL;
+// frontend/web/files
+if(!is_dir('./frontend/web/files'))
+    mkdir('./frontend/web/files');
+// make folders for files & photos
+makeFolders('./frontend/web/files/', ['common', 'post', 'author', 'user']);
+
+echo 'Make frontend\config\params.php writable to have ability change params from backend panel.'.PHP_EOL;
+// make frontend params writable
+chmod('./frontend/config/params.php', 0777);
+
+
+/**
+ * Copy all files from $source$dest/ to .$dest/
+ */
+function copyFiles($src, $dest) {
+    $path = $src . $dest;
+    foreach(array_slice(scandir($path), 2) as $file)
+        copy($src . $dest . $file, '.' . $dest . $file);
+}
+/**
+ * Make subfolders in a dir
+ */
+function makeFolders($dir, $folders) {
+    foreach($folders as $folder) {
+        if(!is_dir($dir . $folder))
+            mkdir($dir . $folder);
+    }
+}
