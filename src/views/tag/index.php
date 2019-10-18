@@ -14,6 +14,8 @@ sergmoro1\modal\assets\PopUpAsset::register($this);
 $this->title = Module::t('core', 'Tags');
 $this->params['breadcrumbs'][] = $this->title;;
 
+$areYouShure = Module::t('core', 'Are you shure you want to rewrite all tags?');
+
 echo Modal::widget([
     'id' => 'tag-win',
     'toggleButton' => false,
@@ -26,55 +28,62 @@ echo Modal::widget([
 ?>
 
 <div class="tag-index">
+    <div class='row'>
+        <div class='col-sm-8'>
 
-<div class='row'>
-<div class='col-sm-8'>
-    
-    <div class="table-responsive">
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'layout' => "{items}\n{summary}\n{pager}",
-        'columns' => [
-            [
-                'attribute' => 'id',
-                'options' => ['style' => 'width:4%;'],
-            ],
-            [
-                'attribute' => 'show',
-                'format' => 'html',
-                'value' => function($data) {
-                    return $data->show ? '+' : '-';
-                }
-            ],
-            'name',
-            'frequency',
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'options' => ['style' => 'width:10%;'],
-                'template' => '{update} {delete}',
-                'buttons' => [
-                    'update' => function ($url, $model) {
-                        return Html::a(
-                            \Yii::$app->params['icons']['pencil'], 
-                            $url, [
-                                'class' => 'update',
-                                'data-toggle' => 'modal',
-                                'data-target' => '#tag-win',
-                            ]
-                        );
-                    },
+            <p>
+                <?= Html::a(Module::t('core', 'Rewrite'), ['rewrite'], [
+                    'id' => 'tags-rewrite',
+                    'class' => 'btn btn-warning',
+                    'onclick' => "return confirm('$areYouShure');",
+                ]) ?>
+            </p>
+            
+            <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'layout' => "{items}\n{summary}\n{pager}",
+                'columns' => [
+                    [
+                        'attribute' => 'id',
+                        'options' => ['style' => 'width:4%;'],
+                    ],
+                    [
+                        'attribute' => 'show',
+                        'format' => 'html',
+                        'value' => function($data) {
+                            return $data->show ? '+' : '-';
+                        }
+                    ],
+                    'name',
+                    'frequency',
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'options' => ['style' => 'width:10%;'],
+                        'template' => '{update} {delete}',
+                        'buttons' => [
+                            'update' => function ($url, $model) {
+                                return Html::a(
+                                    \Yii::$app->params['icons']['pencil'], 
+                                    $url, [
+                                        'class' => 'update',
+                                        'data-toggle' => 'modal',
+                                        'data-target' => '#tag-win',
+                                    ]
+                                );
+                            },
+                        ],
+                    ],
                 ],
-            ],
-        ],
-    ]); ?>
-    </div>
+            ]); ?>
+            </div>
 
-</div>
+        </div>
 
-<div class='col-sm-4'>
-    <?= $this->render('help') ?>
-</div>
+        <div class='col-sm-4'>
+            <?= $this->render('help') ?>
+        </div>
 
-</div> <!-- ./row -->
+    </div> <!-- ./row -->
 </div> <!-- ./tag-index -->

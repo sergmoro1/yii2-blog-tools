@@ -2,6 +2,7 @@
 
 namespace sergmoro1\blog\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 use sergmoro1\blog\Module;
 
@@ -119,6 +120,42 @@ class Tag extends ActiveRecord
         return implode(', ',$tags);
     }
 
+    /**
+     * Update name of tag.
+     * @param string $old
+     * @param string $new
+     */
+    public static function updateName($old, $new)
+    {
+        // replace $old tag to empty if $old and $new tags exists in the same record
+        $space = Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = TRIM(REPLACE(tags, '{$old}', '')) WHERE tags LIKE '%{$old}%' AND tags LIKE '%{$new}%'")
+            ->execute();
+        // clear comma
+        if ($space) {
+            // middle
+            Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, ', ,', ',') WHERE tags REGEXP ', ,'")
+                ->execute();
+            // begin, end
+            Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = IF(STRCMP(SUBSTR(tags, 1, 1), ',') = 0, SUBSTR(tags, 2), IF(STRCMP(SUBSTR(tags, -1, 1), ',') = 0, SUBSTR(tags, 1, LENGTH(tags) - 1), tags)) WHERE STRCMP(SUBSTR(tags, 1, 1), ',') = 0 OR STRCMP(SUBSTR(tags, -1, 1), ',') = 0")
+                ->execute();
+        }
+        // replace an $old tag to a $new
+        $updated = Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, '{$old}', '{$new}') WHERE tags LIKE '%{$old}%' AND tags NOT LIKE '%{$new}%'")
+            ->execute();
+        // delete $old tag
+        $oldTag = Tag::findOne(['name' => $old]);
+        $oldTag->delete();
+        // replace frequency for a $new tag
+        $model = Tag::findOne(['name' => $new]);
+        if($model) {
+            $model->frequency += $updated;
+            $model->save(false);
+        } else {
+            $model = new Tag(['name' => $new, 'show' => $oldTag->show, 'frequency' => $updated]);
+            $model->save();
+        }
+    }
+    
     /**
      * Update tags frequencies.
      * 

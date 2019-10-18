@@ -1,9 +1,10 @@
 <?php
 namespace sergmoro1\blog\controllers;
 
+use Yii;
 use yii\web\ForbiddenHttpException;
-use sergmoro1\blog\Module;
 
+use sergmoro1\blog\Module;
 use sergmoro1\modal\controllers\ModalController;
 use common\models\Post;
 use sergmoro1\blog\models\Tag;
@@ -24,18 +25,19 @@ class TagController extends ModalController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (!\Yii::$app->user->can('update'))
+        if (!Yii::$app->user->can('update'))
             return $this->alert(Module::t('core', 'Access denied.'));
 
         $this->_tag = $model->name;
         
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            // replace all tags in all posts
-            \Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, '{$this->_tag}', '{$model->name}') WHERE tags LIKE '%{$this->_tag}%'")
-                ->execute();
+        if ($model->load(\Yii::$app->request->post())) {
+            if ($this->_tag === $model->name)
+                $model->save();
+            else
+                Tag::updateName($this->_tag, $model->name);
             return YII_DEBUG 
                 ? $this->redirect(['index'])
-                : $this->redirect(\Yii::$app->request->referrer);
+                : $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,
@@ -65,6 +67,36 @@ class TagController extends ModalController
             $post->save();
         }
         $model->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Rewrite tags by posts.
+     * @return mixed
+     */
+    public function actionRewrite()
+    {
+        $tags = [];
+        $posts = Post::find()->select(['id', 'tags'])->asArray()->all();
+        foreach($posts as $post) {
+            $postTags = Tag::string2array($post['tags']);
+            foreach($postTags as $postTag) {
+                if (isset($tags[$postTag]))
+                    $tags[$postTag] += 1;
+                else
+                    $tags[$postTag] = 1;
+            }
+        }
+        $allTags = [];
+        foreach($tags as $name => $frequency) {
+            $show = false;
+            if ($model = Tag::findOne(['name' => $name]))
+                $show = $model->show;
+            $allTags[] = ['name' => $name, 'show' => $show, 'frequency' => $frequency];
+        }
+        Tag::deleteAll();
+        Yii::$app->db->createCommand()->batchInsert(Tag::tableName(), ['name', 'show', 'frequency'], $allTags)->execute();
 
         return $this->redirect(['index']);
     }
