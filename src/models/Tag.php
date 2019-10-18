@@ -130,7 +130,8 @@ class Tag extends ActiveRecord
         // replace $old tag to empty if $old and $new tags exists in the same record
         $space = Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = TRIM(REPLACE(tags, '{$old}', '')) WHERE tags LIKE '%{$old}%' AND tags LIKE '%{$new}%'")
             ->execute();
-        // clear comma
+        // after the replacement will be extra commas
+        // clear commas
         if ($space) {
             // middle
             Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = REPLACE(tags, ', ,', ',') WHERE tags REGEXP ', ,'")
