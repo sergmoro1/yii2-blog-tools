@@ -85,7 +85,7 @@ class RubricController extends Controller
         $model->node_id = Rubric::ROOT;
         $model->type = Rubric::NODE_PARENT;
         
-        if ($model->load(Yii::$app->request->post()) && $this->move($model)) {
+        if ($model->load(Yii::$app->request->post()) && $model->move()) {
             return YII_DEBUG 
                 ? $this->redirect(['index'])
                 : $this->redirect(Yii::$app->request->referrer);
@@ -116,7 +116,7 @@ class RubricController extends Controller
             
             if ($model->load(Yii::$app->request->post())) {
                 if (($model->node_id != $parent->id)) {
-                    $this->move($model);
+                    $model->move();
                 } else {
                     if(!$model->save()) {
                         Yii::$app->session->setFlash('danger', Module::t('core', 'Rubric can not be saved.'));
@@ -137,38 +137,6 @@ class RubricController extends Controller
     }
     
     /**
-     * Validate and save the model to the selected location in a rubric tree.
-     * appendTo(), insertAfter() call validate() and save().
-     * @param mixid $model
-     * @return boolean
-     */
-    private function move($model) 
-    {
-        $node = $this->findModel($model->node_id);
-        switch ($model->type) {
-            case Rubric::NODE_PARENT:
-                return $model->appendTo($node);
-            case Rubric::NODE_NEIGHBOR:
-                return $model->insertAfter($node);
-            case Rubric::NODE_RECIPIENT:
-                return $this->merge($model->id, $model->node_id);
-        }
-    }
-
-    private function merge($deleted_id, $recipient_id)
-    {
-        $node = $this->findModel($deleted_id);
-        // find all node childrens
-        $childrens = $node->children()->all();
-        $node->deleteWithChildren();
-        // update field rubric_id to $recipient_id in all posts with rubric $deleted_id or it's childrens id
-        $ids = $deleted_id;
-        foreach($childrens as $node)
-            $ids .= ',' . $node->id;
-        return Post::updateAll(['rubric_id' => $recipient_id], 'rubric_id IN (' . $ids . ')');
-    }
-    
-    /**
      * Deletes an existing Rubric model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -181,8 +149,10 @@ class RubricController extends Controller
 
         if($id == Rubric::ROOT)
             Yii::$app->session->setFlash('warning', Module::t('core', 'Node can not be deleted.'));
-        else
-            $this->merge($id, Rubric::ROOT);
+        else {
+            $host = $this->findModel($id);
+            $host->merge();
+        }
 
         return $this->redirect(['index']);
     }

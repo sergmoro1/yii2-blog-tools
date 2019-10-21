@@ -37,7 +37,7 @@ class Rubric extends ActiveRecord
     public $post_count;        // posts count for the rubric
     
     public $node_id;           // ID of node related to curent
-    public $type;              // related node type - parent, neighbor
+    public $type;              // related node type - parent, neighbor, recipient
     
     const ROOT           = 1;
     
@@ -201,5 +201,46 @@ class Rubric extends ActiveRecord
     {
         $this->translit();
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * Validate and save the model to the selected location in a rubric tree.
+     * appendTo(), insertAfter() call validate() and save().
+     * Merge all posts with rubric (and all subrubrics) that will be deleted to recipient rubric.
+     * @return boolean
+     */
+    public function move() 
+    {
+        $node = self::findOne($this->node_id);
+        switch ($this->type) {
+            case Rubric::NODE_PARENT:
+                return $this->appendTo($node);
+            case Rubric::NODE_NEIGHBOR:
+                return $this->insertAfter($node);
+            case Rubric::NODE_RECIPIENT:
+                return $this->merge();
+        }
+    }
+
+    /**
+     * Current rubric will be deleted. 
+     * Before that all posts for the rubric to be deleted are merged with posts from the selected rubric.
+     * @return boolean
+     */
+    public function merge()
+    {
+        // ID of rubric that will be deleted
+        $deleted_id = $this->id;
+        // ID of selected rubric
+        $recipient_id = $this->node_id ? $this->node_id : self::ROOT;
+        // find all childrens of current rubric
+        $childrens = $this->children()->all();
+        // delete current rubric and all childrens
+        $this->deleteWithChildren();
+        // update field rubric_id to $recipient_id in all posts with rubric $deleted_id or it's childrens id
+        $ids = $deleted_id;
+        foreach($childrens as $node)
+            $ids .= ',' . $node->id;
+        return Post::updateAll(['rubric_id' => $recipient_id], 'rubric_id IN (' . $ids . ')');
     }
 }
