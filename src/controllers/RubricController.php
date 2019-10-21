@@ -142,14 +142,30 @@ class RubricController extends Controller
      * @param mixid $model
      * @return boolean
      */
-    public function move($model) 
+    private function move($model) 
     {
         $node = $this->findModel($model->node_id);
-        if ($model->type == Rubric::NODE_PARENT) {
-            return $model->appendTo($node);
-        } elseif ($model->type == Rubric::NODE_NEIGHBOR) {
-            return $model->insertAfter($node);
+        switch ($model->type) {
+            case Rubric::NODE_PARENT:
+                return $model->appendTo($node);
+            case Rubric::NODE_NEIGHBOR:
+                return $model->insertAfter($node);
+            case Rubric::NODE_RECIPIENT:
+                return $this->merge($model->id, $model->node_id);
         }
+    }
+
+    private function merge($deleted_id, $recipient_id)
+    {
+        $node = $this->findModel($deleted_id);
+        // find all node childrens
+        $childrens = $node->children()->all();
+        $node->deleteWithChildren();
+        // update field rubric_id to $recipient_id in all posts with rubric $deleted_id or it's childrens id
+        $ids = $deleted_id;
+        foreach($childrens as $node)
+            $ids .= ',' . $node->id;
+        return Post::updateAll(['rubric_id' => $recipient_id], 'rubric_id IN (' . $ids . ')');
     }
     
     /**
@@ -163,19 +179,10 @@ class RubricController extends Controller
         if (!Yii::$app->user->can('delete'))
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
-        if($id == 1)
+        if($id == Rubric::ROOT)
             Yii::$app->session->setFlash('warning', Module::t('core', 'Node can not be deleted.'));
-        else {
-            $node = $this->findModel($id);
-            // find all node childrens
-            $childrens = $node->children()->all();
-            $node->deleteWithChildren();
-            // update deleted rubrics to 1 in all posts with rubrics are $id or $childrens ID
-            $ids = $id;
-            foreach($childrens as $node)
-                $ids .= ',' . $node->id;
-            Post::updateAll(['rubric_id' => 1], 'rubric_id IN (' . $ids . ')');
-        }
+        else
+            $this->merge($id, Rubric::ROOT);
 
         return $this->redirect(['index']);
     }

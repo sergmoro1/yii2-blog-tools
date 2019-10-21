@@ -120,6 +120,7 @@ return [
     'one hour ago' => 'один час назад',
     'parent' => 'родитель',
     'registration' => 'регистрацию',
+    'recipient' => 'получатель',
     'should be' => 'должен следовать',
     'should not be' => 'не должно быть',
     'unpaired brackets' => 'не парные скобки',

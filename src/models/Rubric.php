@@ -40,8 +40,10 @@ class Rubric extends ActiveRecord
     public $type;              // related node type - parent, neighbor
     
     const ROOT           = 1;
+    
     const NODE_PARENT    = 1;
     const NODE_NEIGHBOR  = 2;
+    const NODE_RECIPIENT = 3;
     
     /**
      * @return string the associated database table name
@@ -80,7 +82,7 @@ class Rubric extends ActiveRecord
             ['slug', 'sergmoro1\blog\components\UniqueExceptItself'],
             [['node_id', 'show'], 'integer'],
             ['show', 'default', 'value' => 1],
-            ['type', 'in', 'range' => [self::NODE_PARENT, self::NODE_NEIGHBOR]],
+            ['type', 'in', 'range' => [self::NODE_PARENT, self::NODE_NEIGHBOR, self::NODE_RECIPIENT]],
             ['_slug', 'safe'],
         ];
     }
@@ -108,6 +110,7 @@ class Rubric extends ActiveRecord
         return [
             self::NODE_PARENT     => Module::t('core', 'parent'),
             self::NODE_NEIGHBOR   => Module::t('core', 'neighbor'),
+            self::NODE_RECIPIENT  => Module::t('core', 'recipient'),
         ];
     }
 
