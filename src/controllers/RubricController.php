@@ -115,7 +115,7 @@ class RubricController extends Controller
             $model->type = Rubric::NODE_PARENT;
             
             if ($model->load(Yii::$app->request->post())) {
-                if (($model->node_id != $parent->id)) {
+                if (($model->node_id != $parent->id) || ($model->type == RUBRIC::NODE_RECIPIENT)) {
                     $model->move();
                 } else {
                     if(!$model->save()) {
