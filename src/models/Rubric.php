@@ -188,13 +188,10 @@ class Rubric extends ActiveRecord
     {
         parent::afterFind();
         $this->_slug = $this->slug;
-        $this->post_count = $this->show
-            ? Post::find()
-                ->where(['rubric_id' => $this->id, 'status' => Post::STATUS_PUBLISHED])
-                ->count()
-            : Post::find()
-                ->where(['rubric_id' => $this->id])
-                ->count();
+        $query = Post::find()->where(['rubric_id' => $this->id]);
+        if ($this->show)
+            $query->andWhere(['status' => Post::STATUS_PUBLISHED]);
+        $this->post_count = $query->count();
     }
 
     /**
