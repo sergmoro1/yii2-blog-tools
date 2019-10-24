@@ -34,7 +34,7 @@ class Rubric extends ActiveRecord
      */
     public $_slug;             // old slug
 
-    public $post_count;        // posts count for the rubric
+    public $post_count;        // published posts count for the rubric with show=true or all posts
     
     public $node_id;           // ID of node related to curent
     public $type;              // related node type - parent, neighbor, recipient
@@ -188,9 +188,13 @@ class Rubric extends ActiveRecord
     {
         parent::afterFind();
         $this->_slug = $this->slug;
-        $this->post_count = Post::find()
-            ->where(['rubric_id' => $this->id, 'status' => Post::STATUS_PUBLISHED])
-            ->count();
+        $this->post_count = $this->show
+            ? Post::find()
+                ->where(['rubric_id' => $this->id, 'status' => Post::STATUS_PUBLISHED])
+                ->count()
+            : Post::find()
+                ->where(['rubric_id' => $this->id])
+                ->count();
     }
 
     /**
