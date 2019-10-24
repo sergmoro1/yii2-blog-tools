@@ -50,10 +50,7 @@ echo Modal::widget([
                             'attribute' => 'show',
                             'format' => 'html',
                             'value' => function($data) {
-                                $show = true;
-                                foreach($data->parents()->all() as $parent)
-                                    $show = $show && $parent->show;
-                                return $data->show && $show ? '+' : '-';
+                                return $data->show ? '+' : '-';
                             }
                         ],
                         [
