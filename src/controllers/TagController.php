@@ -77,6 +77,10 @@ class TagController extends ModalController
      */
     public function actionRewrite()
     {
+        // set all tags to lowercase
+        Yii::$app->db->createCommand("UPDATE {{%post}} SET tags = LOWER(tags)")
+            ->execute();
+        // get all tags in array
         $tags = [];
         $posts = Post::find()->select(['id', 'tags'])->asArray()->all();
         foreach($posts as $post) {
@@ -88,6 +92,7 @@ class TagController extends ModalController
                     $tags[$postTag] = 1;
             }
         }
+        // prepare array with Tag records
         $allTags = [];
         foreach($tags as $name => $frequency) {
             $show = false;
@@ -95,6 +100,7 @@ class TagController extends ModalController
                 $show = $model->show;
             $allTags[] = ['name' => $name, 'show' => $show, 'frequency' => $frequency];
         }
+        // delete all tags and batch insert them
         Tag::deleteAll();
         Yii::$app->db->createCommand()->batchInsert(Tag::tableName(), ['name', 'show', 'frequency'], $allTags)->execute();
 
