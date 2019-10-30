@@ -94,7 +94,7 @@ return [
     'Submit' => 'Отправить',
     'Syntax error' => 'Ошибка синтаксиса',
     'Tags' => 'Метки',
-    'Tags may consists alphabets, numbers and space only.' => 'Метки монут состоять из буквб цифр и пробела.',
+    'Tags may consists lowercase alphabets, numbers and space only.' => 'Метки могут содержать только строчные буквы, цифры и пробел.',
     'The requested model does not exist.' => 'Запрошенная модель не существует.',
     'There are no comments yet.' => 'Комментариев еще нет.',
     'This post is already selected as the previous one.' => 'Данная статья уже выбрана, как предыдущая.',

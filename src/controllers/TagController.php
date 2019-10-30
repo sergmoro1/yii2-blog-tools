@@ -30,7 +30,7 @@ class TagController extends ModalController
 
         $this->_tag = $model->name;
         
-        if ($model->load(\Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
             if ($this->_tag === $model->name)
                 $model->save();
             else
@@ -53,7 +53,7 @@ class TagController extends ModalController
      */
     public function actionDelete($id)
     {
-        if (!\Yii::$app->user->can('delete'))
+        if (!Yii::$app->user->can('delete'))
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $model = $this->findModel($id);

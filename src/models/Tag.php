@@ -37,6 +37,7 @@ class Tag extends ActiveRecord
             ['name', 'required'],
             ['frequency', 'integer'],
             ['name', 'string', 'max' => 128],
+            ['name', 'match', 'pattern' => '/^[а-яa-z0-9\s]+$/u', 'message' => Module::t('core', 'Tags may consists lowercase alphabets, numbers and space only.')],
             ['show', 'integer'],
         ];
     }
@@ -146,6 +147,7 @@ class Tag extends ActiveRecord
         // delete $old tag
         $oldTag = Tag::findOne(['name' => $old]);
         $oldTag->delete();
+
         // replace frequency for a $new tag
         $model = Tag::findOne(['name' => $new]);
         if($model) {
