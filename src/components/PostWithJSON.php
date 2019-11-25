@@ -29,9 +29,10 @@ class PostWithJSON extends Behavior
     
     public function getPostBySlug($slug)
     {
-        if(self::$_post = Post::findOne(['slug' => $slug]))
+        if(self::$_post = Post::findOne(['slug' => $slug])) {
+            self::$_json = 0;
             return self::$_post;
-        else
+        } else
             throw new NotFoundHttpException("The requested Post model ($slug) does not exist.");
     }
 
