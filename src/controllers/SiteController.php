@@ -1,6 +1,7 @@
 <?php
 namespace sergmoro1\blog\controllers;
 
+use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -89,27 +90,27 @@ class SiteController extends Controller
      */
     public function actionGear()
     {
-        if (!\Yii::$app->user->can('gear'))
+        if (!Yii::$app->user->can('gear'))
             throw new ForbiddenHttpException(Module::t('core', 'Access denied.'));
 
         $model = new \sergmoro1\blog\models\GearForm();
         $error = false;
-        if ($model->load(\Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
             $syntax = new ParamsSyntaxChecker();
             if($syntax->check($model->params)) {
                 // new name for archive params file
                 $f = 'params_'. date('Ymd_Hi', time()) .'.php';
                 // if frontend/runtime/params do not exists then make it
-                if(!is_dir(($dir = \Yii::getAlias('@frontend/runtime/params'))))
+                if(!is_dir(($dir = Yii::getAlias('@frontend/runtime/params'))))
                     mkdir($dir);
                 // save just edited params to the temporary file
-                file_put_contents(\Yii::getAlias('@frontend/runtime/params/params.php'), $model->params);
+                file_put_contents(Yii::getAlias('@frontend/runtime/params/params.php'), $model->params);
                 // verify array by loading it
-                if(($params = include(\Yii::getAlias('@frontend/runtime/params/params.php'))) && is_array($params)) {
+                if(($params = include(Yii::getAlias('@frontend/runtime/params/params.php'))) && is_array($params)) {
                     // copy current params to runtime folder with a new name of file
-                    copy(\Yii::getAlias('@frontend/config/params.php'), \Yii::getAlias('@frontend/runtime/params/' . $f));
+                    copy(Yii::getAlias('@frontend/config/params.php'), Yii::getAlias('@frontend/runtime/params/' . $f));
                     // save changes to runtime/params.php
-                    if(file_put_contents(\Yii::getAlias('@frontend/config/params.php'), $model->params))
+                    if(file_put_contents(Yii::getAlias('@frontend/config/params.php'), $model->params))
                         return $this->goHome();
                     else
                         $error = 'Params file can\'t be saved.';
@@ -128,7 +129,7 @@ class SiteController extends Controller
                 ) . '.';
         } else {
             // load params
-            $model->params = file_get_contents(\Yii::getAlias('@frontend/config/params.php'));
+            $model->params = file_get_contents(Yii::getAlias('@frontend/config/params.php'));
         }
         return $this->render('gear', [
             'model' => $model,
@@ -141,15 +142,13 @@ class SiteController extends Controller
         return $this->redirect($this->toFrontend());    
     }
 
+    /**
+     * Return host and full path to frontend saved in params-local.php (common or backend).
+     * 
+     * @return string
+     */
     private function toFrontend()
     {
-        $frontend = isset(\Yii::$app->params['frontend']) 
-            ? \Yii::$app->params['frontend']
-            : 'frontend.';
-            
-        return str_replace($frontend, '' , str_replace('back', 'front', (Url::base()
-            ? Url::base()
-            : \Yii::$app->request->hostInfo
-        )));
+        return Yii::$app->params['frontend'];
     }
 }

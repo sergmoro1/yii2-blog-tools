@@ -125,10 +125,10 @@ return [
         'comment',
     ],
     'modules' => [
-		'lookup'        => ['class' => 'sergmoro1\lookup\Module'],
-		'blog'          => ['class' => 'sergmoro1\blog\Module'],
-		'comment'       => ['class' => 'sergmoro1\comment\Module'],
-		'user'          => ['class' => 'sergmoro1\user\Module'],
+        'lookup'        => ['class' => 'sergmoro1\lookup\Module'],
+        'blog'          => ['class' => 'sergmoro1\blog\Module'],
+        'comment'       => ['class' => 'sergmoro1\comment\Module'],
+        'user'          => ['class' => 'sergmoro1\user\Module'],
         'seo'           => ['class' => 'notgosu\yii2\modules\metaTag\Module'],
     ],
     'components' => [
@@ -181,6 +181,15 @@ return [
             ],
         ],
     ],
+];
+```
+
+Set up in `common/config/params-local.php`.
+
+```php
+return [
+    // localhost or real host
+    'frontend' => 'http://localhost',
 ];
 ```
 
