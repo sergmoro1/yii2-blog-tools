@@ -404,7 +404,7 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
      * @param string $tag
      * @return array the most recently added posts
      */
-    public function getRecentPosts($limit = 3, $rubric = false, $tag = false)
+    public static function getRecentPosts($limit = 3, $rubric = false, $tag = false)
     {
         $query = \common\models\Post::find()
             ->where(['status' => self::STATUS_PUBLISHED]);
