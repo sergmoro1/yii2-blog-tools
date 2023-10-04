@@ -389,9 +389,9 @@ class BasePost extends ActiveRecord implements SitemapInterface, Linkable, RssIn
     /**
      * @return integer the number of posts that are published
      */
-    public function getPublishedPostCount()
+    public static function getPublishedPostCount()
     {
-        return BasePost::find()
+        return static::find()
             ->where(['status' => self::STATUS_PUBLISHED])
             ->count();
     }
